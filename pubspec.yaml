@@ -32,9 +32,11 @@ dependencies:
   page_transition: ^2.1.0
   flutter:
     sdk: flutter
+  table_calendar: ^3.0.0
   animated_text_kit: ^4.2.2
   lottie: ^2.3.2
-  table_calendar: ^3.0.0
+  salomon_bottom_bar: ^3.3.2
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -62,11 +64,11 @@ flutter:
   # the material Icons class.
   uses-material-design: true
 
-  # To add assets to your application, add an assets section, like this:
+
   assets:
     - assets/image1.jpg
     - assets/image2.jpg
-    - assets/topImg.jpg
+    - assets/top.jpg
     - assets/cat1.jpg
     - assets/cat2.jpg
     - assets/cat3.jpg
@@ -83,10 +85,11 @@ flutter:
     - assets/maconde.jpg
     - assets/78.jpg
     - assets/hiking.jpg
-    - assets/picicon.png
-    - assets/dhav.png
+    - assets/picicon/dhav.png
     - assets/location.png
-    - assets/gina.jpg
+    - assets/picicon/gina.jpg
+    - assets/picicon/lim.jpg
+    - assets/picicon/bob.jpg
     - assets/disco1.jpg
     - assets/disco2.jpg
     - assets/disco3.jpg
@@ -95,8 +98,18 @@ flutter:
     - assets/beaches/beach2.jpg
     - assets/beaches/flicnflck.jpg
     - assets/beaches/Peyrebere.jpg
+    - assets/activities/1b.jpg
+    - assets/activities/catamaron.jpg
+    - assets/activities/hik.jpg
+    - assets/activities/quad.jpg
+    - assets/activities/swim.jpg
+    - assets/activities/zip.jpg
     - assets/beaches/Trou-Aux-Biches.jpg
-
+    - assets/images/alex.jpg
+    - assets/images/lebradant.jpg
+    - assets/images/mareaux.jpg
+    - assets/images/pitondela.jpg
+    - assets/images/riverenoir.jpg
     - assets/animation/anim1.json
     - assets/animation/anim2.json
     - assets/animation/anim3.json

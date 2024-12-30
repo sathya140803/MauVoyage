@@ -4,6 +4,7 @@ import 'home_page.dart';
 import 'favourite_page.dart';
 import 'calendar_page.dart';
 import 'settings_page.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({Key? key}) : super(key: key);
@@ -22,7 +23,7 @@ class _RootPageState extends State<RootPage> {
         onFavoriteToggle: _updateFavorites,
       ),
       FavouritePage(favoritedPlaces: favorites),
-      CalendarPage(),
+      CalenderPage(),
       SettingsPage(),
     ];
   }
@@ -47,31 +48,32 @@ class _RootPageState extends State<RootPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _widgetOptions()[_currentIndex],
-      bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: SalomonBottomBar(
         currentIndex: _currentIndex,
         onTap: _onTap,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
+        items: [
+          SalomonBottomBarItem(
+            icon: const Icon(Icons.home),
+            title: const Text('Home'),
+            selectedColor: Colors.blue,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.favorite),
-            label: 'Favourites',
+          SalomonBottomBarItem(
+            icon: const Icon(Icons.favorite),
+            title: const Text('Favorites'),
+            selectedColor: Colors.red,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.calendar_today),
-            label: 'Calendar',
+          SalomonBottomBarItem(
+            icon: const Icon(Icons.calendar_today),
+            title: const Text('Calendar'),
+            selectedColor: Colors.green,
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
+          SalomonBottomBarItem(
+            icon: const Icon(Icons.settings),
+            title: const Text('Settings'),
+            selectedColor: Colors.grey,
           ),
         ],
       ),
     );
   }
 }
-
-

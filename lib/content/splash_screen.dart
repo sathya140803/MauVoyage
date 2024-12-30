@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:lottie/lottie.dart';
-//import 'package:my_application/ui/root_page.dart'; // Adjust the path to RootPage if necessary
 import 'package:my_application/ui/OnboardingScreen.dart';
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -58,6 +57,7 @@ class _SplashScreenState extends State<SplashScreen>
         decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [Colors.blueAccent, Colors.purpleAccent],
+            //colors: [Colors.redAccent, Colors.blueAccent,Colors.yellowAccent,Colors.greenAccent],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
