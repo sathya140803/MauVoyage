@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 class CategoryCarousel extends StatelessWidget {
   final List<Map<String, String>> categories = [
     {'title': 'Beaches', 'image': 'assets/cat3.jpg', 'route': '/beaches'},
-    {'title': 'Night Clubs', 'image': 'assets/cat1.jpg', 'route': '/nightclubs'},
     {'title': 'Forests', 'image': 'assets/cat2.jpg', 'route': '/forests'},
+    {'title': 'Night Clubs', 'image': 'assets/cat1.jpg', 'route': '/nightclubs'},
     {'title': 'Activities', 'image': 'assets/cat4.jpg', 'route': '/activities'},
-    {'title': 'Kids club', 'image': 'assets/cat5.jpg', 'route': '/kidsclub'},
+
   ];
 
    CategoryCarousel({super.key});
