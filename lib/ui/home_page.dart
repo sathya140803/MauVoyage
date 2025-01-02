@@ -3,18 +3,21 @@ import '../content/category_carousel.dart';
 import 'package:my_application/data_model/PlaceOfInterest.dart';
 import 'package:my_application/ui/DetailPage.dart';
 import 'package:my_application/ui/NotificationPage.dart';
+//import 'package:my_application/content/SearchPage.dart';
+import 'package:my_application/cat_Pages/ExplorePage.dart'; // Import the page you want to navigate to
+import 'package:my_application/ui/InterestSelectionScreen.dart';
+
 class HomePage extends StatelessWidget {
-  final Function(PlaceOfInterest place) onFavoriteToggle; // Callback for managing favorites
+  final Function(PlaceOfInterest place)
+      onFavoriteToggle; // Callback for managing favorites
 
   const HomePage({super.key, required this.onFavoriteToggle});
 
   @override
   Widget build(BuildContext context) {
-    // Get screen dimensions
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     Size size = MediaQuery.of(context).size;
-    //List<PlaceOfInterest> placeList = PlaceOfInterest.placeList;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -62,18 +65,19 @@ class HomePage extends StatelessWidget {
                   child: Stack(
                     alignment: Alignment.center,
                     children: [
-                      // Notification Icon Button
                       IconButton(
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const NotificationPage()),
+                            MaterialPageRoute(
+                                builder: (context) => InterestSelectionScreen()),
                           );
                         },
-                        icon: const Icon(Icons.notifications, color: Colors.blue),
+                        icon:
+                            const Icon(Icons.notifications, color: Colors.blue),
                       ),
 
-                      // Badge (Optional)
+                      // Badge
                       Positioned(
                         right: 4,
                         top: 4,
@@ -86,7 +90,7 @@ class HomePage extends StatelessWidget {
                           ),
                           child: const Center(
                             child: Text(
-                              '3', // Dynamic notification count
+                              '3',
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
@@ -106,9 +110,6 @@ class HomePage extends StatelessWidget {
                   left: screenWidth * 0.05,
                   right: screenWidth * 0.05,
                   child: GestureDetector(
-                    onTap: () {
-                      // Add search functionality here
-                    },
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -122,12 +123,13 @@ class HomePage extends StatelessWidget {
                         ],
                       ),
                       child: const TextField(
-                        enabled: false, // Disable the TextField to prevent direct input
+                        enabled: false,
                         decoration: InputDecoration(
                           hintText: 'Search...',
                           prefixIcon: Icon(Icons.search, color: Colors.grey),
                           border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                          contentPadding: EdgeInsets.symmetric(
+                              horizontal: 10, vertical: 10),
                         ),
                       ),
                     ),
@@ -136,27 +138,47 @@ class HomePage extends StatelessWidget {
               ],
             ),
 
-
             // Text Section Below Image
             Padding(
-              padding: EdgeInsets.all(screenWidth * 0.01),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              padding: EdgeInsets.all(screenWidth * 0.03),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Featured Places',
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.05,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Featured Places',
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.05,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        'Most trending places in Mauritius!',
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.04,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black54,
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'Most trending places in Mauritius!',
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.04,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black54,
+                  GestureDetector(
+                    // onTap: () {
+                    //   Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(builder: (context) => const ExplorePage()), // Navigate to another page
+                    //   );
+                    // },
+                    child: Text(
+                      'View all',
+                      style: TextStyle(
+                        fontSize: screenWidth * 0.04,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                      ),
                     ),
                   ),
                 ],
@@ -167,13 +189,12 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: size.height * 0.3,
               child: ListView.builder(
-                scrollDirection: Axis.horizontal,  // Set the scroll direction to horizontal
-                itemCount: PlaceOfInterest.placeList.length,  // Replace with your actual list of places
+                scrollDirection: Axis.horizontal,
+                itemCount: PlaceOfInterest.placeList.length,
                 itemBuilder: (context, index) {
-                  final place = PlaceOfInterest.placeList[index];  // Use a different name for the variable
+                  final place = PlaceOfInterest.placeList[index];
                   return GestureDetector(
                     onTap: () {
-                      // Navigate to the DetailPage and pass the selected place item
                       Navigator.push(
                         context,
                         MaterialPageRoute(
@@ -185,94 +206,84 @@ class HomePage extends StatelessWidget {
                       width: 200,
                       margin: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
-                        color: Colors.blue.withOpacity(0.8),  // You can change the background color
+                        color: Colors.blue.withOpacity(0.8),
                         borderRadius: BorderRadius.circular(20),
                       ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20),
-                          child: Stack(
-                            children: [
-                              // Background Image
-                              Positioned.fill(
-                                child: Image.asset(
-                                  place.imageURL,
-                                  fit: BoxFit.cover,
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(20),
+                        child: Stack(
+                          children: [
+                            Positioned.fill(
+                              child: Image.asset(
+                                place.imageURL,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+
+                            // Heart Icon
+                            Positioned(
+                              top: 10,
+                              right: 10,
+                              child: Container(
+                                width: 40,
+                                height: 40,
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.4),
+                                  shape: BoxShape.circle,
+                                ),
+                                child: IconButton(
+                                  icon: const Icon(Icons.favorite_border,
+                                      color: Colors.white),
+                                  onPressed: () {},
                                 ),
                               ),
+                            ),
 
-                              // Heart Icon with Fade Black Circle Behind It
-                              Positioned(
-                                top: 10,
-                                right: 10, // Align the heart icon to the top-right corner
-                                child: Container(
-                                  width: 40,  // Width of the circle
-                                  height: 40, // Height of the circle
-                                  decoration: BoxDecoration(
-                                    color: Colors.black.withOpacity(0.4), // Semi-transparent black background
-                                    shape: BoxShape.circle, // Make the container circular
-                                  ),
-                                  child: IconButton(
-                                    icon: Icon(
-                                      Icons.favorite_border, // Outline heart icon
-                                      color: Colors.white,   // White color for visibility
-                                      size: 24,              // Adjust the size of the icon
+                            // Overlay with Place Details
+                            Positioned(
+                              bottom: 10,
+                              left: 10,
+                              right: 10,
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.black.withOpacity(0.4),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 8, vertical: 10),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      place.name,
+                                      style: const TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
                                     ),
-                                    onPressed: () {
-                                      // This is non-functional for now
-                                      // You can add functionality later if needed
-                                    },
-                                  ),
-                                ),
-                              ),
-
-                              // Overlay with Place Details
-                              Positioned(
-                                bottom: 10,
-                                left: 10,
-                                right: 10, // Ensures the overlay spans the width of the card
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: Colors.black.withOpacity(0.4), // Semi-transparent black color
-                                    borderRadius: BorderRadius.circular(10), // Add rounded corners
-                                  ),
-                                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 10), // Padding for text
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start, // Align text and rating to the start
-                                    children: [
-                                      Text(
-                                        place.name,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                      const SizedBox(height: 5), // Space between name and rating
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.star,
+                                    const SizedBox(height: 5),
+                                    Row(
+                                      children: [
+                                        Icon(Icons.star,
                                             color: Colors.yellow[700],
-                                            size: 16,
-                                          ),
-                                          const SizedBox(width: 5), // Space between the star icon and rating
-                                          Text(
-                                            place.rating.toString(),
-                                            style: const TextStyle(
+                                            size: 16),
+                                        const SizedBox(width: 5),
+                                        Text(
+                                          place.rating.toString(),
+                                          style: const TextStyle(
                                               fontSize: 16,
-                                              color: Colors.white,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
+                                              color: Colors.white),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
-                        )
-
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   );
                 },
@@ -281,30 +292,54 @@ class HomePage extends StatelessWidget {
 
             // Categories Section
             Padding(
-              padding: EdgeInsets.all(screenWidth * 0.01),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              padding: EdgeInsets.all(screenWidth * 0.03),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Explore more',
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.05,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Explore more',
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.05,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black,
+                        ),
+                      ),
+                      Text(
+                        'According to your personal taste',
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.04,
+                          fontWeight: FontWeight.w500,
+                          color: Colors.black54,
+                        ),
+                      ),
+                    ],
                   ),
-                  Text(
-                    'According to your personal taste',
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.04,
-                      fontWeight: FontWeight.w500,
-                      color: Colors.black54,
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const ExplorePage()),
+                      );
+                    },
+                    child: Text(
+                      'View all',
+                      style: TextStyle(
+                        fontSize: screenWidth * 0.04,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.blue,
+                      ),
                     ),
                   ),
                 ],
               ),
             ),
-            CategoryCarousel(),
+            Padding(
+              padding: const EdgeInsets.only(left: 5.0), // Add margin to the left
+              child: CategoryCarousel(),
+            ),
           ],
         ),
       ),

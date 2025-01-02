@@ -183,7 +183,7 @@ class CommonDetailLayout extends StatelessWidget {
                             Column(
                               children: [
                                 CircleAvatar(
-                                  backgroundColor: Colors.black54,
+                                  backgroundColor: Colors.teal,
                                   radius: 24,
                                   child: IconButton(
                                     icon: const Icon(Icons.location_on, color: Colors.white),
@@ -200,7 +200,7 @@ class CommonDetailLayout extends StatelessWidget {
                             Column(
                               children: [
                                 CircleAvatar(
-                                  backgroundColor: Colors.black54,
+                                  backgroundColor: Colors.teal,
                                   radius: 24,
                                   child: IconButton(
                                     icon: const Icon(Icons.book, color: Colors.white),
@@ -234,7 +234,7 @@ class CommonDetailLayout extends StatelessWidget {
                             Column(
                               children: [
                                 CircleAvatar(
-                                  backgroundColor: Colors.black54,
+                                  backgroundColor: Colors.teal,
                                   radius: 24,
                                   child: IconButton(
                                     icon: const Icon(Icons.favorite_border, color: Colors.white),
@@ -245,6 +245,23 @@ class CommonDetailLayout extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 8),
                                 const Text('Favorite'),
+                              ],
+                            ),
+                            const SizedBox(width: 20),
+                            Column(
+                              children: [
+                                CircleAvatar(
+                                  backgroundColor: Colors.teal,
+                                  radius: 24,
+                                  child: IconButton(
+                                    icon: const Icon(Icons.share, color: Colors.white),
+                                    onPressed: () {
+                                      // Implement favoriting functionality
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                const Text('Share'),
                               ],
                             ),
                           ],

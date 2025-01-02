@@ -6,7 +6,7 @@ import 'cat_Pages/NightClubsPage.dart'; // Import the NightClubsPage
 import 'cat_Pages/ForestsPage.dart'; // Import the ForestsPage
 import 'cat_Pages/BeachesPage.dart'; // Import the BeachesPage
 import 'cat_Pages/ActivitiesPage.dart'; // Import the ActivitiesPage
-
+import 'ui/InterestSelectionScreen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Navigation Example',
+      title: 'myapp',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
         '/forests': (context) => ForestsPage(),
         '/beaches': (context) => BeachesPage(),
         '/activities': (context) => ActivitiesPage(),
-
+        '/InterestSelectionScreen': (context) => ActivitiesPage(),
         '/root_page': (context) => RootPage(),
       },
     );

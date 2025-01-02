@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-
+import 'package:my_application/ui/InterestSelectionScreen.dart';
 class OnboardingScreen extends StatefulWidget {
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
@@ -57,12 +57,23 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                     end: Alignment.bottomRight,
                   ),
                 ),
+                OnboardingPage(
+                  animationPath: 'assets/animation/anim6.json',
+                  title: "Enjoy the Journey",
+                  description:
+                  "Embrace every moment of your adventure with stunning views.",
+                  bgColor: const LinearGradient(
+                    colors: [Colors.blueAccent, Colors.tealAccent],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                ),
               ],
             ),
           ),
           BottomNavigation(
             controller: _controller,
-            totalPages: 3,
+            totalPages: 4,
             currentPage: _currentPage,
           ),
         ],
@@ -221,14 +232,20 @@ class BottomNavigation extends StatelessWidget {
           else
             TextButton(
               onPressed: () {
-                // Navigate to the root page
-                Navigator.pushReplacementNamed(context, '/root_page');
+                // Navigate to the InterestSelectionScreen
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => InterestSelectionScreen(),
+                  ),
+                );
               },
               child: const Text(
                 "START",
                 style: TextStyle(color: Colors.white),
               ),
             ),
+
         ],
       ),
     );

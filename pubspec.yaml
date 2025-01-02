@@ -32,10 +32,12 @@ dependencies:
   page_transition: ^2.1.0
   flutter:
     sdk: flutter
+  flutter_staggered_grid_view: ^0.7.0
   table_calendar: ^3.0.0
   animated_text_kit: ^4.2.2
   lottie: ^2.3.2
   salomon_bottom_bar: ^3.3.2
+
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -78,10 +80,14 @@ flutter:
     - assets/snorking.jpg
     - assets/lemorne1.jpg
     - assets/Port-Louis.jpg
+    - assets/souv.jpg
     - assets/waterfall.jpg
     - assets/aquarium.jpg
     - assets/blackriver.jpg
     - assets/lavanille.jpg
+    - assets/festival.jpg
+    - assets/spa.jpg
+    - assets/traditinel.jpg
     - assets/maconde.jpg
     - assets/78.jpg
     - assets/hiking.jpg
@@ -115,6 +121,7 @@ flutter:
     - assets/animation/anim3.json
     - assets/animation/anim4.json
     - assets/animation/anim5.json
+    - assets/animation/anim6.json
     - assets/moris.png
 
 
