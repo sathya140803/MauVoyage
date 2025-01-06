@@ -6,7 +6,7 @@ import 'cat_Pages/NightClubsPage.dart'; // Import the NightClubsPage
 import 'cat_Pages/ForestsPage.dart'; // Import the ForestsPage
 import 'cat_Pages/BeachesPage.dart'; // Import the BeachesPage
 import 'cat_Pages/ActivitiesPage.dart'; // Import the ActivitiesPage
-import 'ui/InterestSelectionScreen.dart';
+
 
 void main() {
   runApp(const MyApp());

@@ -4,6 +4,7 @@ import 'home_page.dart';
 import 'favourite_page.dart';
 import 'calendar_page.dart';
 import 'settings_page.dart';
+import 'currency_converter_page.dart'; // Import the new page
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
 class RootPage extends StatefulWidget {
@@ -24,7 +25,9 @@ class _RootPageState extends State<RootPage> {
       ),
       FavouritePage(favoritedPlaces: favorites),
       CalenderPage(),
+      CurrencyConverterPage(),
       SettingsPage(),
+       // Add the new page
     ];
   }
 
@@ -68,10 +71,16 @@ class _RootPageState extends State<RootPage> {
             selectedColor: Colors.green,
           ),
           SalomonBottomBarItem(
+            icon: const Icon(Icons.attach_money),
+            title: const Text('Converter'),
+            selectedColor: Colors.teal,
+          ),
+          SalomonBottomBarItem(
             icon: const Icon(Icons.settings),
             title: const Text('Settings'),
             selectedColor: Colors.grey,
           ),
+
         ],
       ),
     );

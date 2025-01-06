@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen>
     );
 
     // Navigate to the next page after delay
-    Future.delayed(const Duration(seconds: 6), () {
+    Future.delayed(const Duration(seconds: 10), () {
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
           pageBuilder: (_, __, ___) => OnboardingScreen(),

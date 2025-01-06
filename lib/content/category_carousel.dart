@@ -13,7 +13,7 @@ class CategoryCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 110, // Adjust height as per design
+      height: 130, // Adjust height as per design
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(

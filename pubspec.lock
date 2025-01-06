@@ -94,19 +94,35 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
-  flutter_staggered_grid_view:
+  flutter_slidable:
     dependency: "direct main"
     description:
-      name: flutter_staggered_grid_view
-      sha256: "19e7abb550c96fbfeb546b23f3ff356ee7c59a019a651f8f102a4ba9b7349395"
+      name: flutter_slidable
+      sha256: a857de7ea701f276fd6a6c4c67ae885b60729a3449e42766bb0e655171042801
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.0"
+    version: "3.1.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
     source: sdk
     version: "0.0.0"
+  http:
+    dependency: "direct main"
+    description:
+      name: http
+      sha256: b9c29a161230ee03d3ccf545097fccd9b87a5264228c5d348202e0f0c28f9010
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.2"
+  http_parser:
+    dependency: transitive
+    description:
+      name: http_parser
+      sha256: "76d306a1c3afb33fe82e2bbacad62a61f409b5634c915fceb0d799de1a913360"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.1.1"
   intl:
     dependency: transitive
     description:
@@ -179,6 +195,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.15.0"
+  number_pad_keyboard:
+    dependency: "direct main"
+    description:
+      name: number_pad_keyboard
+      sha256: "66dc5e88a14a49791bb06020ec7fb9287643e4bfb250d09c1d654af167aa6a45"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.6"
   page_transition:
     dependency: "direct main"
     description:
@@ -304,6 +328,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "14.3.0"
+  web:
+    dependency: transitive
+    description:
+      name: web
+      sha256: cd3543bd5798f6ad290ea73d210f423502e71900302dde696f8bff84bf89a1cb
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
 sdks:
   dart: ">=3.6.0 <4.0.0"
   flutter: ">=3.18.0-18.0.pre.54"

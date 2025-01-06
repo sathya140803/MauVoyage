@@ -5,7 +5,7 @@ import 'package:my_application/ui/DetailPage.dart';
 import 'package:my_application/ui/NotificationPage.dart';
 //import 'package:my_application/content/SearchPage.dart';
 import 'package:my_application/cat_Pages/ExplorePage.dart'; // Import the page you want to navigate to
-import 'package:my_application/ui/InterestSelectionScreen.dart';
+
 
 class HomePage extends StatelessWidget {
   final Function(PlaceOfInterest place)
@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
                   height: screenHeight * 0.3,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/top.jpg'),
+                      image: AssetImage('assets/sea1.jpg'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -70,7 +70,7 @@ class HomePage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => InterestSelectionScreen()),
+                                builder: (context) => NotificationPage()),
                           );
                         },
                         icon:
@@ -140,7 +140,7 @@ class HomePage extends StatelessWidget {
 
             // Text Section Below Image
             Padding(
-              padding: EdgeInsets.all(screenWidth * 0.03),
+              padding: EdgeInsets.all(screenWidth * 0.01),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -148,7 +148,7 @@ class HomePage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Featured Places',
+                        'Discover Top Picks',
                         style: TextStyle(
                           fontSize: screenWidth * 0.05,
                           fontWeight: FontWeight.bold,
@@ -156,7 +156,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Most trending places in Mauritius!',
+                        'Experience the Best of Mauritius!',
                         style: TextStyle(
                           fontSize: screenWidth * 0.04,
                           fontWeight: FontWeight.w500,
@@ -164,6 +164,7 @@ class HomePage extends StatelessWidget {
                         ),
                       ),
                     ],
+
                   ),
                   GestureDetector(
                     // onTap: () {
@@ -292,7 +293,7 @@ class HomePage extends StatelessWidget {
 
             // Categories Section
             Padding(
-              padding: EdgeInsets.all(screenWidth * 0.03),
+              padding: EdgeInsets.all(screenWidth * 0.01),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
