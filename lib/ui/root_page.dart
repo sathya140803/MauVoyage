@@ -68,7 +68,7 @@ class _RootPageState extends State<RootPage> {
           SalomonBottomBarItem(
             icon: const Icon(Icons.calendar_today),
             title: const Text('Calendar'),
-            selectedColor: Colors.green,
+            selectedColor: Colors.purple,
           ),
           SalomonBottomBarItem(
             icon: const Icon(Icons.attach_money),
@@ -78,7 +78,7 @@ class _RootPageState extends State<RootPage> {
           SalomonBottomBarItem(
             icon: const Icon(Icons.settings),
             title: const Text('Settings'),
-            selectedColor: Colors.grey,
+            selectedColor: Colors.black54,
           ),
 
         ],

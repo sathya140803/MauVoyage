@@ -3,7 +3,7 @@ import '../content/category_carousel.dart';
 import 'package:my_application/data_model/PlaceOfInterest.dart';
 import 'package:my_application/ui/DetailPage.dart';
 import 'package:my_application/ui/NotificationPage.dart';
-//import 'package:my_application/content/SearchPage.dart';
+import 'package:my_application/content/SearchPage.dart';
 import 'package:my_application/cat_Pages/ExplorePage.dart'; // Import the page you want to navigate to
 
 
@@ -32,7 +32,7 @@ class HomePage extends StatelessWidget {
                   height: screenHeight * 0.3,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/sea1.jpg'),
+                      image: AssetImage('assets/top.jpg'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -110,6 +110,24 @@ class HomePage extends StatelessWidget {
                   left: screenWidth * 0.05,
                   right: screenWidth * 0.05,
                   child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation, secondaryAnimation) => SearchPage(),
+                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                            const begin = Offset(0.0, 1.0); // Start from the bottom
+                            const end = Offset.zero; // End at the top (original position)
+                            const curve = Curves.easeInOut;
+
+                            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                            var offsetAnimation = animation.drive(tween);
+
+                            return SlideTransition(position: offsetAnimation, child: child);
+                          },
+                        ),
+                      );
+                    },
                     child: Container(
                       decoration: BoxDecoration(
                         color: Colors.white,
@@ -122,25 +140,25 @@ class HomePage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: const TextField(
+                      child: TextField(
                         enabled: false,
                         decoration: InputDecoration(
-                          hintText: 'Search...',
-                          prefixIcon: Icon(Icons.search, color: Colors.grey),
+                          hintText: 'Search',
+                          prefixIcon: Icon(Icons.search),
                           border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 10),
                         ),
                       ),
                     ),
                   ),
                 ),
+
+
               ],
             ),
-
             // Text Section Below Image
             Padding(
-              padding: EdgeInsets.all(screenWidth * 0.01),
+              padding: const EdgeInsets.only(left: 12.0),
+              //padding: EdgeInsets.all(screenWidth * 0.01),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -166,19 +184,22 @@ class HomePage extends StatelessWidget {
                     ],
 
                   ),
-                  GestureDetector(
-                    // onTap: () {
-                    //   Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(builder: (context) => const ExplorePage()), // Navigate to another page
-                    //   );
-                    // },
-                    child: Text(
-                      'View all',
-                      style: TextStyle(
-                        fontSize: screenWidth * 0.04,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ExplorePage()),
+                        );
+                      },
+                      child: Text(
+                        'View all',
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.04,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
                       ),
                     ),
                   ),
@@ -293,7 +314,8 @@ class HomePage extends StatelessWidget {
 
             // Categories Section
             Padding(
-              padding: EdgeInsets.all(screenWidth * 0.01),
+              padding: const EdgeInsets.only(left: 12.0),
+              //padding: EdgeInsets.all(screenWidth * 0.01),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -318,19 +340,22 @@ class HomePage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const ExplorePage()),
-                      );
-                    },
-                    child: Text(
-                      'View all',
-                      style: TextStyle(
-                        fontSize: screenWidth * 0.04,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ExplorePage()),
+                        );
+                      },
+                      child: Text(
+                        'View all',
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.04,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
                       ),
                     ),
                   ),

@@ -13,7 +13,7 @@ class CategoryCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 130, // Adjust height as per design
+      height: 150, // Adjust height as per design
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
@@ -27,8 +27,8 @@ class CategoryCarousel extends StatelessWidget {
                 children: [
                   // Icon/Image
                   Container(
-                    width: 120, // Adjust the width here
-                    height: 120, // Adjust the height here
+                    width: 130, // Adjust the width here
+                    height: 140, // Adjust the height here
                     margin: const EdgeInsets.symmetric(horizontal: 4),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(15),
@@ -40,8 +40,8 @@ class CategoryCarousel extends StatelessWidget {
                   ),
                   // Title overlay
                   Container(
-                    width: 120, // Match the width with the image container
-                    height: 120, // Match the height with the image container
+                    width: 130, // Match the width with the image container
+                    height: 140, // Match the height with the image container
                     decoration: BoxDecoration(
                       color: Colors.black45, // Darken the image for better readability
                       borderRadius: BorderRadius.circular(15),
