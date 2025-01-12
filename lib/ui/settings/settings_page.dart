@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:my_application/ui/settings/theme_provider.dart';
+import '../settings/AboutPage.dart';
+import '../settings/NotificationSettingsPage.dart';
+import '../settings/ProfileSettingsPage.dart';
+import '../settings/SecuritySettingsPage.dart';
+import '../settings/LanguageSettingsPage.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -9,31 +16,36 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-  bool _isDarkMode = false;
   final TextEditingController _searchController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(106.0), // Height of app bar
+        preferredSize: const Size.fromHeight(106.0),
         child: AppBar(
-          backgroundColor: Colors.transparent, // Make background transparent
-          elevation: 0, // Remove shadow for a flat look
+          backgroundColor: Colors.transparent,
+          elevation: 0,
           flexibleSpace: Padding(
-            padding: const EdgeInsets.only(bottom: 8.0), // Padding at the bottom
+            padding: const EdgeInsets.only(bottom: 8.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const SizedBox(height: 70.0), // Space above title
+                const SizedBox(height: 70.0),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: const Text(
+                  child: Text(
                     'Settings',
-                    style: TextStyle(color: Colors.black, fontSize: 24.0, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                      color: themeProvider.isDarkMode ? Colors.white : Colors.black, // Conditional text color
+                      fontSize: 24.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
-                const SizedBox(height: 8.0), // Space between title and search bar
+                const SizedBox(height: 8.0),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16.0),
                   child: TextField(
@@ -43,7 +55,7 @@ class _SettingsPageState extends State<SettingsPage> {
                       hintStyle: const TextStyle(color: Colors.grey),
                       filled: true,
                       fillColor: Colors.white,
-                      contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0), // Reduce height
+                      contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(8.0),
                         borderSide: BorderSide.none,
@@ -52,16 +64,16 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
         ),
       ),
-      backgroundColor: Colors.grey[200], // Set background color to a light grey
+      backgroundColor: themeProvider.isDarkMode ? Colors.black : Colors.grey[200],  // Conditional background color
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         children: [
+
           // Account Management Section
           _buildSectionTitle('Account Management'),
           _buildListTile(
@@ -75,8 +87,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 MaterialPageRoute(builder: (context) => ProfileSettingsPage()),
               );
             },
-          ),
-          _buildListTile(
+          ),_buildListTile(
             title: 'Security',
             subtitle: 'Change your password and security settings',
             icon: MaterialCommunityIcons.lock,
@@ -90,22 +101,18 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           const Divider(height: 32.0),
 
-          // Dark Mode Toggle Section
           _buildSectionTitle('Appearance'),
           _buildSwitchTile(
             title: 'Dark Mode',
             subtitle: 'Enable dark mode for better night-time use.',
-            value: _isDarkMode,
-            onChanged: (value) {
-              setState(() {
-                _isDarkMode = value;
-              });
-            },
+            value: themeProvider.isDarkMode,
+            onChanged: (value) => themeProvider.toggleTheme(value),
             icon: MaterialCommunityIcons.theme_light_dark,
           ),
-          const SizedBox(height: 16.0),
 
-          // General Settings Section
+          const Divider(height: 32.0),
+
+          // General Section
           _buildSectionTitle('General'),
           _buildListTile(
             title: 'Notifications',
@@ -124,18 +131,6 @@ class _SettingsPageState extends State<SettingsPage> {
             subtitle: 'Change your app language',
             icon: MaterialCommunityIcons.translate,
             iconColor: Colors.orange,
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => LanguageSettingsPage()),
-              );
-            },
-          ),
-          _buildListTile(
-            title: 'Personalized Features',
-            subtitle: 'Change your app preferences',
-            icon: MaterialCommunityIcons.pretzel,
-            iconColor: Colors.teal,
             onTap: () {
               Navigator.push(
                 context,
@@ -188,7 +183,7 @@ class _SettingsPageState extends State<SettingsPage> {
         leading: _buildIconWithCircle(icon, iconColor),
         title: Text(title),
         subtitle: Text(subtitle),
-        trailing: const Icon(Icons.arrow_forward_ios_outlined, color: Colors.black54),
+        trailing: const Icon(Icons.arrow_forward_ios_outlined, color: Colors.grey),
         onTap: onTap,
       ),
     );
@@ -200,16 +195,15 @@ class _SettingsPageState extends State<SettingsPage> {
       height: 40.0,
       decoration: BoxDecoration(
         color: color,
-        borderRadius: BorderRadius.circular(8.0), // Rounded corners
+        borderRadius: BorderRadius.circular(8.0),
       ),
       child: Icon(
         icon,
         color: Colors.white,
-        size: 24.0, // Adjust size if necessary
+        size: 24.0,
       ),
     );
   }
-
 
   Widget _buildSwitchTile({
     required String title,
@@ -222,7 +216,7 @@ class _SettingsPageState extends State<SettingsPage> {
       margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
       elevation: 2,
       child: ListTile(
-        leading: Icon(icon, color: _isDarkMode ? Colors.white : Colors.blue),
+        leading: Icon(icon, color: value ? Colors.white : Colors.blue),
         title: Text(title),
         subtitle: Text(subtitle),
         trailing: Switch(
@@ -234,53 +228,3 @@ class _SettingsPageState extends State<SettingsPage> {
   }
 }
 
-// Placeholder pages for navigation
-class ProfileSettingsPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Profile Settings')),
-      body: Center(child: const Text('Profile Settings Page')),
-    );
-  }
-}
-
-class SecuritySettingsPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Security Settings')),
-      body: Center(child: const Text('Security Settings Page')),
-    );
-  }
-}
-
-class NotificationSettingsPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Notification Settings')),
-      body: Center(child: const Text('Notification Settings Page')),
-    );
-  }
-}
-
-class LanguageSettingsPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Language Settings')),
-      body: Center(child: const Text('Language Settings Page')),
-    );
-  }
-}
-
-class AboutPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('About')),
-      body: Center(child: const Text('About Page')),
-    );
-  }
-}

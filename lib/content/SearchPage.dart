@@ -134,7 +134,7 @@ class _SearchPageState extends State<SearchPage> {
                   fontSize: 16, // Larger font size
                 ),
               ),
-              trailing: Icon(Icons.arrow_forward, color: Colors.grey),
+              trailing: Icon(Icons.arrow_forward_ios_sharp, color: Colors.black54),
             ),
           ),
         );
