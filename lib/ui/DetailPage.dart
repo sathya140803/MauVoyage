@@ -5,6 +5,9 @@ import 'package:my_application/data_model/Activity.dart'; // Import the Activity
 import 'package:my_application/data_model/NightClubEvent .dart'; // Import the NightClubEvent model
 import 'package:my_application/data_model/PlaceOfInterest.dart'; // Import the PlaceOfInterest model
 import 'package:table_calendar/table_calendar.dart'; // Import the custom_calendar_picker package
+
+
+
 class DetailPage extends StatelessWidget {
   final dynamic item;
 
@@ -18,10 +21,11 @@ class DetailPage extends StatelessWidget {
       itemImageURL: getItemImageURL(),
       itemDescription: getItemDescription(),
       comments: getItemComments(),
-      additionalInfo: getAdditionalInfo(),
+      additionalInfo: getAdditionalInfo(context),  // Pass the context here
       themeColor: getThemeColor(),
     );
   }
+
 
   String getItemName() {
     if (item is Beach) return item.name;
@@ -59,39 +63,45 @@ class DetailPage extends StatelessWidget {
     return [];
   }
 
-  List<Widget> getAdditionalInfo() {
+  List<Widget> getAdditionalInfo(BuildContext context) {
+    // Get the current theme data
+    final textColor = Theme.of(context).brightness == Brightness.dark
+        ? Colors.white
+        : Colors.black54;
+
     if (item is Activity) {
       return [
-        Text('Price: ${item.price}', style: const TextStyle(fontSize: 16, color: Colors.black54)),
-        Text('Duration: ${item.duration}', style: const TextStyle(fontSize: 16, color: Colors.black54)),
+        Text('Price: ${item.price}', style: TextStyle(fontSize: 16, color: textColor)),
+        Text('Duration: ${item.duration}', style: TextStyle(fontSize: 16, color: textColor)),
       ];
     }
     if (item is Beach) {
       return [
-        Text('EntryFee: ${item.entryFee}', style: const TextStyle(fontSize: 16, color: Colors.black54)),
-        Text('OpeningHour: ${item.openingHours}', style: const TextStyle(fontSize: 16, color: Colors.black54)),
+        Text('EntryFee: ${item.entryFee}', style: TextStyle(fontSize: 16, color: textColor)),
+        Text('OpeningHour: ${item.openingHours}', style: TextStyle(fontSize: 16, color: textColor)),
       ];
     }
     if (item is NightClubEvent) {
       return [
-        Text('EntryFee: ${item.entryFee}', style: const TextStyle(fontSize: 16, color: Colors.black54)),
-        Text('EventDate: ${item.eventDate}', style: const TextStyle(fontSize: 16, color: Colors.black54)),
+        Text('EntryFee: ${item.entryFee}', style: TextStyle(fontSize: 16, color: textColor)),
+        Text('EventDate: ${item.eventDate}', style: TextStyle(fontSize: 16, color: textColor)),
       ];
     }
     if (item is Forest) {
       return [
-        Text('EntryFee: ${item.entryFee}', style: const TextStyle(fontSize: 16, color: Colors.black54)),
-        Text('OpeningHours: ${item.openingHours}', style: const TextStyle(fontSize: 16, color: Colors.black54)),
+        Text('EntryFee: ${item.entryFee}', style: TextStyle(fontSize: 16, color: textColor)),
+        Text('OpeningHours: ${item.openingHours}', style: TextStyle(fontSize: 16, color: textColor)),
       ];
     }
     if (item is PlaceOfInterest) {
       return [
-        Text('EntryFee: ${item.entryFee}', style: const TextStyle(fontSize: 16, color: Colors.black54)),
-        Text('OpeningHours: ${item.openingHours}', style: const TextStyle(fontSize: 16, color: Colors.black54)),
+        Text('EntryFee: ${item.entryFee}', style: TextStyle(fontSize: 16, color: textColor)),
+        Text('OpeningHours: ${item.openingHours}', style: TextStyle(fontSize: 16, color: textColor)),
       ];
     }
     return [];
   }
+
 
   Color getThemeColor() {
     if (item is Beach) return Colors.blueAccent;
@@ -126,9 +136,13 @@ class CommonDetailLayout extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
+    Color textColor = isDarkMode ? Colors.white : Colors.black;
+    Color backgroundColor = isDarkMode ? Colors.black : Colors.white;
 
     List<String> commenterNames = ['Dhavish_69😎🔥', 'Gina_23❤️'];
     return Scaffold(
+      backgroundColor: backgroundColor,
       body: Stack(
         children: [
           Positioned(
@@ -144,9 +158,9 @@ class CommonDetailLayout extends StatelessWidget {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.only(
+              decoration: BoxDecoration(
+                color: backgroundColor,
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(24),
                   topRight: Radius.circular(24),
                 ),
@@ -169,21 +183,22 @@ class CommonDetailLayout extends StatelessWidget {
                       children: [
                         Text(
                           itemName,
-                          style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold, color: textColor),
                         ),
                         const SizedBox(height: 8),
                         Text(
                           itemDescription,
-                          style: const TextStyle(fontSize: 16, color: Colors.black87),
+                          style: TextStyle(fontSize: 16, color: textColor),
                         ),
                         const SizedBox(height: 16),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            // Get Location Button
                             Column(
                               children: [
                                 CircleAvatar(
-                                  backgroundColor: Colors.teal,
+                                  backgroundColor: themeColor,
                                   radius: 24,
                                   child: IconButton(
                                     icon: const Icon(Icons.location_on, color: Colors.white),
@@ -193,14 +208,15 @@ class CommonDetailLayout extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 8),
-                                const Text('Get Location'),
+                                Text('Get Location', style: TextStyle(color: textColor)),
                               ],
                             ),
                             const SizedBox(width: 20),
+                            // Book Button
                             Column(
                               children: [
                                 CircleAvatar(
-                                  backgroundColor: Colors.teal,
+                                  backgroundColor: themeColor,
                                   radius: 24,
                                   child: IconButton(
                                     icon: const Icon(Icons.book, color: Colors.white),
@@ -210,14 +226,14 @@ class CommonDetailLayout extends StatelessWidget {
                                         isScrollControlled: true,
                                         builder: (BuildContext context) {
                                           return Container(
-                                            height: size.height * 0.6, // Set to half screen
+                                            height: size.height * 0.6,
                                             child: TableCalendar(
                                               focusedDay: DateTime.now(),
                                               firstDay: DateTime.utc(2020, 01, 01),
                                               lastDay: DateTime.utc(2030, 12, 31),
                                               onDaySelected: (selectedDay, focusedDay) {
                                                 // Perform booking logic here
-                                                Navigator.pop(context); // Close the calendar after selection
+                                                Navigator.pop(context);
                                               },
                                             ),
                                           );
@@ -227,14 +243,15 @@ class CommonDetailLayout extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 8),
-                                const Text('Book'),
+                                Text('Book', style: TextStyle(color: textColor)),
                               ],
                             ),
                             const SizedBox(width: 20),
+                            // Favorite Button
                             Column(
                               children: [
                                 CircleAvatar(
-                                  backgroundColor: Colors.teal,
+                                  backgroundColor: themeColor,
                                   radius: 24,
                                   child: IconButton(
                                     icon: const Icon(Icons.favorite_border, color: Colors.white),
@@ -244,24 +261,25 @@ class CommonDetailLayout extends StatelessWidget {
                                   ),
                                 ),
                                 const SizedBox(height: 8),
-                                const Text('Favorite'),
+                                Text('Favorite', style: TextStyle(color: textColor)),
                               ],
                             ),
                             const SizedBox(width: 20),
+                            // Share Button
                             Column(
                               children: [
                                 CircleAvatar(
-                                  backgroundColor: Colors.teal,
+                                  backgroundColor: themeColor,
                                   radius: 24,
                                   child: IconButton(
                                     icon: const Icon(Icons.share, color: Colors.white),
                                     onPressed: () {
-                                      // Implement favoriting functionality
+                                      // Implement share functionality
                                     },
                                   ),
                                 ),
                                 const SizedBox(height: 8),
-                                const Text('Share'),
+                                Text('Share', style: TextStyle(color: textColor)),
                               ],
                             ),
                           ],
@@ -279,7 +297,7 @@ class CommonDetailLayout extends StatelessWidget {
                             children: [
                               Text(
                                 'Rating: ${item.rating} ',
-                                style: const TextStyle(fontSize: 16, color: Colors.black54),
+                                style: TextStyle(fontSize: 16, color: textColor),
                               ),
                               Row(
                                 children: List.generate(1, (index) {
@@ -296,7 +314,7 @@ class CommonDetailLayout extends StatelessWidget {
                           const SizedBox(height: 16),
                           Text(
                             'What does people say:',
-                            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                            style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold, color: textColor),
                           ),
                           const SizedBox(height: 8),
                           ...comments.asMap().entries.map((entry) {
@@ -322,7 +340,7 @@ class CommonDetailLayout extends StatelessWidget {
                                     children: [
                                       Text(
                                         commenterNames[index],
-                                        style: const TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                                        style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: textColor),
                                       ),
                                       SizedBox(
                                         width: MediaQuery.of(context).size.width * 0.75,
@@ -330,7 +348,7 @@ class CommonDetailLayout extends StatelessWidget {
                                           comment,
                                           maxLines: 4,
                                           overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(fontSize: 16, color: Colors.black54),
+                                          style: TextStyle(fontSize: 16, color: textColor),
                                         ),
                                       ),
                                     ],

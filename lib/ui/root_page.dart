@@ -3,7 +3,7 @@ import 'package:my_application/data_model/PlaceOfInterest.dart';
 import 'home_page.dart';
 import 'favourite_page.dart';
 import 'calendar_page.dart';
-import 'settings_page.dart';
+import 'settings/settings_page.dart';
 import 'currency_converter_page.dart'; // Import the new page
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
@@ -78,7 +78,7 @@ class _RootPageState extends State<RootPage> {
           SalomonBottomBarItem(
             icon: const Icon(Icons.settings),
             title: const Text('Settings'),
-            selectedColor: Colors.black54,
+            selectedColor: Colors.green,
           ),
 
         ],

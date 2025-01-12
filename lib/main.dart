@@ -1,15 +1,20 @@
-
 import 'package:flutter/material.dart';
-import 'content//splash_screen.dart'; // Import the SplashScreen
+import 'package:provider/provider.dart';
+import 'package:my_application/ui/settings/theme_provider.dart'; // Import the ThemeProvider
+import 'content/splash_screen.dart'; // Import the SplashScreen
 import 'ui/root_page.dart';
-import 'cat_Pages/NightClubsPage.dart'; // Import the NightClubsPage
-import 'cat_Pages/ForestsPage.dart'; // Import the ForestsPage
-import 'cat_Pages/BeachesPage.dart'; // Import the BeachesPage
-import 'cat_Pages/ActivitiesPage.dart'; // Import the ActivitiesPage
-
+import 'cat_Pages/NightClubsPage.dart';
+import 'cat_Pages/ForestsPage.dart';
+import 'cat_Pages/BeachesPage.dart';
+import 'cat_Pages/ActivitiesPage.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => ThemeProvider(),
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -17,13 +22,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'myapp',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const SplashScreen(), // Use the SplashScreen from the new file
+      themeMode: themeProvider.themeMode, // Use themeMode from ThemeProvider
+      theme: MyThemes.lightTheme,        // Light theme
+      darkTheme: MyThemes.darkTheme,     // Dark theme
+      home: const RootPage(),
       routes: {
         '/nightclubs': (context) => NightClubsPage(),
         '/forests': (context) => ForestsPage(),

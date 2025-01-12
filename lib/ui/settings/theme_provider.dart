@@ -17,8 +17,8 @@ class MyThemes {
   static final darkTheme = ThemeData(
     brightness: Brightness.dark,
     primaryColor: Colors.black,
-    scaffoldBackgroundColor: Colors.grey[900],
-    cardColor: Colors.grey[850],
+    scaffoldBackgroundColor: Colors.black,
+    cardColor: Colors.grey,
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.grey[850],
       elevation: 0,
@@ -32,7 +32,7 @@ class MyThemes {
   static final lightTheme = ThemeData(
     brightness: Brightness.light,
     primaryColor: Colors.blue,
-    scaffoldBackgroundColor: Colors.grey[200],
+    scaffoldBackgroundColor: Colors.white,
     cardColor: Colors.white,
     appBarTheme: const AppBarTheme(
       backgroundColor: Colors.transparent,

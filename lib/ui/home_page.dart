@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
-import '../content/category_carousel.dart';
+import 'package:provider/provider.dart';
 import 'package:my_application/data_model/PlaceOfInterest.dart';
-import 'package:my_application/ui/DetailPage.dart';
 import 'package:my_application/ui/NotificationPage.dart';
 import 'package:my_application/content/SearchPage.dart';
-import 'package:my_application/cat_Pages/ExplorePage.dart'; // Import the page you want to navigate to
+import 'package:my_application/cat_Pages/ExplorePage.dart';
+import 'package:my_application/ui/settings/theme_provider.dart'; // Import ThemeProvider
+import '../content/category_carousel.dart'; // Import your CategoryCarousel
+import 'package:my_application/ui/DetailPage.dart';
 
 
 class HomePage extends StatelessWidget {
-  final Function(PlaceOfInterest place)
-      onFavoriteToggle; // Callback for managing favorites
+  final Function(PlaceOfInterest place) onFavoriteToggle;
 
   const HomePage({super.key, required this.onFavoriteToggle});
 
@@ -18,6 +19,10 @@ class HomePage extends StatelessWidget {
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     Size size = MediaQuery.of(context).size;
+
+    // Use the ThemeProvider to check if it's dark mode
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    bool isDarkMode = themeProvider.isDarkMode;
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -37,7 +42,6 @@ class HomePage extends StatelessWidget {
                     ),
                   ),
                 ),
-
                 // Text Overlay
                 Positioned(
                   top: screenHeight * 0.05,
@@ -47,7 +51,7 @@ class HomePage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: screenWidth * 0.06,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
+                      color: isDarkMode ? Colors.black : Colors.white, // Adjust text color
                       shadows: [
                         Shadow(
                           blurRadius: 3,
@@ -69,14 +73,11 @@ class HomePage extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => NotificationPage()),
+                            MaterialPageRoute(builder: (context) => NotificationPage()),
                           );
                         },
-                        icon:
-                            const Icon(Icons.notifications, color: Colors.blue),
+                        icon: const Icon(Icons.notifications, color: Colors.blue),
                       ),
-
                       // Badge
                       Positioned(
                         right: 4,
@@ -130,7 +131,7 @@ class HomePage extends StatelessWidget {
                     },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: isDarkMode ? Colors.white : Colors.white, // Adjust background color
                         borderRadius: BorderRadius.circular(8),
                         boxShadow: [
                           BoxShadow(
@@ -143,22 +144,25 @@ class HomePage extends StatelessWidget {
                       child: TextField(
                         enabled: false,
                         decoration: InputDecoration(
-                          hintText: 'Search',
-                          prefixIcon: Icon(Icons.search),
+                          hintText: 'Search...',
+                          hintStyle: TextStyle(
+                            color: isDarkMode ? Colors.black54 : Colors.black54, // Adjust hint text color
+                          ),
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: isDarkMode ? Colors.black54 : Colors.black54, // Adjust icon color
+                          ),
                           border: InputBorder.none,
                         ),
                       ),
                     ),
                   ),
                 ),
-
-
               ],
             ),
             // Text Section Below Image
             Padding(
               padding: const EdgeInsets.only(left: 12.0),
-              //padding: EdgeInsets.all(screenWidth * 0.01),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -170,7 +174,7 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: screenWidth * 0.05,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: isDarkMode ? Colors.white : Colors.black, // Adjust text color
                         ),
                       ),
                       Text(
@@ -178,11 +182,10 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: screenWidth * 0.04,
                           fontWeight: FontWeight.w500,
-                          color: Colors.black54,
+                          color: isDarkMode ? Colors.white70 : Colors.black54, // Adjust text color
                         ),
                       ),
                     ],
-
                   ),
                   Padding(
                     padding: const EdgeInsets.only(right: 8.0),
@@ -315,7 +318,6 @@ class HomePage extends StatelessWidget {
             // Categories Section
             Padding(
               padding: const EdgeInsets.only(left: 12.0),
-              //padding: EdgeInsets.all(screenWidth * 0.01),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -327,7 +329,7 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: screenWidth * 0.05,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: isDarkMode ? Colors.white : Colors.black, // Adjust text color
                         ),
                       ),
                       Text(
@@ -335,7 +337,7 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: screenWidth * 0.04,
                           fontWeight: FontWeight.w500,
-                          color: Colors.black54,
+                          color: isDarkMode ? Colors.white70 : Colors.black54, // Adjust text color
                         ),
                       ),
                     ],
@@ -362,8 +364,9 @@ class HomePage extends StatelessWidget {
                 ],
               ),
             ),
+            // Category Carousel
             Padding(
-              padding: const EdgeInsets.only(left: 5.0), // Add margin to the left
+              padding: const EdgeInsets.only(left: 7.0), // Adjust the value as needed
               child: CategoryCarousel(),
             ),
           ],
