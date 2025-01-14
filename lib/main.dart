@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
       themeMode: themeProvider.themeMode, // Use themeMode from ThemeProvider
       theme: MyThemes.lightTheme,        // Light theme
       darkTheme: MyThemes.darkTheme,     // Dark theme
-      home: const RootPage(),
+      home: const  SplashScreen(),
       routes: {
         '/nightclubs': (context) => NightClubsPage(),
         '/forests': (context) => ForestsPage(),

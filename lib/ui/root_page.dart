@@ -4,8 +4,8 @@ import 'home_page.dart';
 import 'favourite_page.dart';
 import 'calendar_page.dart';
 import 'settings/settings_page.dart';
-import 'currency_converter_page.dart'; // Import the new page
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import 'currency_converter_page.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({Key? key}) : super(key: key);

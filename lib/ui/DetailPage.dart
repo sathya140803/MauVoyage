@@ -368,16 +368,28 @@ class CommonDetailLayout extends StatelessWidget {
           Positioned(
             top: 40,
             left: 19,
-            child: CircleAvatar(
-              backgroundColor: Colors.black.withOpacity(0.5),
-              child: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.white),
-                onPressed: () {
+            child: Material(
+              color: Colors.transparent, // Make sure the material doesn't cover anything
+              child: InkWell(
+                onTap: () {
                   Navigator.pop(context);
                 },
+                borderRadius: BorderRadius.circular(30), // Circular tap area
+                child: CircleAvatar(
+                  backgroundColor: Colors.black.withOpacity(0.5),
+                  radius: 20, // Adjust size of the avatar (larger if needed)
+                  child: const Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.white,
+                    size: 20, // Icon size
+                  ),
+                ),
               ),
             ),
           ),
+
+
+
         ],
       ),
     );

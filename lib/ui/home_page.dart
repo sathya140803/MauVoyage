@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:my_application/data_model/PlaceOfInterest.dart';
 import 'package:my_application/ui/NotificationPage.dart';
 import 'package:my_application/content/SearchPage.dart';
@@ -7,12 +6,45 @@ import 'package:my_application/cat_Pages/ExplorePage.dart';
 import 'package:my_application/ui/settings/theme_provider.dart'; // Import ThemeProvider
 import '../content/category_carousel.dart'; // Import your CategoryCarousel
 import 'package:my_application/ui/DetailPage.dart';
+import 'package:my_application/content/weather_service.dart'; // Import WeatherService
+import 'package:provider/provider.dart';
 
-
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
   final Function(PlaceOfInterest place) onFavoriteToggle;
 
   const HomePage({super.key, required this.onFavoriteToggle});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String _currentWeatherInfo = "Loading weather...";
+  String _currentIconUrl = '';
+  List<Map<String, String>> _forecast = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadWeather();
+  }
+
+  Future<void> _loadWeather() async {
+    final weatherData = await WeatherService.fetchWeatherForecast('Port Louis');
+    if (weatherData['error'] != null) {
+      setState(() {
+        _currentWeatherInfo = weatherData['error']!;
+      });
+    } else {
+      setState(() {
+        _currentWeatherInfo =
+        '${weatherData['current']['temp']}°C, ${weatherData['current']['description']}';
+        _currentIconUrl =
+        'https://openweathermap.org/img/wn/${weatherData['current']['icon']}@2x.png';
+        _forecast = WeatherService.getFormattedForecast(weatherData['forecast']);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,39 +61,34 @@ class HomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // First Section (Stack with background image, text, and search bar)
             Stack(
               children: [
-                // Background Image
                 Container(
                   height: screenHeight * 0.3,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/top.jpg'),
+                      image: AssetImage('assets/sea1.jpg'),
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
-                // Text Overlay
                 Positioned(
                   top: screenHeight * 0.05,
                   left: screenWidth * 0.05,
-                  child: Text(
-                    'Hi Dhavish',
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.06,
-                      fontWeight: FontWeight.bold,
-                      color: isDarkMode ? Colors.black : Colors.white, // Adjust text color
-                      shadows: [
-                        Shadow(
-                          blurRadius: 3,
-                          color: Colors.black.withOpacity(0.6),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Hi Dhavish',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-
                 // Notification Icon
                 Positioned(
                   top: screenHeight * 0.05,
@@ -104,10 +131,61 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-
+                Positioned(
+                  top: screenHeight * 0.1,
+                  left: screenWidth * 0.05,
+                  right: screenWidth * 0.05,
+                  child: Stack(
+                    children: [
+                      // Dark overlay
+                      Container(
+                        width: double.infinity,
+                        height: 100, // Adjust height to match content
+                        decoration: BoxDecoration(
+                          color: Colors.lightBlue.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      // Forecast content
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: _forecast.map((day) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Column(
+                                children: [
+                                  Image.network(
+                                    day['icon']!,
+                                    width: 50,
+                                    height: 50,
+                                  ),
+                                  Text(
+                                    day['date']!,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    day['temp']!,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 30),
                 // Search Bar
                 Positioned(
-                  top: screenHeight * 0.22,
+                  top: screenHeight * 0.23,
                   left: screenWidth * 0.05,
                   right: screenWidth * 0.05,
                   child: GestureDetector(
@@ -120,7 +198,6 @@ class HomePage extends StatelessWidget {
                             const begin = Offset(0.0, 1.0); // Start from the bottom
                             const end = Offset.zero; // End at the top (original position)
                             const curve = Curves.easeInOut;
-
                             var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
                             var offsetAnimation = animation.drive(tween);
 
@@ -162,7 +239,7 @@ class HomePage extends StatelessWidget {
             ),
             // Text Section Below Image
             Padding(
-              padding: const EdgeInsets.only(left: 12.0),
+              padding: const EdgeInsets.only(left: 5.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -229,10 +306,17 @@ class HomePage extends StatelessWidget {
                     },
                     child: Container(
                       width: 200,
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      margin: const EdgeInsets.only(left: 5, right: 3),
                       decoration: BoxDecoration(
                         color: Colors.blue.withOpacity(0.8),
                         borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3), // Shadow color
+                            offset: Offset(0, 4), // Shadow position
+                            blurRadius: 6, // Shadow blur
+                          ),
+                        ],
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
@@ -244,7 +328,6 @@ class HomePage extends StatelessWidget {
                                 fit: BoxFit.cover,
                               ),
                             ),
-
                             // Heart Icon
                             Positioned(
                               top: 10,
@@ -263,7 +346,6 @@ class HomePage extends StatelessWidget {
                                 ),
                               ),
                             ),
-
                             // Overlay with Place Details
                             Positioned(
                               bottom: 10,
@@ -291,14 +373,12 @@ class HomePage extends StatelessWidget {
                                     Row(
                                       children: [
                                         Icon(Icons.star,
-                                            color: Colors.yellow[700],
-                                            size: 16),
+                                            color: Colors.yellow[700], size: 16),
                                         const SizedBox(width: 5),
                                         Text(
                                           place.rating.toString(),
                                           style: const TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.white),
+                                              fontSize: 16, color: Colors.white),
                                         ),
                                       ],
                                     ),
@@ -314,10 +394,9 @@ class HomePage extends StatelessWidget {
                 },
               ),
             ),
-
             // Categories Section
             Padding(
-              padding: const EdgeInsets.only(left: 12.0),
+              padding: const EdgeInsets.only(left: 7.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -366,7 +445,7 @@ class HomePage extends StatelessWidget {
             ),
             // Category Carousel
             Padding(
-              padding: const EdgeInsets.only(left: 7.0), // Adjust the value as needed
+              padding: const EdgeInsets.only(left: 1.0), // Adjust the value as needed
               child: CategoryCarousel(),
             ),
           ],
