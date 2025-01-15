@@ -24,7 +24,7 @@ class _SettingsPageState extends State<SettingsPage> {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(106.0),
+        preferredSize: const Size.fromHeight(110.0),
         child: AppBar(
           backgroundColor: Colors.transparent,
           elevation: 0,

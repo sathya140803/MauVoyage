@@ -64,10 +64,10 @@ class _HomePageState extends State<HomePage> {
             Stack(
               children: [
                 Container(
-                  height: screenHeight * 0.3,
+                  height: screenHeight * 0.311,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/sea1.jpg'),
+                      image: AssetImage('assets/top.jpg'),
                       fit: BoxFit.cover,
                     ),
                   ),

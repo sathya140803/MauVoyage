@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_application/ui/InterestSelectionScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:my_application/ui/settings/theme_provider.dart'; // Import the ThemeProvider
 import 'content/splash_screen.dart'; // Import the SplashScreen
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
       themeMode: themeProvider.themeMode, // Use themeMode from ThemeProvider
       theme: MyThemes.lightTheme,        // Light theme
       darkTheme: MyThemes.darkTheme,     // Dark theme
-      home: const  SplashScreen(),
+      home:  RootPage(),
       routes: {
         '/nightclubs': (context) => NightClubsPage(),
         '/forests': (context) => ForestsPage(),
