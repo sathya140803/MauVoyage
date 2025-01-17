@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+
 class CategoryCarousel extends StatelessWidget {
   final List<Map<String, String>> categories = [
     {'title': 'Beaches', 'image': 'assets/cat3.jpg', 'route': '/beaches'},
     {'title': 'Forests', 'image': 'assets/cat2.jpg', 'route': '/forests'},
     {'title': 'Night Clubs', 'image': 'assets/cat1.jpg', 'route': '/nightclubs'},
     {'title': 'Activities', 'image': 'assets/cat4.jpg', 'route': '/activities'},
-
   ];
 
-   CategoryCarousel({super.key});
+  CategoryCarousel({super.key});
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 150, // Adjust height as per design
+      height: 145, // Adjust height as per design
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: Row(
@@ -36,6 +36,13 @@ class CategoryCarousel extends StatelessWidget {
                         image: AssetImage(category['image']!),
                         fit: BoxFit.cover,
                       ),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.3), // Shadow color
+                          offset: Offset(0, 4), // Shadow position
+                          blurRadius: 8, // Shadow blur
+                        ),
+                      ],
                     ),
                   ),
                   // Title overlay

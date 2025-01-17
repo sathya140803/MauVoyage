@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen>
     );
 
     // Navigate to the next page after delay
-    Future.delayed(const Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 5), () {
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
           pageBuilder: (_, __, ___) => OnboardingScreen(),
@@ -56,7 +56,8 @@ class _SplashScreenState extends State<SplashScreen>
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.redAccent, Colors.blueAccent,Colors.yellowAccent,Colors.greenAccent],
+            //colors: [Colors.redAccent, Colors.blueAccent,Colors.yellowAccent,Colors.greenAccent],
+            colors: [Colors.purpleAccent, Colors.blueAccent],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),

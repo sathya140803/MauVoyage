@@ -34,6 +34,7 @@ dependencies:
   flutter:
     sdk: flutter
   http: ^1.2.2
+  weather_icons: ^3.0.0
   provider: ^6.1.2
   flutter_vector_icons: ^2.0.0
   number_pad_keyboard: ^0.0.5
@@ -41,6 +42,8 @@ dependencies:
   animated_text_kit: ^4.2.2
   lottie: ^2.3.2
   salomon_bottom_bar: ^3.3.2
+
+
 
 
 
@@ -96,7 +99,6 @@ flutter:
     - assets/maconde.jpg
     - assets/78.jpg
     - assets/hiking.jpg
-    - assets/sea1.jpg
     - assets/picicon/dhav.png
     - assets/location.png
     - assets/picicon/gina.jpg

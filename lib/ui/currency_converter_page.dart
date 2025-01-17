@@ -151,7 +151,7 @@ class _CurrencyConverterPageState extends State<CurrencyConverterPage> {
                       controller: _amountController,
                       keyboardType: TextInputType.number,
                       decoration: InputDecoration(
-                       // labelText: 'Amount',
+                        // labelText: 'Amount',
                         labelStyle: TextStyle(color: Colors.white),
                         filled: true,
                         fillColor: Colors.red[50],
@@ -230,3 +230,4 @@ class _CurrencyConverterPageState extends State<CurrencyConverterPage> {
     super.dispose();
   }
 }
+

@@ -70,7 +70,7 @@ class _InterestSelectionScreenState extends State<InterestSelectionScreen> {
     return Scaffold(
       backgroundColor: Colors.black,
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(13.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
