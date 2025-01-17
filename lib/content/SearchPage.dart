@@ -51,7 +51,8 @@ class _SearchPageState extends State<SearchPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text('Filter by Category', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              Text('Filter by Category',
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               ListTile(
                 leading: Icon(Icons.nature),
                 title: Text('Forest'),
@@ -78,7 +79,7 @@ class _SearchPageState extends State<SearchPage> {
               ),
               ListTile(
                 leading: Icon(Icons.nightlife),
-                title: Text('Nightlife'),
+                title: Text('Nightlimfe'),
                 onTap: () {
                   // Implement filtering logic here
                   Navigator.pop(context);
@@ -138,21 +139,27 @@ class _SearchPageState extends State<SearchPage> {
                     onTap: () {
                       setState(() {
                         selectedCategory = categories[index];
-                        filteredResults = _filterResultsByCategory(selectedCategory);
+                        filteredResults =
+                            _filterResultsByCategory(selectedCategory);
                       });
                     },
                     child: Container(
                       margin: EdgeInsets.symmetric(horizontal: 8.0),
-                      padding: EdgeInsets.symmetric(horizontal: 14.0, vertical: 8.0),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 14.0, vertical: 8.0),
                       decoration: BoxDecoration(
-                        color: selectedCategory == categories[index] ? Colors.blue : Colors.grey[300],
+                        color: selectedCategory == categories[index]
+                            ? Colors.blue
+                            : Colors.grey[300],
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                       child: Center(
                         child: Text(
                           categories[index],
                           style: TextStyle(
-                            color: selectedCategory == categories[index] ? Colors.white : Colors.black87,
+                            color: selectedCategory == categories[index]
+                                ? Colors.white
+                                : Colors.black87,
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
                           ),
@@ -189,7 +196,8 @@ class _SearchPageState extends State<SearchPage> {
                         hintStyle: TextStyle(color: Colors.grey),
                         border: InputBorder.none,
                         prefixIcon: Icon(Icons.search, color: Colors.grey),
-                        contentPadding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+                        contentPadding: EdgeInsets.symmetric(
+                            vertical: 10.0, horizontal: 15.0),
                       ),
                       onChanged: (value) {
                         setState(() {
@@ -246,11 +254,16 @@ class _SearchPageState extends State<SearchPage> {
   // Perform search on all categories
   List<dynamic> _performSearch(String query) {
     return [
-      ...Forest.forestList.where((forest) => forest.name.toLowerCase().contains(query.toLowerCase())),
-      ...Activity.activityList.where((activity) => activity.name.toLowerCase().contains(query.toLowerCase())),
-      ...Beach.beachList.where((beach) => beach.name.toLowerCase().contains(query.toLowerCase())),
-      ...PlaceOfInterest.placeList.where((poi) => poi.name.toLowerCase().contains(query.toLowerCase())),
-      ...NightClubEvent.nightClubList.where((event) => event.name.toLowerCase().contains(query.toLowerCase())),
+      ...Forest.forestList.where(
+          (forest) => forest.name.toLowerCase().contains(query.toLowerCase())),
+      ...Activity.activityList.where((activity) =>
+          activity.name.toLowerCase().contains(query.toLowerCase())),
+      ...Beach.beachList.where(
+          (beach) => beach.name.toLowerCase().contains(query.toLowerCase())),
+      ...PlaceOfInterest.placeList
+          .where((poi) => poi.name.toLowerCase().contains(query.toLowerCase())),
+      ...NightClubEvent.nightClubList.where(
+          (event) => event.name.toLowerCase().contains(query.toLowerCase())),
     ];
   }
 
@@ -320,11 +333,13 @@ class _SearchPageState extends State<SearchPage> {
           },
           child: Card(
             margin: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0)),
             elevation: 4.0, // Increased elevation for better separation
             child: ListTile(
               contentPadding: EdgeInsets.all(8.0),
-              title: Text(item.name, style: TextStyle(fontWeight: FontWeight.bold)),
+              title: Text(item.name,
+                  style: TextStyle(fontWeight: FontWeight.bold)),
               subtitle: Text(item.description),
               leading: ClipOval(
                 child: Image.asset(
