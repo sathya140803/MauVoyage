@@ -128,6 +128,9 @@ flutter:
     - assets/images/food1.jpg
     - assets/images/food3.jpg
     - assets/images/food2.jpg
+    - assets/images/seaside.jpg
+    - assets/images/lizard.jpg
+    - assets/images/water.jpg
     - assets/images/riverenoir.jpg
     - assets/animation/anim1.json
     - assets/animation/anim2.json
