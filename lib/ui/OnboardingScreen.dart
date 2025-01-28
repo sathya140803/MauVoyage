@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:my_application/ui/InterestSelectionScreen.dart';
+import 'package:my_application/acc_management/register_page.dart';
+
 class OnboardingScreen extends StatefulWidget {
   @override
   _OnboardingScreenState createState() => _OnboardingScreenState();
@@ -236,7 +238,8 @@ class BottomNavigation extends StatelessWidget {
                 Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => InterestSelectionScreen(),
+                    builder: (context) => SignUpPage(),
+                        //InterestSelectionScreen(),
                   ),
                 );
               },

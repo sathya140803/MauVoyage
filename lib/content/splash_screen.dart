@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:lottie/lottie.dart';
 import 'package:my_application/ui/OnboardingScreen.dart';
+
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
 
@@ -94,7 +95,7 @@ class _SplashScreenState extends State<SplashScreen>
                   ),
                 ),
                 SizedBox(height: size.height * 0.01),
-                // Typer animation for "Mauritius"
+                // Type animation for "Mauritius"
                 DefaultTextStyle(
                   style: TextStyle(
                     fontSize: size.width * 0.08,
