@@ -11,6 +11,7 @@ class CurrencyConverterPage extends StatefulWidget {
 
 class _CurrencyConverterPageState extends State<CurrencyConverterPage> {
   final TextEditingController _amountController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();  // FocusNode to manage focus
   double _convertedAmount = 0.0;
   String _fromCurrency = 'USD';
   String _toCurrency = 'MUR';
@@ -149,9 +150,9 @@ class _CurrencyConverterPageState extends State<CurrencyConverterPage> {
                   Expanded(
                     child: TextField(
                       controller: _amountController,
-                      keyboardType: TextInputType.number,
+                      focusNode: _focusNode,  // Attach the focus node
+                      keyboardType: TextInputType.none,  // Disable default keyboard
                       decoration: InputDecoration(
-                        // labelText: 'Amount',
                         labelStyle: TextStyle(color: Colors.white),
                         filled: true,
                         fillColor: Colors.red[50],
@@ -175,7 +176,6 @@ class _CurrencyConverterPageState extends State<CurrencyConverterPage> {
                   ],
                 ),
               ),
-
               const SizedBox(height: 10),
               // Output and Dropdown for destination currency
               Row(
@@ -227,7 +227,7 @@ class _CurrencyConverterPageState extends State<CurrencyConverterPage> {
   @override
   void dispose() {
     _amountController.dispose();
+    _focusNode.dispose();  // Dispose of the focus node
     super.dispose();
   }
 }
-

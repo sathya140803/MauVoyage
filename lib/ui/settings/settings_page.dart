@@ -109,6 +109,17 @@ class _SettingsPageState extends State<SettingsPage> {
             onChanged: (value) => themeProvider.toggleTheme(value),
             icon: MaterialCommunityIcons.theme_light_dark,
           ),
+          _buildSwitchTile(
+            title: 'Emergency Button',
+            subtitle: 'Enable the emergency button to appear on the root page.',
+
+            value: themeProvider.isEmergencyButtonEnabled,
+            onChanged: (value) {
+              themeProvider.toggleEmergencyButton(value);
+            },
+            icon: Feather.alert_circle,
+          ),
+
 
           const Divider(height: 32.0),
 

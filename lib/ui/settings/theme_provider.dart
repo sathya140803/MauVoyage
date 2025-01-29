@@ -2,13 +2,18 @@ import 'package:flutter/material.dart';
 
 class ThemeProvider extends ChangeNotifier {
   ThemeMode _themeMode = ThemeMode.light;
-
+  bool _emergencyButtonEnabled = false;
   ThemeMode get themeMode => _themeMode;
 
   bool get isDarkMode => _themeMode == ThemeMode.dark;
+ bool get isEmergencyButtonEnabled => _emergencyButtonEnabled;
 
   void toggleTheme(bool isDarkMode) {
     _themeMode = isDarkMode ? ThemeMode.dark : ThemeMode.light;
+    notifyListeners();
+  }
+  void toggleEmergencyButton(bool isEnabled) {
+    _emergencyButtonEnabled = isEnabled;
     notifyListeners();
   }
 }
