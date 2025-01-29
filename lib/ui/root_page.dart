@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:my_application/data_model/PlaceOfInterest.dart';
+import 'package:provider/provider.dart';
+import 'package:my_application/ui/settings/theme_provider.dart';
+import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
+import '../data_model/PlaceOfInterest.dart';
 import 'home_page.dart';
 import 'favourite_page.dart';
 import 'calendar_page.dart';
 import 'settings/settings_page.dart';
-import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 import 'currency_converter_page.dart';
+import 'EmergencyPage.dart';  // Import the EmergencyPage
 
 class RootPage extends StatefulWidget {
   const RootPage({Key? key}) : super(key: key);
@@ -20,14 +23,11 @@ class _RootPageState extends State<RootPage> {
 
   List<Widget> _widgetOptions() {
     return [
-      HomePage(
-        onFavoriteToggle: _updateFavorites,
-      ),
+      HomePage(onFavoriteToggle: _updateFavorites),
       FavouritePage(favoritedPlaces: favorites),
       CalenderPage(),
       CurrencyConverterPage(),
       SettingsPage(),
-       // Add the new page
     ];
   }
 
@@ -49,8 +49,33 @@ class _RootPageState extends State<RootPage> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
-      body: _widgetOptions()[_currentIndex],
+      body: Stack(
+        children: [
+          _widgetOptions()[_currentIndex],
+          // Emergency Button
+          Visibility(
+            visible: themeProvider.isEmergencyButtonEnabled,
+            child: Positioned(
+              bottom: 20,
+              right: 20,
+              child: FloatingActionButton(
+                backgroundColor: Colors.red,
+                onPressed: () {
+                  // Navigate to the EmergencyPage
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const EmergencyPage()),
+                  );
+                },
+                child: const Icon(Icons.warning, color: Colors.white),
+              ),
+            ),
+          ),
+        ],
+      ),
       bottomNavigationBar: SalomonBottomBar(
         currentIndex: _currentIndex,
         onTap: _onTap,
@@ -80,7 +105,6 @@ class _RootPageState extends State<RootPage> {
             title: const Text('Settings'),
             selectedColor: Colors.green,
           ),
-
         ],
       ),
     );
