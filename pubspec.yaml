@@ -42,6 +42,13 @@ dependencies:
   animated_text_kit: ^4.2.2
   lottie: ^2.3.2
   salomon_bottom_bar: ^3.3.2
+  google_fonts: ^6.2.1
+  firebase_core: ^3.10.0
+  firebase_auth: ^5.4.0
+  cloud_firestore: ^5.6.1
+  image_picker: ^1.1.2
+  firebase_storage: ^12.4.0
+  random_string: ^2.3.1
 
 
 
@@ -139,6 +146,7 @@ flutter:
     - assets/animation/anim5.json
     - assets/animation/anim6.json
     - assets/moris.png
+    - assets/acc_management/login.jpg
 
 
 
@@ -155,11 +163,11 @@ flutter:
   # "family" key with the font family name, and a "fonts" key with a
   # list giving the asset and other descriptors for the font. For
   # example:
-  # fonts:
-  #   - family: Schyler
+  #fonts:
+  #   - family: Poppins
   #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
+  #      - asset: fonts/Poppins-Black.ttf
+  #       - asset: fonts/Schuyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:
