@@ -1,17 +1,50 @@
 import 'package:flutter/material.dart';
-import '../content/category_carousel.dart';
 import 'package:my_application/data_model/PlaceOfInterest.dart';
-import 'package:my_application/ui/DetailPage.dart';
 import 'package:my_application/ui/NotificationPage.dart';
-//import 'package:my_application/content/SearchPage.dart';
-import 'package:my_application/cat_Pages/ExplorePage.dart'; // Import the page you want to navigate to
+import 'package:my_application/content/SearchPage.dart';
+import 'package:my_application/cat_Pages/ExplorePage.dart';
+import 'package:my_application/ui/settings/theme_provider.dart'; // Import ThemeProvider
+import '../content/category_carousel.dart'; // Import your CategoryCarousel
+import 'package:my_application/ui/DetailPage.dart';
+import 'package:my_application/content/weather_service.dart'; // Import WeatherService
+import 'package:provider/provider.dart';
 
-
-class HomePage extends StatelessWidget {
-  final Function(PlaceOfInterest place)
-      onFavoriteToggle; // Callback for managing favorites
+class HomePage extends StatefulWidget {
+  final Function(PlaceOfInterest place) onFavoriteToggle;
 
   const HomePage({super.key, required this.onFavoriteToggle});
+
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  String _currentWeatherInfo = "Loading weather...";
+  String _currentIconUrl = '';
+  List<Map<String, String>> _forecast = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _loadWeather();
+  }
+
+  Future<void> _loadWeather() async {
+    final weatherData = await WeatherService.fetchWeatherForecast('Port Louis');
+    if (weatherData['error'] != null) {
+      setState(() {
+        _currentWeatherInfo = weatherData['error']!;
+      });
+    } else {
+      setState(() {
+        _currentWeatherInfo =
+        '${weatherData['current']['temp']}°C, ${weatherData['current']['description']}';
+        _currentIconUrl =
+        'https://openweathermap.org/img/wn/${weatherData['current']['icon']}@2x.png';
+        _forecast = WeatherService.getFormattedForecast(weatherData['forecast']);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,45 +52,43 @@ class HomePage extends StatelessWidget {
     double screenHeight = MediaQuery.of(context).size.height;
     Size size = MediaQuery.of(context).size;
 
+    // Use the ThemeProvider to check if it's dark mode
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    bool isDarkMode = themeProvider.isDarkMode;
+
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // First Section (Stack with background image, text, and search bar)
             Stack(
               children: [
-                // Background Image
                 Container(
-                  height: screenHeight * 0.3,
+                  height: screenHeight * 0.311,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/sea1.jpg'),
+                      image: AssetImage('assets/top.jpg'),
                       fit: BoxFit.cover,
                     ),
                   ),
                 ),
-
-                // Text Overlay
                 Positioned(
                   top: screenHeight * 0.05,
                   left: screenWidth * 0.05,
-                  child: Text(
-                    'Hi Dhavish',
-                    style: TextStyle(
-                      fontSize: screenWidth * 0.06,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                      shadows: [
-                        Shadow(
-                          blurRadius: 3,
-                          color: Colors.black.withOpacity(0.6),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Hi Dhavish',
+                        style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-
                 // Notification Icon
                 Positioned(
                   top: screenHeight * 0.05,
@@ -69,14 +100,11 @@ class HomePage extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => NotificationPage()),
+                            MaterialPageRoute(builder: (context) => NotificationPage()),
                           );
                         },
-                        icon:
-                            const Icon(Icons.notifications, color: Colors.blue),
+                        icon: const Icon(Icons.notifications, color: Colors.blue),
                       ),
-
                       // Badge
                       Positioned(
                         right: 4,
@@ -103,16 +131,84 @@ class HomePage extends StatelessWidget {
                     ],
                   ),
                 ),
-
+                Positioned(
+                  top: screenHeight * 0.1,
+                  left: screenWidth * 0.05,
+                  right: screenWidth * 0.05,
+                  child: Stack(
+                    children: [
+                      // Dark overlay
+                      Container(
+                        width: double.infinity,
+                        height: 100, // Adjust height to match content
+                        decoration: BoxDecoration(
+                          color: Colors.lightBlue.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      // Forecast content
+                      SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: _forecast.map((day) {
+                            return Padding(
+                              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                              child: Column(
+                                children: [
+                                  Image.network(
+                                    day['icon']!,
+                                    width: 50,
+                                    height: 50,
+                                  ),
+                                  Text(
+                                    day['date']!,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Text(
+                                    day['temp']!,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 30),
                 // Search Bar
                 Positioned(
-                  top: screenHeight * 0.22,
+                  top: screenHeight * 0.23,
                   left: screenWidth * 0.05,
                   right: screenWidth * 0.05,
                   child: GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        PageRouteBuilder(
+                          pageBuilder: (context, animation, secondaryAnimation) => SearchPage(),
+                          transitionsBuilder: (context, animation, secondaryAnimation, child) {
+                            const begin = Offset(0.0, 1.0); // Start from the bottom
+                            const end = Offset.zero; // End at the top (original position)
+                            const curve = Curves.easeInOut;
+                            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+                            var offsetAnimation = animation.drive(tween);
+
+                            return SlideTransition(position: offsetAnimation, child: child);
+                          },
+                        ),
+                      );
+                    },
                     child: Container(
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: isDarkMode ? Colors.white : Colors.white, // Adjust background color
                         borderRadius: BorderRadius.circular(8),
                         boxShadow: [
                           BoxShadow(
@@ -122,14 +218,18 @@ class HomePage extends StatelessWidget {
                           ),
                         ],
                       ),
-                      child: const TextField(
+                      child: TextField(
                         enabled: false,
                         decoration: InputDecoration(
                           hintText: 'Search...',
-                          prefixIcon: Icon(Icons.search, color: Colors.grey),
+                          hintStyle: TextStyle(
+                            color: isDarkMode ? Colors.black54 : Colors.black54, // Adjust hint text color
+                          ),
+                          prefixIcon: Icon(
+                            Icons.search,
+                            color: isDarkMode ? Colors.black54 : Colors.black54, // Adjust icon color
+                          ),
                           border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(
-                              horizontal: 10, vertical: 10),
                         ),
                       ),
                     ),
@@ -137,10 +237,9 @@ class HomePage extends StatelessWidget {
                 ),
               ],
             ),
-
             // Text Section Below Image
             Padding(
-              padding: EdgeInsets.all(screenWidth * 0.01),
+              padding: const EdgeInsets.only(left: 5.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -152,7 +251,7 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: screenWidth * 0.05,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: isDarkMode ? Colors.white : Colors.black, // Adjust text color
                         ),
                       ),
                       Text(
@@ -160,25 +259,27 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: screenWidth * 0.04,
                           fontWeight: FontWeight.w500,
-                          color: Colors.black54,
+                          color: isDarkMode ? Colors.white70 : Colors.black54, // Adjust text color
                         ),
                       ),
                     ],
-
                   ),
-                  GestureDetector(
-                    // onTap: () {
-                    //   Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(builder: (context) => const ExplorePage()), // Navigate to another page
-                    //   );
-                    // },
-                    child: Text(
-                      'View all',
-                      style: TextStyle(
-                        fontSize: screenWidth * 0.04,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ExplorePage()),
+                        );
+                      },
+                      child: Text(
+                        'View all',
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.04,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
                       ),
                     ),
                   ),
@@ -205,10 +306,17 @@ class HomePage extends StatelessWidget {
                     },
                     child: Container(
                       width: 200,
-                      margin: const EdgeInsets.symmetric(horizontal: 10),
+                      margin: const EdgeInsets.only(left: 5, right: 3),
                       decoration: BoxDecoration(
                         color: Colors.blue.withOpacity(0.8),
                         borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black.withOpacity(0.3), // Shadow color
+                            offset: Offset(0, 4), // Shadow position
+                            blurRadius: 6, // Shadow blur
+                          ),
+                        ],
                       ),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(20),
@@ -220,7 +328,6 @@ class HomePage extends StatelessWidget {
                                 fit: BoxFit.cover,
                               ),
                             ),
-
                             // Heart Icon
                             Positioned(
                               top: 10,
@@ -239,7 +346,6 @@ class HomePage extends StatelessWidget {
                                 ),
                               ),
                             ),
-
                             // Overlay with Place Details
                             Positioned(
                               bottom: 10,
@@ -267,14 +373,12 @@ class HomePage extends StatelessWidget {
                                     Row(
                                       children: [
                                         Icon(Icons.star,
-                                            color: Colors.yellow[700],
-                                            size: 16),
+                                            color: Colors.yellow[700], size: 16),
                                         const SizedBox(width: 5),
                                         Text(
                                           place.rating.toString(),
                                           style: const TextStyle(
-                                              fontSize: 16,
-                                              color: Colors.white),
+                                              fontSize: 16, color: Colors.white),
                                         ),
                                       ],
                                     ),
@@ -290,10 +394,9 @@ class HomePage extends StatelessWidget {
                 },
               ),
             ),
-
             // Categories Section
             Padding(
-              padding: EdgeInsets.all(screenWidth * 0.01),
+              padding: const EdgeInsets.only(left: 7.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -305,7 +408,7 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: screenWidth * 0.05,
                           fontWeight: FontWeight.bold,
-                          color: Colors.black,
+                          color: isDarkMode ? Colors.white : Colors.black, // Adjust text color
                         ),
                       ),
                       Text(
@@ -313,32 +416,36 @@ class HomePage extends StatelessWidget {
                         style: TextStyle(
                           fontSize: screenWidth * 0.04,
                           fontWeight: FontWeight.w500,
-                          color: Colors.black54,
+                          color: isDarkMode ? Colors.white70 : Colors.black54, // Adjust text color
                         ),
                       ),
                     ],
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const ExplorePage()),
-                      );
-                    },
-                    child: Text(
-                      'View all',
-                      style: TextStyle(
-                        fontSize: screenWidth * 0.04,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.blue,
+                  Padding(
+                    padding: const EdgeInsets.only(right: 8.0),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const ExplorePage()),
+                        );
+                      },
+                      child: Text(
+                        'View all',
+                        style: TextStyle(
+                          fontSize: screenWidth * 0.04,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.blue,
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
             ),
+            // Category Carousel
             Padding(
-              padding: const EdgeInsets.only(left: 5.0), // Add margin to the left
+              padding: const EdgeInsets.only(left: 1.0), // Adjust the value as needed
               child: CategoryCarousel(),
             ),
           ],

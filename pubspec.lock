@@ -267,6 +267,7 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+
   flutter_web_plugins:
     dependency: transitive
     description: flutter
@@ -280,6 +281,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.2.1"
+
   http:
     dependency: "direct main"
     description:
@@ -364,10 +366,12 @@ packages:
     dependency: transitive
     description:
       name: intl
+
       sha256: "00f33b908655e606b86d2ade4710a231b802eec6f11e87e4ea3783fd72077a50"
       url: "https://pub.dev"
     source: hosted
     version: "0.20.1"
+
   leak_tracker:
     dependency: transitive
     description:
@@ -432,6 +436,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.15.0"
+
   mime:
     dependency: transitive
     description:
@@ -440,6 +445,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+
   number_pad_keyboard:
     dependency: "direct main"
     description:
@@ -464,6 +470,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.0"
+
   path_provider:
     dependency: transitive
     description:
@@ -536,6 +543,7 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.1"
+
   salomon_bottom_bar:
     dependency: "direct main"
     description:
@@ -601,10 +609,12 @@ packages:
     dependency: "direct main"
     description:
       name: table_calendar
+
       sha256: "0c0c6219878b363a2d5f40c7afb159d845f253d061dc3c822aa0d5fe0f721982"
       url: "https://pub.dev"
     source: hosted
     version: "3.2.0"
+
   term_glyph:
     dependency: transitive
     description:
@@ -645,6 +655,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "14.3.0"
+  weather_icons:
+    dependency: "direct main"
+    description:
+      name: weather_icons
+      sha256: "76bd96fda0b723fba74a35083b6d77313306aae4c0f915636cbb7299b69d3b91"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   web:
     dependency: transitive
     description:

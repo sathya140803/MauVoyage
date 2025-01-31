@@ -1,9 +1,15 @@
 
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
-import 'content//splash_screen.dart'; // Import the SplashScreen
+import 'package:my_application/ui/InterestSelectionScreen.dart';
+import 'package:provider/provider.dart';
+import 'package:my_application/ui/settings/theme_provider.dart'; // Import the ThemeProvider
+import 'content/splash_screen.dart'; // Import the SplashScreen
 import 'ui/root_page.dart';
+
 import 'cat_Pages/NightClubsPage.dart'; // Import the NightClubsPage
 import 'cat_Pages/ForestsPage.dart'; // Import the ForestsPage
 import 'cat_Pages/BeachesPage.dart'; // Import the BeachesPage
@@ -30,6 +36,7 @@ void main() async {
      await Firebase.initializeApp();
     }
   runApp(const MyApp());
+
 }
 
 class MyApp extends StatelessWidget {
@@ -37,17 +44,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'myapp',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home:
-      //ChangePassword(),
-      //ProfileScreen(),
-      //const SignInPage(),
-      SplashScreen(), // Use the SplashScreen from the new file
+
+      themeMode: themeProvider.themeMode, // Use themeMode from ThemeProvider
+      theme: MyThemes.lightTheme,        // Light theme
+      darkTheme: MyThemes.darkTheme,     // Dark theme
+      home:  SplashScreen(),
+
       routes: {
         '/nightclubs': (context) => NightClubsPage(),
         '/forests': (context) => ForestsPage(),

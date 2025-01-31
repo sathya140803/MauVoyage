@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen>
     );
 
     // Navigate to the next page after delay
-    Future.delayed(const Duration(seconds: 10), () {
+    Future.delayed(const Duration(seconds: 5), () {
       Navigator.of(context).pushReplacement(
         PageRouteBuilder(
           pageBuilder: (_, __, ___) => OnboardingScreen(),
@@ -57,8 +57,8 @@ class _SplashScreenState extends State<SplashScreen>
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.blueAccent, Colors.purpleAccent],
-            //colors: [Colors.redAccent, Colors.blueAccent,Colors.yellowAccent,Colors.greenAccent],
+          colors: [Colors.redAccent, Colors.blueAccent,Colors.yellowAccent,Colors.greenAccent],
+
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
@@ -89,7 +89,7 @@ class _SplashScreenState extends State<SplashScreen>
                     'Welcome to',
                     style: TextStyle(
                       fontSize: size.width * 0.06,
-                      color: Colors.white,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -99,7 +99,7 @@ class _SplashScreenState extends State<SplashScreen>
                 DefaultTextStyle(
                   style: TextStyle(
                     fontSize: size.width * 0.08,
-                    color: Colors.white,
+                    color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
                   child: AnimatedTextKit(
@@ -120,7 +120,7 @@ class _SplashScreenState extends State<SplashScreen>
                     'Plan and Book Your Trip With Us',
                     style: TextStyle(
                       fontSize: size.width * 0.05,
-                      color: Colors.white70,
+                      color: Colors.black,
                       fontStyle: FontStyle.italic,
                       fontWeight: FontWeight.w400,
                     ),
