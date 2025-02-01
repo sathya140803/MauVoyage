@@ -7,7 +7,7 @@ class CalenderPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Calendar'),
+        title: const Text('Camendar'),
       ),
       body: Center(
         child: const Text(
