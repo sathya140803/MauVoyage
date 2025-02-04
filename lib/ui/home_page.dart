@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:my_application/data_model/Activity.dart';
+import 'package:my_application/data_model/Beach.dart';
+import 'package:my_application/data_model/Forest.dart';
+import 'package:my_application/data_model/NightClubEvent%20.dart';
 import 'package:my_application/data_model/PlaceOfInterest.dart';
+import 'package:my_application/favourite_manager/favourite_manipulator.dart';
+import 'package:my_application/notification_schedule/notification_controller.dart';
+import 'package:my_application/notification_schedule/schedule_controller.dart';
 import 'package:my_application/ui/NotificationPage.dart';
 import 'package:my_application/content/SearchPage.dart';
 import 'package:my_application/cat_Pages/ExplorePage.dart';
@@ -9,10 +16,18 @@ import 'package:my_application/ui/DetailPage.dart';
 import 'package:my_application/content/weather_service.dart'; // Import WeatherService
 import 'package:provider/provider.dart';
 
-class HomePage extends StatefulWidget {
-  final Function(PlaceOfInterest place) onFavoriteToggle;
+String getItemType(item) {
+  if (item is Beach) return "Beach";
+  if (item is Forest) return "Forest";
+  if (item is Activity) return "Activity";
+  if (item is NightClubEvent) return "NightClubEvent";
+  if (item is PlaceOfInterest) return "PlaceOfInterest";
+  return "";
+}
 
-  const HomePage({super.key, required this.onFavoriteToggle});
+class HomePage extends StatefulWidget {
+
+  const HomePage({super.key});
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -46,11 +61,17 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+
+
   @override
   Widget build(BuildContext context) {
+    showInAppNoti();
+    var notiLen = getCurrentNotificationCount().toString();
     double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
     Size size = MediaQuery.of(context).size;
+
+
 
     // Use the ThemeProvider to check if it's dark mode
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -116,9 +137,9 @@ class _HomePageState extends State<HomePage> {
                             color: Colors.red,
                             borderRadius: BorderRadius.circular(7),
                           ),
-                          child: const Center(
+                          child: Center(
                             child: Text(
-                              '3',
+                              notiLen,
                               style: TextStyle(
                                 fontSize: 10,
                                 fontWeight: FontWeight.bold,
@@ -271,7 +292,7 @@ class _HomePageState extends State<HomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => const ExplorePage()),
-                        );
+                        ).then((_){setState(() {});});
                       },
                       child: Text(
                         'View all',
@@ -302,7 +323,7 @@ class _HomePageState extends State<HomePage> {
                         MaterialPageRoute(
                           builder: (context) => DetailPage(item: place),
                         ),
-                      );
+                      ).then((_){setState(() {});});
                     },
                     child: Container(
                       width: 200,
@@ -339,10 +360,9 @@ class _HomePageState extends State<HomePage> {
                                   color: Colors.black.withOpacity(0.4),
                                   shape: BoxShape.circle,
                                 ),
-                                child: IconButton(
-                                  icon: const Icon(Icons.favorite_border,
-                                      color: Colors.white),
-                                  onPressed: () {},
+                                child: Icon(
+                                  checkIfFavourite(place.id, getItemType(place))? Icons.favorite: Icons.favorite_border,
+                                  color: Colors.white
                                 ),
                               ),
                             ),
@@ -428,7 +448,7 @@ class _HomePageState extends State<HomePage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(builder: (context) => const ExplorePage()),
-                        );
+                        ).then((_){setState(() {});});
                       },
                       child: Text(
                         'View all',

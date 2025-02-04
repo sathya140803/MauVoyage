@@ -4,20 +4,26 @@ import 'package:my_application/data_model/Forest.dart'; // Import the Forest mod
 import 'package:my_application/data_model/Activity.dart'; // Import the Activity model
 import 'package:my_application/data_model/NightClubEvent .dart'; // Import the NightClubEvent model
 import 'package:my_application/data_model/PlaceOfInterest.dart'; // Import the PlaceOfInterest model
+import 'package:my_application/favourite_manager/favourite_manipulator.dart';
+import 'package:my_application/notification_schedule/schedule_controller.dart';
 import 'package:table_calendar/table_calendar.dart'; // Import the custom_calendar_picker package
 
+int getDays(DateTime to){
+  var cur = DateTime(DateTime.now().year, DateTime.now().month, DateTime.now().day);
+  var to2 = DateTime(to.year, to.month, to.day);
+  return (to2.difference(cur).inHours/24).round() - 1;
+}
 
 
 class DetailPage extends StatelessWidget {
   final dynamic item;
-
   const DetailPage({super.key, required this.item});
-
   @override
   Widget build(BuildContext context) {
     return CommonDetailLayout(
       item: item,
       itemName: getItemName(),
+      itemType: getItemType(),
       itemImageURL: getItemImageURL(),
       itemDescription: getItemDescription(),
       comments: getItemComments(),
@@ -102,6 +108,15 @@ class DetailPage extends StatelessWidget {
     return [];
   }
 
+  String getItemType() {
+    if (item is Beach) return "Beach";
+    if (item is Forest) return "Forest";
+    if (item is Activity) return "Activity";
+    if (item is NightClubEvent) return "NightClubEvent";
+    if (item is PlaceOfInterest) return "PlaceOfInterest";
+    return "";
+  }
+
 
   Color getThemeColor() {
     if (item is Beach) return Colors.blueAccent;
@@ -113,9 +128,10 @@ class DetailPage extends StatelessWidget {
   }
 }
 
-class CommonDetailLayout extends StatelessWidget {
+class CommonDetailLayout extends StatefulWidget {
   final dynamic item;
   final String itemName;
+  final String itemType;
   final String itemImageURL;
   final String itemDescription;
   final List<String> comments;
@@ -126,6 +142,7 @@ class CommonDetailLayout extends StatelessWidget {
     super.key,
     required this.item,
     required this.itemName,
+    required this.itemType,
     required this.itemImageURL,
     required this.itemDescription,
     required this.comments,
@@ -134,7 +151,21 @@ class CommonDetailLayout extends StatelessWidget {
   });
 
   @override
+  State<StatefulWidget> createState() => _CommonDetailLayout();
+}
+
+class _CommonDetailLayout extends State<CommonDetailLayout> {
+
+  @override
   Widget build(BuildContext context) {
+    dynamic item = widget.item;
+    String itemName = widget.itemName;
+    String itemType = widget.itemType;
+    String itemImageURL = widget.itemImageURL;
+    String itemDescription = widget.itemDescription;
+    List<String> comments = widget.comments;
+    List<Widget> additionalInfo = widget.additionalInfo;
+    Color themeColor = widget.themeColor;
     Size size = MediaQuery.of(context).size;
     bool isDarkMode = Theme.of(context).brightness == Brightness.dark;
     Color textColor = isDarkMode ? Colors.white : Colors.black;
@@ -195,92 +226,126 @@ class CommonDetailLayout extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             // Get Location Button
-                            Column(
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: themeColor,
-                                  radius: 24,
-                                  child: IconButton(
-                                    icon: const Icon(Icons.location_on, color: Colors.white),
-                                    onPressed: () {
-                                      // Implement location functionality
-                                    },
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: themeColor,
+                                    radius: 24,
+                                    child: IconButton(
+                                      icon: const Icon(Icons.location_on, color: Colors.white),
+                                      onPressed: () {
+                                        // Implement location functionality
+                                      },
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text('Get Location', style: TextStyle(color: textColor)),
-                              ],
+                                  const SizedBox(height: 8),
+                                  Text('Get Location', style: TextStyle(color: textColor)),
+                                ],
+                              ),
                             ),
-                            const SizedBox(width: 20),
+                            //const SizedBox(width: 20),
                             // Book Button
-                            Column(
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: themeColor,
-                                  radius: 24,
-                                  child: IconButton(
-                                    icon: const Icon(Icons.book, color: Colors.white),
-                                    onPressed: () {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        isScrollControlled: true,
-                                        builder: (BuildContext context) {
-                                          return Container(
-                                            height: size.height * 0.6,
-                                            child: TableCalendar(
-                                              focusedDay: DateTime.now(),
-                                              firstDay: DateTime.utc(2020, 01, 01),
-                                              lastDay: DateTime.utc(2030, 12, 31),
-                                              onDaySelected: (selectedDay, focusedDay) {
-                                                // Perform booking logic here
-                                                Navigator.pop(context);
-                                              },
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    },
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: themeColor,
+                                    radius: 24,
+                                    child: IconButton(
+                                      icon: const Icon(Icons.book, color: Colors.white),
+                                      onPressed: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          isScrollControlled: true,
+                                          builder: (BuildContext context) {
+                                            return Container(
+                                              height: size.height * 0.6,
+                                              child: TableCalendar(
+                                                focusedDay: DateTime.now(),
+                                                firstDay: DateTime.utc(2020, 01, 01),
+                                                lastDay: DateTime.utc(2030, 12, 31),
+                                                onDaySelected: (selectedDay, focusedDay) {
+                                                  var days = getDays(selectedDay);
+                                                  if(days < 2){
+                                                    ScaffoldMessenger.of(context).clearSnackBars();
+                                                    ScaffoldMessenger.of(context).showSnackBar(
+                                                      SnackBar(content: Text("Failed: You can only set a schedule three or more days in the future!")),
+                                                    );
+                                                  }else{
+                                                    ScaffoldMessenger.of(context).clearSnackBars();
+                                                    ScaffoldMessenger.of(context).showSnackBar(
+                                                      SnackBar(content: Text("Successfully Scheduled!")),
+                                                    );
+                                                    addSchedule(item.id, itemType, selectedDay);
+                                                  }
+                                                  //addSchedule(item.id, itemType, selectedDay);
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                            );
+                                          },
+                                        );
+                                      },
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text('Book', style: TextStyle(color: textColor)),
-                              ],
+                                  const SizedBox(height: 8),
+                                  Text('Schedule', style: TextStyle(color: textColor)),
+                                ],
+                              ),
                             ),
-                            const SizedBox(width: 20),
+                            //const SizedBox(width: 20),
                             // Favorite Button
-                            Column(
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: themeColor,
-                                  radius: 24,
-                                  child: IconButton(
-                                    icon: const Icon(Icons.favorite_border, color: Colors.white),
-                                    onPressed: () {
-                                      // Implement favoriting functionality
-                                    },
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: themeColor,
+                                    radius: 24,
+                                    child: IconButton(
+                                      icon: checkIfFavourite(item.id, itemType)? Icon(Icons.favorite, color: Colors.white) : Icon(Icons.favorite_border, color: Colors.white),
+                                      onPressed: () {
+                                        var msg = "";
+                                        if(checkIfFavourite(item.id, itemType)){
+                                          removeFavouriteFull(item.id, itemType);
+                                          msg = "Successfully removed from favourites!";
+                                        }else{
+                                          addFavourite(item.id, itemType);
+                                          msg = "Successfully added to favourites!";
+                                        }
+                                        setState(() {
+                                          ScaffoldMessenger.of(context).clearSnackBars();
+                                          ScaffoldMessenger.of(context).showSnackBar(
+                                            SnackBar(content: Text(msg)),
+                                          );
+                                        });
+                                      },
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text('Favorite', style: TextStyle(color: textColor)),
-                              ],
+                                  const SizedBox(height: 8),
+                                  Text('Favorite', style: TextStyle(color: textColor)),
+                                ],
+                              ),
                             ),
-                            const SizedBox(width: 20),
+                            //const SizedBox(width: 20),
                             // Share Button
-                            Column(
-                              children: [
-                                CircleAvatar(
-                                  backgroundColor: themeColor,
-                                  radius: 24,
-                                  child: IconButton(
-                                    icon: const Icon(Icons.share, color: Colors.white),
-                                    onPressed: () {
-                                      // Implement share functionality
-                                    },
+                            Expanded(
+                              child: Column(
+                                children: [
+                                  CircleAvatar(
+                                    backgroundColor: themeColor,
+                                    radius: 24,
+                                    child: IconButton(
+                                      icon: const Icon(Icons.share, color: Colors.white),
+                                      onPressed: () {
+                                        // Implement share functionality
+                                      },
+                                    ),
                                   ),
-                                ),
-                                const SizedBox(height: 8),
-                                Text('Share', style: TextStyle(color: textColor)),
-                              ],
+                                  const SizedBox(height: 8),
+                                  Text('Share', style: TextStyle(color: textColor)),
+                                ],
+                              ),
                             ),
                           ],
                         ),
