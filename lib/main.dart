@@ -1,8 +1,6 @@
 
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:my_application/data_model/PlaceOfInterest.dart';
@@ -24,11 +22,12 @@ import 'acc_management/profile_setting.dart';
 import 'acc_management/security_frontend.dart';
 
 void main() async {
-
   WidgetsFlutterBinding.ensureInitialized();
+
   LocalNotification.init();
   GetStorage.init();
   if(kIsWeb) {
+
     await Firebase.initializeApp(
         options: FirebaseOptions(
             apiKey: "AIzaSyAeSpjJOi0771PosXMZh5RLICuceeXHIgI",
@@ -38,6 +37,7 @@ void main() async {
             messagingSenderId: "340107156944",
             appId: "1:340107156944:web:d1d5c4738f9b4bd12cedd5",
             measurementId: "G-K12JG3B610"));
+
   }else {
    await Firebase.initializeApp();
   }
@@ -55,6 +55,7 @@ void main() async {
   //GetStorage().remove("notification_id");
   //GetStorage().remove("inAppNotiId");
   //GetStorage().remove("favourites");
+
 }
 
 class MyApp extends StatelessWidget {
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Consumer<ThemeProvider>(
       builder: (context, themeProvider, child){
         return MaterialApp(
@@ -83,6 +85,7 @@ class MyApp extends StatelessWidget {
           },
         );
       }
+
     );
   }
 }

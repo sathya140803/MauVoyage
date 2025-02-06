@@ -39,9 +39,11 @@ class _CalendarPage extends State<CalendarPage> {
     }
     return Scaffold(
       appBar: AppBar(
+
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
         title: Text("Calendar"),
         automaticallyImplyLeading: false,
+
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
