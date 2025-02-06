@@ -1,13 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:my_application/data_model/Activity.dart';
+import 'package:my_application/data_model/Beach.dart';
+import 'package:my_application/data_model/Forest.dart';
+import 'package:my_application/data_model/NightClubEvent%20.dart';
+import 'package:my_application/data_model/PlaceOfInterest.dart';
+import 'package:my_application/notification_schedule/notification_controller.dart';
+import 'package:my_application/notification_schedule/schedule_controller.dart';
+import 'package:my_application/ui/DetailPage.dart';
+import 'package:my_application/ui/calendar_page.dart';
+import 'package:my_application/ui/root_page.dart';
+
+
+getItem(int id, String type){
+  if (type == "Beach") return Beach.beachList[id];
+  if (type == "Forest") return Forest.forestList[id];
+  if (type == "Activity") return Activity.activityList[id];
+  if (type == "NightClubEvent") return NightClubEvent.nightClubList[id];
+  if (type == "PlaceOfInterest") return PlaceOfInterest.placeList[id];
+  return "";
+}
+
+
 
 class NotificationPage extends StatelessWidget {
   const NotificationPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    removeOldDates();
     // Sample notifications
-    final List<Map<String, String>> notifications = [
+    /*final List<Map<String, String>> notifications = [
       {
         "title": "New Destination Added!",
         "description": "Discover the beautiful Le Morne Brabant.",
@@ -32,8 +55,9 @@ class NotificationPage extends StatelessWidget {
         "time": "1 week ago",
         "image": "https://example.com/restaurant.jpg", // Example image URL
       },
-    ];
+    ];*/
 
+    List<dynamic> notifications = getNotifications();
     return Scaffold(
       appBar: AppBar(
         title: const Text("Notifications"),
@@ -43,39 +67,25 @@ class NotificationPage extends StatelessWidget {
       body: ListView.builder(
         itemCount: notifications.length,
         itemBuilder: (context, index) {
-          final notification = notifications[index];
-
-          return Slidable(
-            // Use the correct action pane
-            startActionPane: ActionPane(
-              motion: const DrawerMotion(), // Slide motion
-              dismissible: DismissiblePane(onDismissed: () {
-                // Handle dismiss
-              }),
-              children: [
-                SlidableAction(
-                  onPressed: (context) {
-                    // Handle mark as read action
-                  },
-                  backgroundColor: Colors.green,
-                  icon: Icons.check,
-                  label: 'Mark as Read', // Add label
-                ),
-              ],
-            ),
-            child: Card(
+          var notification = notifications[index];
+          var item = getItem(notification["itemId"], notification["itemType"]);
+          if((DateTime.parse(notification["showTime"])).isBefore(DateTime.now())) {
+            String due = DateTime.now().isAfter(DateTime.parse(notification["showTime"]).add(Duration(days: 1))) ? " Today!" : " Tomorrow!";
+            return Card(
               margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               elevation: 5,
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10),
               ),
               child: ListTile(
-                leading: CircleAvatar(
-                  backgroundImage: NetworkImage(notification["image"]!),
-                  radius: 25,
+                leading: ClipOval(
+                    child: SizedBox.fromSize(
+                      size: Size.fromRadius(25.0),
+                      child: Image.asset(item.imageURL, fit: BoxFit.cover),
+                    )
                 ),
                 title: Text(
-                  notification["title"]!,
+                  notification["type"]!,
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
@@ -85,12 +95,12 @@ class NotificationPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      notification["description"]!,
+                      notification["description"]+due!,
                       style: const TextStyle(color: Colors.black87),
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      notification["time"]!,
+                      notification["showTime"].substring(0,11)!,
                       style: const TextStyle(color: Colors.grey, fontSize: 12),
                     ),
                   ],
@@ -101,11 +111,13 @@ class NotificationPage extends StatelessWidget {
                   color: Colors.grey,
                 ),
                 onTap: () {
-                  // Handle notification tap
+                  Navigator.push(context, MaterialPageRoute(
+                      builder: (context) => DetailPage(item: item)));
                 },
               ),
-            ),
-          );
+            );
+          }
+          return Container();
         },
       ),
     );

@@ -18,28 +18,18 @@ class RootPage extends StatefulWidget {
 }
 
 class _RootPageState extends State<RootPage> {
-  List<PlaceOfInterest> favorites = [];
   int _currentIndex = 0;
 
   List<Widget> _widgetOptions() {
     return [
-      HomePage(onFavoriteToggle: _updateFavorites),
-      FavouritePage(favoritedPlaces: favorites),
-      CalenderPage(),
+      HomePage(),
+      FavouritePage(),
+      CalendarPage(),
       CurrencyConverterPage(),
       SettingsPage(),
     ];
   }
 
-  void _updateFavorites(PlaceOfInterest place) {
-    setState(() {
-      if (favorites.contains(place)) {
-        favorites.remove(place);
-      } else {
-        favorites.add(place);
-      }
-    });
-  }
 
   void _onTap(int index) {
     setState(() {

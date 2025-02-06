@@ -25,7 +25,7 @@ class AboutPage extends StatelessWidget {
             const SizedBox(height: 16),
             const Text(
               'This app helps users discover various points of interest around Mauritius. '
-                  'With features such as booking activities, exploring restaurants, and finding maps for navigation, '
+                  'With features such as scheduling activities, exploring restaurants, and finding maps for navigation, '
                   'it aims to make the travel experience seamless and enjoyable.',
               style: TextStyle(fontSize: 16),
             ),
