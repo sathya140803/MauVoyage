@@ -362,7 +362,7 @@ class _HomePageState extends State<HomePage> {
                                 ),
                                 child: Icon(
                                   checkIfFavourite(place.id, getItemType(place))? Icons.favorite: Icons.favorite_border,
-                                  color: Colors.white
+                                  color: Colors.red,
                                 ),
                               ),
                             ),

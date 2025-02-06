@@ -303,7 +303,7 @@ class _CommonDetailLayout extends State<CommonDetailLayout> {
                                     backgroundColor: themeColor,
                                     radius: 24,
                                     child: IconButton(
-                                      icon: checkIfFavourite(item.id, itemType)? Icon(Icons.favorite, color: Colors.white) : Icon(Icons.favorite_border, color: Colors.white),
+                                      icon: checkIfFavourite(item.id, itemType)? Icon(Icons.favorite, color: Colors.red) : Icon(Icons.favorite_border, color: Colors.white),
                                       onPressed: () {
                                         var msg = "";
                                         if(checkIfFavourite(item.id, itemType)){
@@ -324,26 +324,6 @@ class _CommonDetailLayout extends State<CommonDetailLayout> {
                                   ),
                                   const SizedBox(height: 8),
                                   Text('Favorite', style: TextStyle(color: textColor)),
-                                ],
-                              ),
-                            ),
-                            //const SizedBox(width: 20),
-                            // Share Button
-                            Expanded(
-                              child: Column(
-                                children: [
-                                  CircleAvatar(
-                                    backgroundColor: themeColor,
-                                    radius: 24,
-                                    child: IconButton(
-                                      icon: const Icon(Icons.share, color: Colors.white),
-                                      onPressed: () {
-                                        // Implement share functionality
-                                      },
-                                    ),
-                                  ),
-                                  const SizedBox(height: 8),
-                                  Text('Share', style: TextStyle(color: textColor)),
                                 ],
                               ),
                             ),
@@ -452,9 +432,6 @@ class _CommonDetailLayout extends State<CommonDetailLayout> {
               ),
             ),
           ),
-
-
-
         ],
       ),
     );
