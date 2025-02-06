@@ -228,7 +228,6 @@ class SignInPageState extends State<SignInPage> {
                                   _usernameController.text.trim(),
                                   _passwordController.text.trim(),
                                 );
-
                                 if (user != null) {
                                   Navigator.pushReplacement(
                                     context,
