@@ -45,25 +45,6 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 8.0),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: TextField(
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      hintText: 'Search settings...',
-                      hintStyle: const TextStyle(color: Colors.grey),
-                      filled: true,
-                      fillColor: Colors.white,
-                      contentPadding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 12.0),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                        borderSide: BorderSide.none,
-                      ),
-                      suffixIcon: const Icon(Icons.search, color: Colors.grey),
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
@@ -73,6 +54,43 @@ class _SettingsPageState extends State<SettingsPage> {
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         children: [
+          const Divider(height: 32.0),
+
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              // Profile Picture
+              CircleAvatar(
+                radius: 30, // Made it slightly bigger
+                backgroundImage: NetworkImage('YOUR_PROFILE_IMAGE_URL'),
+                // Or use AssetImage for local images:
+                // backgroundImage: AssetImage('assets/profile.png'),
+              ),
+              const SizedBox(height: 8.0), // Space between picture and username
+              // Username
+              Text(
+                'Username',
+                style: TextStyle(
+                  color: themeProvider.isDarkMode ? Colors.white : Colors.black,
+                  fontSize: 16.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              const SizedBox(height: 4.0), // Space between username and email
+              // Email
+              Text(
+                'user@example.com',
+                style: TextStyle(
+                  color: themeProvider.isDarkMode ? Colors.white70 : Colors.black54,
+                  fontSize: 14.0,
+                ),
+              ),
+            ],
+          ),
+          const Divider(height: 32.0),
+
+
+
 
           // Account Management Section
           _buildSectionTitle('Account Management'),
@@ -84,7 +102,7 @@ class _SettingsPageState extends State<SettingsPage> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ProfileSettingsPage()),
+                MaterialPageRoute(builder: (context) => ProfileScreen()),
               );
             },
           ),_buildListTile(
@@ -95,7 +113,7 @@ class _SettingsPageState extends State<SettingsPage> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => SecuritySettingsPage()),
+                MaterialPageRoute(builder: (context) => ChangePassword()),
               );
             },
           ),
@@ -158,6 +176,22 @@ class _SettingsPageState extends State<SettingsPage> {
             subtitle: 'Information about this app',
             icon: MaterialCommunityIcons.information,
             iconColor: Colors.purple,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AboutPage()),
+              );
+            },
+          ),
+
+          const Divider(height: 32.0),
+
+
+          _buildListTile(
+            title: 'Log Out',
+            subtitle: 'Log out from this app',
+            icon: MaterialCommunityIcons.logout,
+            iconColor: Colors.redAccent,
             onTap: () {
               Navigator.push(
                 context,

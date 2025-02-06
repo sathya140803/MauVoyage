@@ -5,6 +5,8 @@ import 'package:my_application/ui/root_page.dart';
 import 'register_page.dart';
 import 'forgot_password.dart';
 import 'authentications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
 
 class SignInPage extends StatefulWidget {
   const SignInPage({super.key});
@@ -42,7 +44,7 @@ class SignInPageState extends State<SignInPage> {
                 Container(
                   padding: const EdgeInsets.only(top: 40, left: 35, right: 35),
                   margin: const EdgeInsets.only(bottom: 20),
-                  height: 200,
+                  height: 300,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     image: DecorationImage(
@@ -90,7 +92,7 @@ class SignInPageState extends State<SignInPage> {
                         TextFormField(
                           controller: _usernameController,
                           decoration: InputDecoration(
-                            labelText: 'Username',
+                            labelText: 'Email',
                             labelStyle: GoogleFonts.roboto(
                               color: Colors.grey,
                             ),
@@ -111,13 +113,13 @@ class SignInPageState extends State<SignInPage> {
                               ),
                             ),
                             prefixIcon: Icon(
-                              Icons.account_circle,
+                              Icons.email_rounded,
                               color: Colors.orange,
                             ),
                           ),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Please enter your username';
+                              return 'Please enter your Email';
                             }
                             return null;
                           },

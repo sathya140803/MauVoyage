@@ -66,7 +66,7 @@ class SignUpPageState extends State<SignUpPage> {
                 Container(
                   padding: const EdgeInsets.only(top: 40, left: 35, right: 35),
                   margin: const EdgeInsets.only(bottom: 20),
-                  height: 200,  // Reduced from 350
+                  height: 300,  // Reduced from 350
                   width: double.infinity,
                   decoration: BoxDecoration(
                     image: DecorationImage(
