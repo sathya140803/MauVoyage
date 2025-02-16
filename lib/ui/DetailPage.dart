@@ -27,9 +27,12 @@ int getDays(DateTime to){
 Future<Widget> commentsBuilder(String placeString, var width, Color textColor, Function commentSettings, Function addUserComment, User? currentUser) async{
   var data = await getComments(placeString);
   var commentCheck = false;
-  if(data.data() != null){
+  if(data.data() != null && data.data()!.isNotEmpty){
     var userComment = data.data().entries.map((entry) async {
       String uid = entry.key;
+      if(entry.value["user"] == null || entry.value["comment"] == null){
+        return Container();
+      }
       String userName = entry.value["user"];
       String comment = entry.value["comment"];
       if(uid == currentUser?.uid){
@@ -87,6 +90,9 @@ Future<Widget> commentsBuilder(String placeString, var width, Color textColor, F
     }).toList();
     var commentList = data.data().entries.map((entry) async {
       String uid = entry.key;
+      if(entry.value["user"] == null || entry.value["comment"] == null){
+        return Container();
+      }
       String userName = entry.value["user"];
       String comment = entry.value["comment"];
       String imageUrl = await getImage(uid);
@@ -164,7 +170,7 @@ Future<Widget> commentsBuilder(String placeString, var width, Color textColor, F
           onPressed: (){
             addUserComment();
           },
-          child: Text("Comment",)
+          child: Text("Add Comment",)
       ),
       Divider(),
       Text("No Comments")
