@@ -8,8 +8,6 @@ import 'package:my_application/data_model/PlaceOfInterest.dart';
 import 'package:my_application/notification_schedule/notification_controller.dart';
 import 'package:my_application/notification_schedule/schedule_controller.dart';
 import 'package:my_application/ui/DetailPage.dart';
-import 'package:my_application/ui/calendar_page.dart';
-import 'package:my_application/ui/root_page.dart';
 
 
 getItem(int id, String type){

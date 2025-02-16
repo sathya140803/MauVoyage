@@ -66,11 +66,11 @@ class SignUpPageState extends State<SignUpPage> {
                 Container(
                   padding: const EdgeInsets.only(top: 40, left: 35, right: 35),
                   margin: const EdgeInsets.only(bottom: 20),
-                  height: 300,  // Reduced from 350
+                  height: 290,  // Reduced from 350
                   width: double.infinity,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/acc_management/login.jpg"),
+                      image: AssetImage("assets/acc_management/bali.jpg"),
                       fit: BoxFit.cover,
                       colorFilter: ColorFilter.mode(
                         Colors.black.withOpacity(0.4),
@@ -119,7 +119,7 @@ class SignUpPageState extends State<SignUpPage> {
                               color: Colors.grey,
                             ),
                             floatingLabelStyle: TextStyle(
-                              color: Colors.orange,
+                              color: Colors.cyan,
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -130,13 +130,13 @@ class SignUpPageState extends State<SignUpPage> {
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide(
-                                color: Colors.orange,
+                                color: Colors.cyan,
                                 width: 2,
                               ),
                             ),
                             prefixIcon: Icon(
                               Icons.account_circle,
-                              color: Colors.orange,
+                              color: Colors.cyan,
                             ),
                           ),
                           validator: (value) {
@@ -157,7 +157,7 @@ class SignUpPageState extends State<SignUpPage> {
                               color: Colors.grey,
                             ),
                             floatingLabelStyle: TextStyle(
-                              color: Colors.orange,
+                              color: Colors.cyan,
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -168,13 +168,13 @@ class SignUpPageState extends State<SignUpPage> {
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide(
-                                color: Colors.orange,
+                                color: Colors.cyan,
                                 width: 2,
                               ),
                             ),
                             prefixIcon: Icon(
                               Icons.email,
-                              color: Colors.orange,
+                              color: Colors.cyan,
                             ),
                           ),
                           validator: (value) {
@@ -198,7 +198,7 @@ class SignUpPageState extends State<SignUpPage> {
                               color: Colors.grey,
                             ),
                             floatingLabelStyle: TextStyle(
-                              color: Colors.orange,
+                              color: Colors.cyan,
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -209,13 +209,13 @@ class SignUpPageState extends State<SignUpPage> {
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide(
-                                color: Colors.orange,
+                                color: Colors.cyan,
                                 width: 2,
                               ),
                             ),
                             prefixIcon: Icon(
                               Icons.lock,
-                              color: Colors.orange,
+                              color: Colors.cyan,
                             ),
                           ),
                           validator: (value) {
@@ -236,7 +236,7 @@ class SignUpPageState extends State<SignUpPage> {
                               color: Colors.grey,
                             ),
                             floatingLabelStyle: TextStyle(
-                              color: Colors.orange,
+                              color: Colors.cyan,
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -247,13 +247,13 @@ class SignUpPageState extends State<SignUpPage> {
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide(
-                                color: Colors.orange,
+                                color: Colors.cyan,
                                 width: 2,
                               ),
                             ),
                             prefixIcon: Icon(
                               Icons.lock_outline,
-                              color: Colors.orange,
+                              color: Colors.cyan,
                             ),
                           ),
                           validator: (value) {
@@ -266,7 +266,7 @@ class SignUpPageState extends State<SignUpPage> {
                             return null;
                           },
                         ),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 1),
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -280,7 +280,7 @@ class SignUpPageState extends State<SignUpPage> {
                                       _isRememberMeChecked = value ?? false;
                                     });
                                   },
-                                  activeColor: Colors.orange,
+                                  activeColor: Colors.cyan,
                                 ),
                                 Text(
                                   "Remember me",
@@ -294,14 +294,16 @@ class SignUpPageState extends State<SignUpPage> {
                           ],
                         ),
 
-                        SizedBox(height: 20),  // Reduced from 30
+                        SizedBox(height: 20),
                         InkWell(
                           onTap: () async {
                             if (_formKey.currentState?.validate() ?? false) {
                               try {
                                 String result = await _authService.register(
-                                  _emailController.text.trim(),
-                                  _passwordController.text.trim(),
+                                    _emailController.text.trim(),
+                                    _passwordController.text.trim(),
+                                    _usernameController.text,
+                                    _isRememberMeChecked
                                 );
 
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -349,7 +351,7 @@ class SignUpPageState extends State<SignUpPage> {
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
-                                color: Colors.orange,
+                                color: Colors.cyan,
                               ),
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               child: Center(
@@ -366,7 +368,7 @@ class SignUpPageState extends State<SignUpPage> {
                           ),
                         ),
 
-                        SizedBox(height: 16),  // Reduced from 20
+                        SizedBox(height: 10),
 
                         Center(
                           child: GestureDetector(
@@ -389,7 +391,7 @@ class SignUpPageState extends State<SignUpPage> {
                                   TextSpan(
                                     text: "Sign In",
                                     style: GoogleFonts.roboto(
-                                      color: Colors.orange,
+                                      color: Colors.cyan,
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                     ),

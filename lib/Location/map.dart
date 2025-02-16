@@ -2,16 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class MapPage extends StatefulWidget {
 
   final double destinationLatitude ;
   final double destinationLongitude ;
+  final String urlCode;
+  final String name;
 
   const MapPage({
     Key? key,
     required this.destinationLatitude,
     required this.destinationLongitude,
+    required this.urlCode,
+    required this.name,
   }) : super(key: key);
 
   @override
@@ -68,11 +74,10 @@ class _MapPageState extends State<MapPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          ' Map ',
-          style: TextStyle(color: Colors.white),
+    return Scaffold(      appBar: AppBar(
+        title:  Text(
+          widget.name,
+          style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
         ),
         backgroundColor: Color(0xFF8BB380),
         iconTheme: const IconThemeData(color: Colors.white),
@@ -87,8 +92,7 @@ class _MapPageState extends State<MapPage> {
         ),
         children: [
           TileLayer(
-            urlTemplate: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            subdomains: const ['a', 'b', 'c'],
+            urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
           ),
           MarkerLayer(
             markers: [
@@ -120,6 +124,13 @@ class _MapPageState extends State<MapPage> {
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          launchUrlString("https://www.google.com/maps/search/?api=1&query="+widget.urlCode);
+        },
+        child: Icon(Icons.directions),
+      ),
+
     );
   }
 

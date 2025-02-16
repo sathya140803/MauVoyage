@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_application/acc_management/authentications.dart';
 import 'package:my_application/data_model/Activity.dart';
 import 'package:my_application/data_model/Beach.dart';
 import 'package:my_application/data_model/Forest.dart';
@@ -100,7 +101,7 @@ class _HomePageState extends State<HomePage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Hi Dhavish',
+                        'Hi ${AuthService().getCurrentUser()?.displayName}',
                         style: TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.bold,

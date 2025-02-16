@@ -14,6 +14,9 @@ class NightClubEvent {
   final String dressCode; // Example: "Casual", "Formal", "Smart Casual"
   final String entryFee; // Entry fee or ticket price
   final String eventDate; // Date of the event (if applicable)
+  final double destinationLatitude; // Latitude of the destination
+  final double destinationLongitude; // Longitude of the destination
+  final String urlCode;
 
   NightClubEvent({
     required this.id,
@@ -31,6 +34,9 @@ class NightClubEvent {
     required this.dressCode,
     required this.entryFee,
     required this.eventDate,
+    required this.destinationLatitude,
+    required this.destinationLongitude,
+    required this.urlCode,
   });
 
   // List of Night Clubs and Events
@@ -52,6 +58,10 @@ class NightClubEvent {
       dressCode: 'Smart Casual',
       entryFee: 'MUR 500',
       eventDate: 'Fridays & Saturdays',
+      destinationLatitude: -20.3274,
+      destinationLongitude: 57.3855,
+      urlCode: "Big Willy's",
+
     ), NightClubEvent(
       id: 0,
       rating: 4.7,
@@ -68,6 +78,9 @@ class NightClubEvent {
       dressCode: 'Casual',
       entryFee: 'Free Entry',
       eventDate: 'Open Daily',
+      destinationLatitude: -20.0100,
+      destinationLongitude: 57.5831,
+      urlCode: "Banana Beach Club",
     ),
     NightClubEvent(
       id: 2,
@@ -85,6 +98,9 @@ class NightClubEvent {
       dressCode: 'Beachwear',
       entryFee: 'MUR 1,000',
       eventDate: 'Saturdays',
+      destinationLatitude: -20.5058,
+      destinationLongitude: 57.4079,
+      urlCode: "C Beach Club",
     ),
     NightClubEvent(
       id: 3,
@@ -102,6 +118,9 @@ class NightClubEvent {
       dressCode: 'Formal',
       entryFee: 'MUR 700',
       eventDate: 'Weekends Only',
+      destinationLatitude: -20.0065,
+      destinationLongitude: 57.5819,
+      urlCode: "Insomnia Night Club",
     ),
   ];
 

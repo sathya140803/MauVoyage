@@ -92,7 +92,7 @@ class _FavouritePage extends State<FavouritePage> {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => DetailPage(item: item)),
-                  );
+                  ).then((val) => setState(() {}));
                 },
                 child: Padding(
                   padding: const EdgeInsets.all(12.0),

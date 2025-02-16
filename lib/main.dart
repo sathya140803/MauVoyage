@@ -1,14 +1,21 @@
 
+import 'dart:convert';
+
+
+import 'package:cloudinary_url_gen/cloudinary.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:my_application/acc_management/authentications.dart';
 import 'package:my_application/data_model/PlaceOfInterest.dart';
 import 'package:my_application/notification_schedule/local_notification.dart';
+import 'package:my_application/notification_schedule/notification_controller.dart';
 import 'package:my_application/notification_schedule/schedule_controller.dart';
 import 'package:my_application/ui/InterestSelectionScreen.dart';
 import 'package:my_application/ui/home_page.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:my_application/ui/settings/theme_provider.dart'; // Import the ThemeProvider
 import 'content/splash_screen.dart'; // Import the SplashScreen
@@ -19,16 +26,12 @@ import 'cat_Pages/ForestsPage.dart'; // Import the ForestsPage
 import 'cat_Pages/BeachesPage.dart'; // Import the BeachesPage
 import 'cat_Pages/ActivitiesPage.dart'; // Import the ActivitiesPage
 import 'acc_management/login_page.dart';
-import 'acc_management/profile_setting.dart';
-import 'acc_management/security_frontend.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   LocalNotification.init();
   GetStorage.init();
   if(kIsWeb) {
-
     await Firebase.initializeApp(
         options: FirebaseOptions(
             apiKey: "AIzaSyAeSpjJOi0771PosXMZh5RLICuceeXHIgI",
@@ -40,7 +43,21 @@ void main() async {
             measurementId: "G-K12JG3B610"));
 
   }else {
-   await Firebase.initializeApp();
+    await Firebase.initializeApp();
+  }
+  var notificationSettings = {
+    "ScheduledNotification": false,
+    "InAppNotification": false,
+  };
+  if(await Permission.notification.status.isGranted){
+    rebuildNotifications();
+    notificationSettings["ScheduledNotification"] = true;
+    notificationSettings["InAppNotification"] = true;
+  }else{
+    cancelAllNotifications();
+  }
+  if(GetStorage().read("NotificationSettings") == null){
+    GetStorage().write("NotificationSettings", jsonEncode(notificationSettings));
   }
   runApp(
       MultiProvider(
@@ -57,14 +74,18 @@ void main() async {
   //GetStorage().remove("inAppNotiId");
   //GetStorage().remove("favourites");
 
-  runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => ThemeProvider()), // Provide ThemeProvider
-      ],
-      child: const MyApp(),
-    ),
-  );
+}
+
+Future<Widget> checkUser() async{
+  await GetStorage.init();
+  if(GetStorage().read("userDetails") != null){
+    var userDetails = jsonDecode(GetStorage().read("userDetails"));
+    await AuthService().signInWithEmailPassword(userDetails["email"], userDetails["password"], true);
+    return RootPage();
+  }else{
+    await AuthService().logout();
+    return SplashScreen();
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -74,26 +95,42 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return Consumer<ThemeProvider>(
-      builder: (context, themeProvider, child){
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'myapp',
+        builder: (context, themeProvider, child){
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            title: 'myapp',
 
-          themeMode: themeProvider.themeMode, // Use themeMode from ThemeProvider
-          theme: MyThemes.lightTheme,        // Light theme
-          darkTheme: MyThemes.darkTheme,     // Dark theme
-          home:  SplashScreen(),
+            themeMode: themeProvider.themeMode, // Use themeMode from ThemeProvider
+            theme: MyThemes.lightTheme,        // Light theme
+            darkTheme: MyThemes.darkTheme,     // Dark theme
+            home: FutureBuilder(
+                future: checkUser(),
+                builder: (BuildContext context, AsyncSnapshot<Widget> widget){
+                  if(widget.connectionState == ConnectionState.done){
+                    if (!widget.hasData) {
+                      return Center(
+                          child: Text('Something went wrong....')
+                      );
+                    }else{
+                      return widget.requireData;
+                    }
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+            ),
 
-          routes: {
-            '/nightclubs': (context) => NightClubsPage(),
-            '/forests': (context) => ForestsPage(),
-            '/beaches': (context) => BeachesPage(),
-            '/activities': (context) => ActivitiesPage(),
-            '/InterestSelectionScreen': (context) => ActivitiesPage(),
-            '/root_page': (context) => RootPage(),
-          },
-        );
-      }
+            routes: {
+              '/nightclubs': (context) => NightClubsPage(),
+              '/forests': (context) => ForestsPage(),
+              '/beaches': (context) => BeachesPage(),
+              '/activities': (context) => ActivitiesPage(),
+              '/InterestSelectionScreen': (context) => ActivitiesPage(),
+              '/root_page': (context) => RootPage(),
+            },
+          );
+        }
 
     );
   }

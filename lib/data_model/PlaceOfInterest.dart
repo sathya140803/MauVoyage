@@ -1,187 +1,4 @@
-//
-// class PlaceOfInterest {
-//   final int placeId;
-//   final double rating;
-//   final String category;
-//   final String placeName;
-//   final String imageURL;      // First image
-//   final String imageURL2;     // Second image
-//   final String imageURL3;     // Third image
-//   bool isFavorited;
-//   final String description;
-//   bool isSelected;
-//   final String comment1; // Replacing size with comment1
-//   final String comment2; // Replacing temperature with comment2
-//   final String size;    // Re-added size field
-//
-//   PlaceOfInterest({
-//     required this.placeId,
-//     required this.rating,
-//     required this.category,
-//     required this.placeName,
-//     required this.imageURL,
-//     required this.imageURL2, // Second image field
-//     required this.imageURL3, // Third image field
-//     required this.isFavorited,
-//     required this.description,
-//     required this.isSelected,
-//     required this.comment1,  // Replacing size with comment1
-//     required this.comment2,  // Replacing temperature with comment2
-//     required this.size,      // Re-added size field
-//   });
-//
-//   // List of Places of Interest data_model
-//   static List<PlaceOfInterest> placeList = [
-//     PlaceOfInterest(
-//       placeId: 0,
-//       rating: 4.5,
-//       category: 'Mountains',
-//       placeName: 'Le Morne Brabant',
-//       imageURL: 'assets/lemorne1.jpg',
-//       imageURL2: 'assets/dhav.png', // Second image
-//       imageURL3: 'assets/gina.jpg', // Third image
-//       isFavorited: false,
-//       description: 'Le Morne Brabant stands as a majestic symbol of natural beauty, its towering cliffs and lush surroundings offering a breathtaking panorama of the southern coast of Mauritius.',
-//       isSelected: false,
-//       comment1: 'The mountains are a perfect reminder that beauty lies in '
-//           'simplicity — their timeless peaks stand as silent witnesses to natures most serene moments.', // Replacing size with comment1
-//       comment2: 'The climb up Le Morne Brabant reveals more than just a magnificent landscape; it tells the story of Mauritius past while offering an unforgettable connection to natures most serene beauty.', // Replacing temperature with comment2
-//       size: 'mm', // Re-added size field
-//     ),
-//     PlaceOfInterest(
-//       placeId: 1,
-//       rating: 4.8,
-//       category: 'City',
-//       placeName: 'Port Louis',
-//       imageURL: 'assets/Port-Louis.jpg',
-//       imageURL2: 'assets/dhav.png', // Second image
-//       imageURL3: 'assets/gina.jpg', // Third image
-//       isFavorited: false,
-//       description: 'Port Louis is the capital city of Mauritius, in the Indian Ocean. Its known for its French colonial architecture and the 19th-century Champ de Mars horse-racing track. The Caudan Waterfront is a lively dining and shopping precinct. Nearby, vendors sell local produce and handicrafts at the huge Central Market.',
-//       isSelected: false,
-//       comment1: 'Port Louis is the vibrant heart of Mauritius, where modernity meets history, offering a fascinating blend of bustling markets, colonial architecture, and a thriving cultural scene.', // Replacing size with comment1
-//       comment2: 'Walking through the streets of Port Louis is like stepping into the soul of Mauritius, with its lively atmosphere, colorful markets, and a perfect mix of old-world charm and contemporary energy.', // Replacing tempe
-//       size: 'Medium', // Re-added size field
-//     ),
-//     PlaceOfInterest(
-//       placeId: 2,
-//       rating: 4.7,
-//       category: 'Mountain',
-//       placeName: 'Eau Blue Waterfall',
-//       imageURL: 'assets/waterfall.jpg',
-//       imageURL2: 'assets/dhav.png', // Second image
-//       imageURL3: 'assets/gina.jpg', // Third image
-//       isFavorited: false,
-//       description: 'The waterfall originates from the nearby river and comes out on three different levels of the terrain (although the main waterfall is of interest to most of the visitors). All three waterfalls at Eau Bleue are spectacular as you’ll relish on the azure blue color of the pond.',
-//       isSelected: false,
-//       comment1: 'Nestled in the heart of the island, Eau Bleue Waterfall is a hidden gem, offering visitors a serene escape with its crystal-clear waters and lush surroundings', // Replacing size with comment1
-//       comment2: 'The Eau Bleue Waterfall is a picturesque marvel, where the cascading waters create a tranquil oasis, surrounded by vibrant greenery, making it a perfect spot for nature lovers and adventurers alike.', // Replacing tempe
-//       size: 'Large', // Re-added size field
-//     ),
-//     PlaceOfInterest(
-//       placeId: 3,
-//       rating: 4.5,
-//       category: 'Mountain',
-//       placeName: 'Le Pouce',
-//       imageURL: 'assets/hiking.jpg',
-//       imageURL2: 'assets/dhav.png', // Second image
-//       imageURL3: 'assets/gina.jpg', // Third image
-//       isFavorited: false,
-//       description: 'The trail begins at a trailhead where Chateau Deau Street ends. Follow the main trail/road. The road will gradually climb and bring you towards Le Pouce.',
-//       isSelected: false,
-//       comment1: 'Mountain hiking in Mauritius offers an exhilarating experience, with trails that wind through lush forests, rocky terrains, and panoramic views of the islands stunning landscapes.', // Replacing size with comment1
-//       comment2: 'Mauritius is a hiker’s paradise, where the rugged mountains challenge adventurers and reward them with breathtaking views of crystal-clear waters and verdant valleys.', // Replacing temperature with comment2
-//       size: 'Small', // Re-added size field
-//     ),
-//     PlaceOfInterest(
-//       placeId: 4,
-//       rating: 4.1,
-//       category: 'Historical',
-//       placeName: 'Botanical Garden',
-//       imageURL: 'assets/garden.jpg',
-//       imageURL2: 'assets/dhav.png', // Second image
-//       imageURL3: 'assets/gina.jpg', // Third image
-//       isFavorited: false,
-//       description: 'The Sir Seewoosagur Ramgoolam Botanical Garden is a lush paradise, home to an impressive collection of exotic plants, serene pathways, and picturesque ponds, making it a must-visit for nature lovers.',
-//       isSelected: false,
-//       comment1: 'A walk through the botanical garden is like stepping into a world of tranquility, with towering palms, vibrant flowers, and the unique Giant Water Lilies offering a peaceful escape from the bustling city life.', // Replacing size with comment1
-//       comment2: 'As one of the oldest and most renowned botanical gardens in the Southern Hemisphere, the Sir Seewoosagur Ramgoolam Botanical Garden is a living showcase of Mauritius rich biodiversity and horticultural beauty.', // Replacing temperature with comment2
-//       size: 'Large', // Re-added size field
-//     ),
-//     PlaceOfInterest(
-//       placeId: 5,
-//       rating: 4.4,
-//       category: 'Activity',
-//       placeName: 'The Aquarium',
-//       imageURL: 'assets/aquarium.jpg',
-//       imageURL2: 'assets/dhav.png', // Second image
-//       imageURL3: 'assets/gina.jpg', // Third image
-//       isFavorited: false,
-//       description: 'The Mauritius Aquarium offers a fascinating underwater journey, showcasing the vibrant marine life of the Indian Ocean, from colorful tropical fish to majestic sea turtles.',
-//       isSelected: false,
-//       comment1: 'A visit to the Mauritius Aquarium is a delightful experience for all ages, providing an up-close look at the island’s rich marine biodiversity and the beauty of its coral reefs.', // Replacing size with comment1
-//       comment2: 'Discover the wonders of the deep at the Mauritius Aquarium, where visitors can explore a wide variety of marine species in beautifully designed tanks that mimic their natural habitats.', // Replacing temperature with comment2
-//       size: 'Medium', // Re-added size field
-//     ),
-//     PlaceOfInterest(
-//       placeId: 6,
-//       rating: 4.2,
-//       category: 'Garden',
-//       placeName: 'Vallée des Couleurs',
-//       imageURL: 'assets/78.jpg',
-//       imageURL2: 'assets/dhav.png', // Second image
-//       imageURL3: 'assets/gina.jpg', // Third image
-//       isFavorited: false,
-//       description: 'The Vallée des Couleurs is not just about its unique geological formation; it offers adventure activities like ziplining and quad biking, making it a perfect destination for thrill-seekers and nature enthusiasts alike.',
-//       isSelected: false,
-//       comment1: 'he Vallée des Couleurs is a natural wonder, where the earth’s vibrant hues blend beautifully with the lush greenery, creating a mesmerizing landscape like no other.', // Replacing size with comment1
-//       comment2: 'The stunning shades of red, brown, violet, green, blue, purple, and yellow at the Vallée des Couleurs are a geological marvel, offering a glimpse into the volcanic history', // Replacing temperature with comment2
-//       size: 'Small', // Re-added size field
-//     ),
-//     PlaceOfInterest(
-//       placeId: 7,
-//       rating: 4.5,
-//       category: 'Garden',
-//       placeName: 'Crocodile Park',
-//       imageURL: 'assets/lavanille.jpg',
-//       imageURL2: 'assets/dhav.png', // Second image
-//       imageURL3: 'assets/gina.jpg', // Third image
-//       isFavorited: false,
-//       description: 'La Vanille Nature Park, also known as the Crocodile Park, offers a thrilling experience with its fascinating collection of Nile crocodiles, giant tortoises, and other unique wildlife.',
-//       isSelected: false,
-//       comment1: 'A visit to the Crocodile Park is both educational and exciting, providing an up-close encounter with these majestic reptiles while exploring the lush tropical setting of the park.', // Replacing size with comment1
-//       comment2: 'La Vanille Nature Park is not just about crocodiles; it’s a haven for animal lovers, with a diverse array of species, including monkeys, iguanas, and a butterfly sanctuary.', // Replacing temperature with comment2
-//       size: 'Medium', // Re-added size field
-//     ),
-//     PlaceOfInterest(
-//       placeId: 8,
-//       rating: 4.7,
-//       category: 'Activity',
-//       placeName: 'Snorkeling',
-//       imageURL: 'assets/snorking.jpg',
-//       imageURL2: 'assets/dhav.png', // Second image
-//       imageURL3: 'assets/gina.jpg', // Third image
-//       isFavorited: false,
-//       description: 'Whether youre a beginner or an experienced snorkeler, Mauritius offers something for everyone, from shallow coral gardens to thriving marine ecosystems teeming with exotic species.',
-//       isSelected: false,
-//       comment1: 'Snorkeling in Mauritius is a magical experience, offering a glimpse into the vibrant underwater world of coral reefs, tropical fish, and crystal-clear lagoons.', // Replacing size with comment1
-//       comment2: 'The turquoise waters of Mauritius make it a snorkeling paradise, where you can explore colorful marine life just a few meters below the surface.', // Replacing temperature with comment2
-//       size: 'Medium', // Re-added size field
-//     ),
-//   ];
-//
-//   // Get the favorited places
-//   static List<PlaceOfInterest> getFavoritedPlaces() {
-//     List<PlaceOfInterest> placeList = PlaceOfInterest.placeList;
-//     return placeList.where((element) => element.isFavorited == true).toList();
-//   }
-//
-//   // Get the selected places
-//   static List<PlaceOfInterest> selectedPlaces() {
-//     List<PlaceOfInterest> selectedPlaces = PlaceOfInterest.placeList;
-//     return selectedPlaces.where((element) => element.isSelected == true).toList();
-//   }
-// }
+
 class PlaceOfInterest {
   final int id;
   final double rating;
@@ -195,7 +12,10 @@ class PlaceOfInterest {
   final String comment2;
   bool isSelected;
   final String entryFee; // Entry fee or ticket price (if applicable)
-  final String openingHours; // Opening hours (if applicable)
+  final String openingHours;
+  final double destinationLatitude; // Latitude of the destination
+  final double destinationLongitude; // Longitude of the destination// Opening hours (if applicable)
+  final String urlCode;
 
   PlaceOfInterest({
     required this.id,
@@ -211,6 +31,9 @@ class PlaceOfInterest {
     required this.isSelected,
     required this.entryFee,
     required this.openingHours,
+    required this.destinationLatitude,
+    required this.destinationLongitude,
+    required this.urlCode,
   });
 
   // List of Places of Interest
@@ -218,7 +41,7 @@ class PlaceOfInterest {
     PlaceOfInterest(
       id: 0,
       rating: 4.5,
-      name: 'Gateau-Piment.',
+      name: 'Gateau-Piment',
       imageURL: 'assets/images/food2.jpg',
       imageURL2: 'assets/picicon/dhav.png',
       imageURL3: 'assets/picicon/gina.jpg',
@@ -229,6 +52,9 @@ class PlaceOfInterest {
       comment1: 'The perfect blend of spices and crispy texture, Gateau-Piment is a must-try for anyone visiting Mauritius!',
       comment2: 'A delicious street food snack that packs a punch of flavor in every bite.',
       openingHours: 'Daily, 8:00 AM - 5:00 PM',
+      destinationLatitude: -20.2455504,
+      destinationLongitude: 57.4511704,
+      urlCode: "Chez Dowlut",
     ),
     PlaceOfInterest(
       id: 1,
@@ -244,9 +70,51 @@ class PlaceOfInterest {
       comment1: 'Henna art is not just a beauty tradition; its a symbol of celebration and cultural expression',
       comment2: 'The intricate designs are always mesmerizing, and the process feels like a form of meditation.',
       openingHours: 'Mon-Sat, 9:00 AM - 6:00 PM',
+      destinationLatitude: -20.242601,
+      destinationLongitude: 57.4735627,
+      urlCode: "Tattoo Art Lovers Mauritius",
     ),
+
     PlaceOfInterest(
-      id: 2,
+      id: 3,
+      rating: 4.5,
+      name: 'Tamil Temple',
+      imageURL: 'assets/temple.jpg',
+      imageURL2: 'assets/picicon/lim.jpg',
+      imageURL3: 'assets/picicon/gina.jpg',
+      isFavorited: false,
+      description: 'Tamil temples in Mauritius are places of worship for the Tamil Hindu community. These temples are known for their intricate architecture, vibrant colors, and cultural significance.',
+      isSelected: false,
+      entryFee: 'Free',
+      comment1: 'The Tamil temples in Mauritius are not just places of worship but cultural landmarks that showcase the islands diverse heritage.',
+      comment2: 'Visiting a Tamil temple offers a peaceful experience where tradition and spirituality come together beautifully.',
+      openingHours: 'All-day access, best before sunset',
+      destinationLatitude: -20.2241018,
+      destinationLongitude: 57.4678516,
+      urlCode: "Mauritius Tamil Temples Federation, மொரிஷியஸ் தமிழ் கோவில்கள் கூட்டமைப்பு",
+    ),
+
+    PlaceOfInterest(
+      id: 4,
+      rating: 4.1,
+      name: 'Botanical Garden',
+      imageURL: 'assets/garden.jpg',
+      imageURL2: 'assets/picicon/lim.jpg',
+      imageURL3: 'assets/picicon/gina.jpg',
+      isFavorited: false,
+      description: 'The Sir Seewoosagur Ramgoolam Botanical Garden is a lush paradise, home to an impressive collection of exotic plants, serene pathways, and picturesque ponds, making it a must-visit for nature lovers.',
+      isSelected: false,
+      entryFee: 'Free',
+      comment1: 'Mountain hiking in Mauritius offers an exhilarating experience, with trails that wind through lush forests, rocky terrains, and panoramic views.',
+      comment2: 'Mauritius is a hiker’s paradise, where the rugged mountains challenge adventurers and reward them with breathtaking views of crystal-clear waters and verdant valleys.',
+      openingHours: 'All-day access, best before sunset',
+      destinationLatitude: -20.1047,
+      destinationLongitude: 57.5803,
+      urlCode: "Sir Seewoosagur Ramgoolam Botanical Garden",
+    ),
+
+    PlaceOfInterest(
+      id: 5,
       rating: 4.7,
       name: 'Gato-de-lhuile',
       imageURL: 'assets/images/food3.jpg',
@@ -259,24 +127,90 @@ class PlaceOfInterest {
       comment1: 'Crispy, golden, and irresistibly delicious—Gato-de-lhuile brings the taste of Mauritius right to your fingertips.',
       comment2: 'A sweet or savory indulgence, depending on your taste—either way, Gato-de-lhuile never disappoints.',
       openingHours: 'Daily, 7:00 AM - 5:00 PM',
+      destinationLatitude: -20.2547688,
+      destinationLongitude: 57.4401593,
+      urlCode: "Maraz-Chanapuri-gateaude l'huile",
     ),
+
+
     PlaceOfInterest(
-      id: 3,
-      rating: 4.5,
-      name: 'Tamil Temple',
-      imageURL: 'assets/spa.jpg',
+      id: 6,
+      rating: 4.8,
+      name: 'Vallée des Couleurs',
+      imageURL: 'assets/78.jpg',
       imageURL2: 'assets/picicon/lim.jpg',
       imageURL3: 'assets/picicon/gina.jpg',
       isFavorited: false,
-      description: 'Tamil temples in Mauritius are places of worship for the Tamil Hindu community. These temples are known for their intricate architecture, vibrant colors, and cultural significance.',
+      description: 'The Vallée des Couleurs is not just about its unique geological formation; it offers adventure activities like ziplining and quad biking, making it a perfect destination for thrill-seekers and nature enthusiasts alike.',
       isSelected: false,
       entryFee: 'Free',
-      comment1: 'The Tamil temples in Mauritius are not just places of worship but cultural landmarks that showcase the islands diverse heritage.',
-      comment2: 'Visiting a Tamil temple offers a peaceful experience where tradition and spirituality come together beautifully.',
+      comment1: 'Mountain hiking in Mauritius offers an exhilarating experience, with trails that wind through lush forests, rocky terrains, and panoramic views.',
+      comment2: 'Mauritius is a hiker’s paradise, where the rugged mountains challenge adventurers and reward them with breathtaking views of crystal-clear waters and verdant valleys.',
       openingHours: 'All-day access, best before sunset',
+      destinationLatitude: -20.4576,
+      destinationLongitude: 57.4852,
+      urlCode: "La Vallée Des Couleurs Nature Park",
     ),
+
     PlaceOfInterest(
-      id: 4,
+      id: 7,
+      rating: 4.5,
+      name: 'Crocodile Park',
+      imageURL: 'assets/crocodile.jpg',
+      imageURL2: 'assets/picicon/lim.jpg',
+      imageURL3: 'assets/picicon/gina.jpg',
+      isFavorited: false,
+      description: 'La Vanille Nature Park, also known as the Crocodile Park, offers a thrilling experience with its fascinating collection of Nile crocodiles, giant tortoises, and other unique wildlife.',
+      isSelected: false,
+      entryFee: 'Free',
+      comment1: 'Mountain hiking in Mauritius offers an exhilarating experience, with trails that wind through lush forests, rocky terrains, and panoramic views.',
+      comment2: 'Mauritius is a hiker’s paradise, where the rugged mountains challenge adventurers and reward them with breathtaking views of crystal-clear waters and verdant valleys.',
+      openingHours: 'All-day access, best before sunset',
+      destinationLatitude: -20.4995,
+      destinationLongitude: 57.5633,
+      urlCode: "La Vanille Nature Park",
+    ),
+
+    PlaceOfInterest(
+      id: 8,
+      rating: 4.4,
+      name: 'Odysseo Aquarium',
+      imageURL: 'assets/aquarium.jpg',
+      imageURL2: 'assets/picicon/lim.jpg',
+      imageURL3: 'assets/picicon/gina.jpg',
+      isFavorited: false,
+      description: 'The Mauritius Aquarium offers a fascinating underwater journey, showcasing the vibrant marine life of the Indian Ocean, from colorful tropical fish to majestic sea turtles.',
+      isSelected: false,
+      entryFee: 'MUR 1280',
+      comment1: 'Mountain hiking in Mauritius offers an exhilarating experience, with trails that wind through lush forests, rocky terrains, and panoramic views.',
+      comment2: 'Mauritius is a hiker’s paradise, where the rugged mountains challenge adventurers and reward them with breathtaking views of crystal-clear waters and verdant valleys.',
+      openingHours: '9am - 5pm',
+      destinationLatitude: -20.1593,
+      destinationLongitude: 57.4951,
+      urlCode: "Odysseo-oceanarium (Mauritius) LTD",
+    ),
+
+    PlaceOfInterest(
+      id: 9,
+      rating: 4.7,
+      name: 'Eau Bleu Waterfall',
+      imageURL: 'assets/waterfall.jpg',
+      imageURL2: 'assets/picicon/lim.jpg',
+      imageURL3: 'assets/picicon/gina.jpg',
+      isFavorited: false,
+      description: 'The waterfall originates from the nearby river and comes out on three different levels of the terrain (although the main waterfall is of interest to most of the visitors). All three waterfalls at Eau Bleue are spectacular as you’ll relish on the azure blue color of the pond.',
+      isSelected: false,
+      entryFee: 'MUR 1280',
+      comment1: 'Mountain hiking in Mauritius offers an exhilarating experience, with trails that wind through lush forests, rocky terrains, and panoramic views.',
+      comment2: 'Mauritius is a hiker’s paradise, where the rugged mountains challenge adventurers and reward them with breathtaking views of crystal-clear waters and verdant valleys.',
+      openingHours: '9am - 5pm',
+      destinationLatitude: -20.3699,
+      destinationLongitude: 57.6185,
+      urlCode: "Cascade Eau Bleu",
+    ),
+
+    PlaceOfInterest(
+      id: 10,
       rating: 4.5,
       name: 'Le Pouce',
       imageURL: 'assets/hiking.jpg',
@@ -289,7 +223,11 @@ class PlaceOfInterest {
       comment1: 'Mountain hiking in Mauritius offers an exhilarating experience, with trails that wind through lush forests, rocky terrains, and panoramic views.',
       comment2: 'Mauritius is a hiker’s paradise, where the rugged mountains challenge adventurers and reward them with breathtaking views of crystal-clear waters and verdant valleys.',
       openingHours: 'All-day access, best before sunset',
+      destinationLatitude: -20.1950,
+      destinationLongitude: 57.5222,
+      urlCode: "Le Pouce",
     ),
+
   ];
 
   // Get favorited places

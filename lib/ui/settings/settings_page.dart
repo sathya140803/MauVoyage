@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:my_application/ui/settings/theme_provider.dart';
+import '../../acc_management/authentications.dart';
 import '../settings/AboutPage.dart';
 import '../settings/NotificationSettingsPage.dart';
 import '../settings/ProfileSettingsPage.dart';
 import '../settings/SecuritySettingsPage.dart';
 import '../settings/LanguageSettingsPage.dart';
+import '../../acc_management/logout_notice.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -23,38 +25,17 @@ class _SettingsPageState extends State<SettingsPage> {
     final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(106.0),
-        child: AppBar(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          flexibleSpace: Padding(
-            padding: const EdgeInsets.only(bottom: 8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 70.0),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Text(
-                    'Settings',
-                    style: TextStyle(
-                      color: themeProvider.isDarkMode ? Colors.white : Colors.black, // Conditional text color
-                      fontSize: 24.0,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
+      appBar: AppBar(
+        backgroundColor: Colors.green,
+        title: const Text("Settings", style: TextStyle(fontWeight: FontWeight.bold)),
+        automaticallyImplyLeading: false,
       ),
+
       backgroundColor: themeProvider.isDarkMode ? Colors.black : Colors.grey[200],  // Conditional background color
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         children: [
-          const Divider(height: 32.0),
+
 
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -62,14 +43,14 @@ class _SettingsPageState extends State<SettingsPage> {
               // Profile Picture
               CircleAvatar(
                 radius: 30, // Made it slightly bigger
-                backgroundImage: NetworkImage('YOUR_PROFILE_IMAGE_URL'),
+                backgroundImage: NetworkImage(AuthService().getCurrentUser()?.photoURL?? 'https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg'),
                 // Or use AssetImage for local images:
                 // backgroundImage: AssetImage('assets/profile.png'),
               ),
               const SizedBox(height: 8.0), // Space between picture and username
               // Username
               Text(
-                'Username',
+                '${AuthService().getCurrentUser()?.displayName}',
                 style: TextStyle(
                   color: themeProvider.isDarkMode ? Colors.white : Colors.black,
                   fontSize: 16.0,
@@ -77,9 +58,10 @@ class _SettingsPageState extends State<SettingsPage> {
                 ),
               ),
               const SizedBox(height: 4.0), // Space between username and email
+              const SizedBox(height: 4.0), // Space between username and email
               // Email
               Text(
-                'user@example.com',
+                AuthService().getCurrentUser()?.email ?? 'No email available',
                 style: TextStyle(
                   color: themeProvider.isDarkMode ? Colors.white70 : Colors.black54,
                   fontSize: 14.0,
@@ -103,7 +85,7 @@ class _SettingsPageState extends State<SettingsPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => ProfileScreen()),
-              );
+              ).then((val){setState(() {});});
             },
           ),_buildListTile(
             title: 'Security',
@@ -117,28 +99,6 @@ class _SettingsPageState extends State<SettingsPage> {
               );
             },
           ),
-          const Divider(height: 32.0),
-
-          _buildSectionTitle('Appearance'),
-          _buildSwitchTile(
-            title: 'Dark Mode',
-            subtitle: 'Enable dark mode for better night-time use.',
-            value: themeProvider.isDarkMode,
-            onChanged: (value) => themeProvider.toggleTheme(value),
-            icon: MaterialCommunityIcons.theme_light_dark,
-          ),
-          _buildSwitchTile(
-            title: 'Emergency Button',
-            subtitle: 'Enable the emergency button to appear on the root page.',
-
-            value: themeProvider.isEmergencyButtonEnabled,
-            onChanged: (value) {
-              themeProvider.toggleEmergencyButton(value);
-            },
-            icon: Feather.alert_circle,
-          ),
-
-
           const Divider(height: 32.0),
 
           // General Section
@@ -169,6 +129,30 @@ class _SettingsPageState extends State<SettingsPage> {
           ),
           const Divider(height: 32.0),
 
+          _buildSectionTitle('Appearance'),
+          _buildSwitchTile(
+            title: 'Dark Mode',
+            subtitle: 'Enable dark mode for better night-time use.',
+            value: themeProvider.isDarkMode,
+            onChanged: (value) => themeProvider.toggleTheme(value),
+            icon: MaterialCommunityIcons.theme_light_dark,
+          ),
+          _buildSwitchTile(
+            title: 'Emergency Button',
+            subtitle: 'Enable the emergency button to appear on the root page.',
+
+            value: themeProvider.isEmergencyButtonEnabled,
+            onChanged: (value) {
+              themeProvider.toggleEmergencyButton(value);
+            },
+            icon: Feather.alert_circle,
+          ),
+
+
+          const Divider(height: 32.0),
+
+
+
           // About Section
           _buildSectionTitle('About'),
           _buildListTile(
@@ -195,7 +179,7 @@ class _SettingsPageState extends State<SettingsPage> {
             onTap: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => AboutPage()),
+                MaterialPageRoute(builder: (context) => LogoutDialog(onLogoutPressed: () {  },)),
               );
             },
           ),

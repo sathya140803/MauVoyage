@@ -8,43 +8,20 @@ class InterestSelectionScreen extends StatefulWidget {
 
 class _InterestSelectionScreenState extends State<InterestSelectionScreen> {
   final List<String> artists = [
-    'Night Club',
-    'Forest',
-    'Beaches',
-    'Activities',
-    'Kid Club',
-    'Waterfall',
-    'Aquarium', // New interest
-    'Hiking', // New interest
-    'Festivals', // New interest
-    'Water Sports', // New interest
-    'Spa & Wellness', // New interest
-    'Souvenirs', // New interest
-    'Traditional', // New interest
-    'Nature', // New interest
-    'Farm Tours', // New interest
-
+    'Night Club', 'Forest', 'Beaches', 'Activities', 'Kid Club',
+    'Waterfall', 'Aquarium', 'Hiking', 'Festivals', 'Water Sports',
+    'Spa & Wellness', 'Souvenirs', 'Traditional', 'Nature', 'Farm Tours'
   ];
 
   final List<String> images = [
-    'assets/cat1.jpg',
-    'assets/cat2.jpg',
-    'assets/cat3.jpg',
-    'assets/cat4.jpg',
-    'assets/cat5.jpg',
-    'assets/waterfall.jpg',
-    'assets/aquarium.jpg', // New image
-    'assets/hiking.jpg', // New image
-    'assets/festival.jpg', // New image
-    'assets/snorking.jpg', // New image
-    'assets/spa.jpg', // New image
-    'assets/souv.jpg', // New image
-    'assets/traditinel.jpg', // New image
-    'assets/images/riverenoir.jpg', // New image
-    'assets/lavanille.jpg', // New image
+    'assets/cat1.jpg', 'assets/cat2.jpg', 'assets/cat3.jpg',
+    'assets/cat4.jpg', 'assets/cat5.jpg', 'assets/waterfall.jpg',
+    'assets/aquarium.jpg', 'assets/hiking.jpg', 'assets/festival.jpg',
+    'assets/snorking.jpg', 'assets/spa.jpg', 'assets/souv.jpg',
+    'assets/traditinel.jpg', 'assets/images/riverenoir.jpg', 'assets/lavanille.jpg'
   ];
 
-  List<bool> selectedArtists = List.generate(20, (index) => false);
+  List<bool> selectedArtists = List.generate(15, (index) => false);
   bool isContinueButtonVisible = false;
 
   void _updateSelection(int index) {
@@ -56,7 +33,6 @@ class _InterestSelectionScreenState extends State<InterestSelectionScreen> {
   }
 
   void _navigateToNextScreen() {
-    // Navigate to the RootPage
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
@@ -67,87 +43,111 @@ class _InterestSelectionScreenState extends State<InterestSelectionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black,
-      body: Padding(
-        padding: const EdgeInsets.all(13.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // Positioning the "Choose 3 or more artists you like." text
-            Padding(
-              padding: const EdgeInsets.only(top: 40.0), // Adjust top padding
-              child: Text(
-                'Choose 3 or more interests you like.',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-                textAlign: TextAlign.center, // Centered the text
-              ),
-            ),
-            const SizedBox(height: 20),
-            Expanded(
-              child: GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 3,
-                  childAspectRatio: 0.8,
-                  crossAxisSpacing: 16.0,
-                  mainAxisSpacing: 16.0,
-                ),
-                itemCount: artists.length,
-                itemBuilder: (context, index) {
-                  return GestureDetector(
-                    onTap: () => _updateSelection(index),
-                    child: Stack(
-                      children: [
-                        Column(
-                          children: [
-                            CircleAvatar(
-                              radius: 55,
-                              backgroundColor: Colors.grey[900],
-                              backgroundImage: AssetImage(images[index]),
-                            ),
-                            const SizedBox(height: 8),
-                            Text(
-                              artists[index],
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.w500,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        final screenWidth = constraints.maxWidth;
+        final screenHeight = constraints.maxHeight;
+
+        int crossAxisCount = screenWidth > 600 ? 4 : 3;
+        double childAspectRatio = screenWidth > 600 ? 0.7 : 0.8;
+        double avatarRadius = screenWidth * 0.12;
+
+        return Scaffold(
+          backgroundColor: Colors.black,
+          body: SafeArea(
+            child: Center(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: 600), // Limit max width
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: screenWidth * 0.04,
+                      vertical: screenWidth * 0.02
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Choose 3 or more interests you like.',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: screenWidth * 0.06,
+                          fontWeight: FontWeight.bold,
                         ),
-                        if (selectedArtists[index])
-                          Positioned(
-                            top: 0,
-                            right: 0,
-                            child: Icon(
-                              Icons.check_circle,
-                              color: Colors.green,
-                              size: 24,
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: screenHeight * 0.02),
+                      Expanded(
+                        child: GridView.builder(
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: crossAxisCount,
+                            childAspectRatio: childAspectRatio,
+                            crossAxisSpacing: screenWidth * 0.04,
+                            mainAxisSpacing: screenWidth * 0.04,
+                          ),
+                          itemCount: artists.length,
+                          itemBuilder: (context, index) {
+                            return GestureDetector(
+                              onTap: () => _updateSelection(index),
+                              child: Stack(
+                                children: [
+                                  Column(
+                                    children: [
+                                      CircleAvatar(
+                                        radius: avatarRadius,
+                                        backgroundColor: Colors.grey[900],
+                                        backgroundImage: AssetImage(images[index]),
+                                      ),
+                                      SizedBox(height: screenHeight * 0.01),
+                                      Text(
+                                        artists[index],
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: screenWidth * 0.03,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                    ],
+                                  ),
+                                  if (selectedArtists[index])
+                                    Positioned(
+                                      top: 0,
+                                      right: 0,
+                                      child: Icon(
+                                        Icons.check_circle,
+                                        color: Colors.green,
+                                        size: screenWidth * 0.06,
+                                      ),
+                                    ),
+                                ],
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                      if (isContinueButtonVisible)
+                        Padding(
+                          padding: EdgeInsets.only(top: screenHeight * 0.02),
+                          child: ElevatedButton(
+                            onPressed: _navigateToNextScreen,
+                            style: ElevatedButton.styleFrom(
+                              minimumSize: Size(double.infinity, screenHeight * 0.06),
+                            ),
+                            child: Text(
+                              'Continue',
+                              style: TextStyle(fontSize: screenWidth * 0.04),
                             ),
                           ),
-                      ],
-                    ),
-                  );
-                },
+                        ),
+                    ],
+                  ),
+                ),
               ),
             ),
-            if (isContinueButtonVisible) // Show button only if minimum selection is met
-              ElevatedButton(
-                onPressed: _navigateToNextScreen,
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 50), // Full width
-                  iconColor: Colors.orangeAccent, // Set button color to green
-                ),
-                child: Text('Continue'),
-              ),
-          ],
-        ),
-      ),
+          ),
+        );
+      },
     );
   }
 }

@@ -12,6 +12,9 @@ class Beach {
   bool isSelected;
   final String entryFee; // Entry fee or ticket price
   final String openingHours; // Opening hours of the beach
+  final double destinationLatitude; // Latitude of the destination
+  final double destinationLongitude;
+  final String urlCode;// Longitude of the destination
 
   Beach({
     required this.id,
@@ -27,6 +30,9 @@ class Beach {
     required this.isSelected,
     required this.entryFee,
     required this.openingHours,
+    required this.destinationLatitude,
+    required this.destinationLongitude,
+    required this.urlCode,
   });
 
   // List of Beaches
@@ -41,11 +47,14 @@ class Beach {
       isFavorited: false,
       description: 'Blue Bay Beach is famous for its clear waters, soft white sand, and great snorkeling opportunities.',
       isSelected: false,
-      entryFee: 'MUR 200',
+      entryFee: 'Free',
       comment1: 'The mountains are a perfect reminder that beauty lies in '
           'simplicity — their timeless peaks stand as silent witnesses to nature\'s most serene moments.',
       comment2: 'The climb up Le Morne Brabant reveals more than just a magnificent landscape; it tells the story of Mauritius past while offering an unforgettable connection to nature\'s most serene beauty.',
       openingHours: 'Daily, 8:00 AM - 6:00 PM',
+      destinationLatitude: -20.4442,
+      destinationLongitude: 57.7165,
+      urlCode: "Blue Bay Beach Mauritius",
     ),
     Beach(
       id: 1,
@@ -62,6 +71,9 @@ class Beach {
           'simplicity — their timeless peaks stand as silent witnesses to nature\'s most serene moments.',
       comment2: 'The climb up Le Morne Brabant reveals more than just a magnificent landscape; it tells the story of Mauritius past while offering an unforgettable connection to nature\'s most serene beauty.',
       openingHours: 'Daily, 9:00 AM - 7:00 PM',
+      destinationLatitude: -20.4523973,
+      destinationLongitude: 57.3125488,
+      urlCode: "Le Morne Public Beach",
     ),
     Beach(
       id: 2,
@@ -77,6 +89,10 @@ class Beach {
       comment1: 'A quiet and peaceful escape, the pristine waters offer an unmatched serenity.',
       comment2: 'The golden sands stretch far and wide, creating the perfect environment for a relaxing day.',
       openingHours: 'Daily, 8:00 AM - 5:00 PM',
+      destinationLatitude: -20.0350,
+      destinationLongitude: 57.5450,
+      urlCode: "Trou aux Biches Beach",
+
     ),
     Beach(
       id: 3,
@@ -92,6 +108,9 @@ class Beach {
       comment1: 'Grand Baie is vibrant with an abundance of water sports activities and entertainment.',
       comment2: 'A bustling beach where you can enjoy both adventure and relaxation.',
       openingHours: 'Daily, 9:00 AM - 8:00 PM',
+      destinationLatitude: -20.0089,
+      destinationLongitude: 57.5816,
+      urlCode: "Grand Baie Public Beach",
     ),
     Beach(
       id: 4,
@@ -107,6 +126,9 @@ class Beach {
       comment1: 'Perfect for a day out with family or friends, enjoying both the sun and the calm sea.',
       comment2: 'A charming, small beach that never feels overcrowded, perfect for swimming.',
       openingHours: 'Daily, 7:00 AM - 6:00 PM',
+      destinationLatitude: -19.9939,
+      destinationLongitude: 57.5913,
+      urlCode: "Pereybere Public Beach",
     ),
     Beach(
       id: 5,
@@ -122,6 +144,9 @@ class Beach {
       comment1: 'With its clear waters and vibrant marine life, it’s a diver\'s paradise.',
       comment2: 'Flic en Flac offers a great balance of relaxation and adventure, with activities for everyone.',
       openingHours: 'Daily, 8:00 AM - 7:00 PM',
+      destinationLatitude: -20.2995,
+      destinationLongitude: 57.3634,
+      urlCode: "Flic En Flac Beach",
     ),
   ];
 

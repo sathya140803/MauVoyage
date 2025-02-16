@@ -1,4 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:url_launcher/url_launcher_string.dart';
+
+
+
+Widget _buildSwitchTile({
+  required String title,
+  required String subtitle,
+  required String number
+}) {
+  return Card(
+      margin: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
+      elevation: 2,
+      child: TextButton(
+        onPressed: (){
+          launchUrlString("tel:"+number);
+        },
+        child: ListTile(
+          leading: Icon(Icons.emergency, color: Colors.red),
+          title: Text(title),
+          subtitle: Text(subtitle),
+          trailing: Icon(Icons.call),
+        ),
+      )
+  );
+}
+
+
+
 
 class EmergencyPage extends StatelessWidget {
   const EmergencyPage({Key? key}) : super(key: key);
@@ -6,38 +34,21 @@ class EmergencyPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Emergency'),
-        backgroundColor: Colors.red,
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(Icons.warning, size: 100, color: Colors.red),
-            const SizedBox(height: 20),
-            const Text(
-              'Emergency Services',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 10),
-            const Text(
-              'Call or navigate to emergency resources.',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 16),
-            ),
-            const SizedBox(height: 30),
-            ElevatedButton.icon(
-              onPressed: () {
-                // Call action
-              },
-              icon: const Icon(Icons.phone),
-              label: const Text('Call Now'),
-              style: ElevatedButton.styleFrom(iconColor: Colors.red),
-            ),
-          ],
+        appBar: AppBar(
+          title: const Text('Emergency'),
+          backgroundColor: Colors.red,
         ),
-      ),
+        body: ListView(
+          children: [
+            _buildSwitchTile(title: "Airport Police", subtitle: "6377320", number: "6377320"),
+            _buildSwitchTile(title: "Ambulance (SAMU)", subtitle: "114", number: "114"),
+            _buildSwitchTile(title: "Emergency (Police)", subtitle: "999", number: "999"),
+            _buildSwitchTile(title: "Fire & Rescue", subtitle: "115", number: "115"),
+            _buildSwitchTile(title: "National Coast Guard Hotline", subtitle: "177", number: "177"),
+            _buildSwitchTile(title: "Police Hotline", subtitle: "148", number: "148"),
+            _buildSwitchTile(title: "Tourist Info", subtitle: "152", number: "152"),
+          ],
+        )
     );
   }
 }

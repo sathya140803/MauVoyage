@@ -49,7 +49,7 @@ dependencies:
   image_picker: ^1.1.2
   firebase_storage: ^12.4.0
   random_string: ^2.3.1
-  shared_preferences: ^2.5.1
+
 
 
 
@@ -61,6 +61,13 @@ dependencies:
   get_storage:
   flutter_local_notifications:
   calendar_view:
+  flutter_map: ^8.0.0
+  geolocator: ^13.0.2
+  shared_preferences:
+  cloudinary_dart: ^0.0.11
+  cloudinary_api: ^1.1.0
+  permission_handler: ^11.3.1
+  url_launcher:
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +80,12 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^5.0.0
+  flutter_launcher_icons: ^0.14.3
+
+flutter_icons:
+    android: "launcher_icon"
+    ios: true
+    image_path: "assets/icon/logo.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -106,6 +119,8 @@ flutter:
     - assets/lavanille.jpg
     - assets/festival.jpg
     - assets/spa.jpg
+    - assets/temple.jpg
+    - assets/crocodile.jpg
     - assets/traditinel.jpg
     - assets/maconde.jpg
     - assets/78.jpg
@@ -150,13 +165,14 @@ flutter:
     - assets/animation/anim5.json
     - assets/animation/anim6.json
     - assets/moris.png
-    - assets/acc_management/login.jpg
+    - assets/acc_management/bali.jpg
+    - assets/icon/logo.png
 
 
 
 
 
-      # An image asset can refer to one or more resolution-specific "variants", see
+    # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 
   # For details regarding adding assets from package dependencies, see

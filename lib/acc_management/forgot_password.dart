@@ -18,10 +18,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     return Scaffold(
       backgroundColor: Colors.white, // White background for a minimalist look
       appBar: AppBar(
-        backgroundColor: Colors.orange,
+        backgroundColor: Colors.cyan,
 
       ),
       body: SafeArea(
+        child: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 36.0, vertical: 50.0),
           child: Form(
@@ -35,7 +36,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   style: GoogleFonts.roboto(
                     fontSize: 28, // Larger font size for emphasis
                     fontWeight: FontWeight.bold,
-                    color: Colors.orange, // Orange color for the label
+                    color: Colors.cyan, // Orange color for the label
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -69,13 +70,13 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),
                       borderSide: BorderSide(
-                        color: Colors.orange, // Focused border color
+                        color: Colors.cyan, // Focused border color
                         width: 2,
                       ),
                     ),
                     prefixIcon: Icon(
                       Icons.email,
-                      color: Colors.orange,
+                      color: Colors.cyan,
                     ),
                   ),
                   validator: (value) {
@@ -112,7 +113,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        color: Colors.orange,
+                        color: Colors.cyan,
                       ),
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       child: Center(
@@ -138,7 +139,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                   child: Text(
                     "Back",
                     style: GoogleFonts.roboto(
-                      color: Colors.orange,
+                      color: Colors.cyan,
                       fontSize: 16,
                       fontWeight: FontWeight.w600,
                     ),
@@ -149,6 +150,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
           ),
         ),
       ),
+    ),
     );
   }
 }

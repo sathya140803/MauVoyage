@@ -39,7 +39,7 @@ class LocalNotification{
         const NotificationDetails(
           android: AndroidNotificationDetails(
               'channel 1', 'your channel name',
-             channelDescription: 'your channel description'
+              channelDescription: 'your channel description'
           ),
         ),
         androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
@@ -62,10 +62,15 @@ class LocalNotification{
 
   static Future cancelWithId(id) async{
     await flutterLocalNotificationsPlugin.cancel(id);
+    print(await flutterLocalNotificationsPlugin.pendingNotificationRequests());
   }
 
   static Future cancelAll() async{
     await flutterLocalNotificationsPlugin.cancelAll();
+  }
+
+  static Future seeAll() async{
+    //print(await flutterLocalNotificationsPlugin.pendingNotificationRequests());
   }
 
 }

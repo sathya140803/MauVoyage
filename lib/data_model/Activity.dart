@@ -13,6 +13,9 @@ class Activity {
   final String duration; // Duration of the activity
   final String price; // Price of the activity
   final String location; // Location of the activity
+  final double destinationLatitude; // Latitude of the destination
+  final double destinationLongitude;
+  final String urlCode;// Longitude of the destination
 
   Activity({
     required this.id,
@@ -29,6 +32,10 @@ class Activity {
     required this.duration,
     required this.price,
     required this.location,
+    required this.destinationLatitude,
+    required this.destinationLongitude,
+    required this.urlCode,
+
   });
 
   // List of Activities
@@ -48,11 +55,14 @@ class Activity {
       duration: '2 hours',
       price: 'MUR 2,000',
       location: 'Grand Baie',
+      destinationLatitude: -19.9872377,
+      destinationLongitude: 57.600568,
+      urlCode: "Crystal Divers Mauritius",
     ),
     Activity(
       id: 1,
       rating: 4.8,
-      name: 'Zip-lining',
+      name: 'Zip-Lining',
       imageURL: 'assets/activities/zip.jpg',
       imageURL2: 'assets/picicon/lim.jpg',
       imageURL3: 'assets/picicon/gina.jpg',
@@ -64,6 +74,9 @@ class Activity {
       comment2: 'Perfect for adventure lovers.',
       price: 'MUR 1,500',
       location: 'Ebene Forest',
+      destinationLatitude: -20.4577,
+      destinationLongitude: 57.4852,
+      urlCode: "La Vallée Des Couleurs Nature Park",
     ),
     Activity(
       id: 2,
@@ -80,6 +93,9 @@ class Activity {
       comment2: 'Includes lunch and snorkeling.',
       price: 'MUR 3,500',
       location: 'Black River',
+      destinationLatitude: -20.3640,
+      destinationLongitude: 57.3758,
+      urlCode: "Catamaran Cruises Ltd",
     ),
     Activity(
       id: 3,
@@ -96,6 +112,9 @@ class Activity {
       comment2: 'Perfect for nature and fitness enthusiasts.',
       price: 'MUR 1,200',
       location: 'Le Morne Brabant',
+      destinationLatitude: -20.4562,
+      destinationLongitude: 57.3278,
+      urlCode: "Le Morne",
     ),
     Activity(
       id: 4,
@@ -112,6 +131,9 @@ class Activity {
       comment2: 'Explore scenic trails and wildlife.',
       price: 'MUR 2,500',
       location: 'Bel Ombre',
+      destinationLatitude: -20.5045,
+      destinationLongitude: 57.4118,
+      urlCode: "Bel Ombre",
     ),
     Activity(
       id: 5,
@@ -128,6 +150,9 @@ class Activity {
       comment2: 'An unforgettable memory for animal lovers.',
       price: 'MUR 3,000',
       location: 'Tamarin Bay',
+      destinationLatitude: -20.3547,
+      destinationLongitude: 57.3617,
+      urlCode: "Tamarin Mauritius",
     ),
   ];
 

@@ -5,6 +5,7 @@ import 'package:my_application/data_model/Beach.dart';
 import 'package:my_application/data_model/Forest.dart';
 import 'package:my_application/data_model/NightClubEvent .dart';
 import 'package:my_application/data_model/PlaceOfInterest.dart';
+import 'package:my_application/notification_schedule/notification_controller.dart';
 import "package:my_application/notification_schedule/schedule_controller.dart";
 import 'package:my_application/ui/DetailPage.dart';
 
@@ -26,6 +27,7 @@ class CalendarPage extends StatefulWidget {
 
 class _CalendarPage extends State<CalendarPage> {
   var currentDate = DateTime.now();
+  var checkDate = null;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class _CalendarPage extends State<CalendarPage> {
     for (int i = 0; i < scheduleList.length; i++) {
       var item = getItem(scheduleList[i]["itemId"], scheduleList[i]["itemType"]);
       calendarData.add(CalendarEventData(
-          title: item.name, date: DateTime.parse(scheduleList[i]["date"])));
+          title: item.name+i.toString(), date: DateTime.parse(scheduleList[i]["date"])));
     }
 
     return Scaffold(
@@ -49,23 +51,78 @@ class _CalendarPage extends State<CalendarPage> {
           Expanded(
             child: MonthView(
               controller: EventController()..addAll(calendarData),
+              cellBuilder: (date, events, isToday, isInMonth, hideDaysNotInMonth){
+                if(isInMonth){
+                  return Column(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          margin: EdgeInsets.only(top: 5),
+                          decoration: !isToday? BoxDecoration(): BoxDecoration(
+                            color: Theme.of(context).primaryColor,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                              child: Text(
+                                date.day.toString(),
+                              )
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                          child: Text(
+                            events.isNotEmpty? events.length.toString(): "",
+                            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Theme.of(context).primaryColor),
+                          )
+                      )
+                    ],
+                  );
+                }
+                return Container();
+              },
               minMonth: DateTime(DateTime.now().year),
               maxMonth: DateTime(2050),
               initialMonth: DateTime.now(),
-              cellAspectRatio: 1.05,
+              cellAspectRatio: 1.02,
               onPageChange: (date, pageIndex) {
                 setState(() {
                   currentDate = date;
+                  checkDate = null;
                 });
               },
               onCellTap: (events, date) {
-                print(events);
+                setState(() {
+                  checkDate = date;
+                });
               },
               startDay: WeekDays.sunday,
               showWeekTileBorder: false,
               hideDaysNotInMonth: true,
               showWeekends: true,
             ),
+          ),
+          Row(
+            children: [
+              Container(
+                margin: EdgeInsets.only(left: 10),
+                child: Center(
+                    child: Text(
+                        checkDate == null? "Sorted By: None": "Sorted By: ${checkDate.toString().substring(0,11)}"
+                    )
+                ),
+              ),
+              Spacer(),
+              Expanded(
+                  child: TextButton(
+                      onPressed: (){
+                        setState(() {
+                          checkDate = null;
+                        });
+                      },
+                      child: Text("Clear")
+                  )
+              )
+            ],
           ),
           Expanded(
             child: ListView.builder(
@@ -75,9 +132,10 @@ class _CalendarPage extends State<CalendarPage> {
                 var schedule = scheduleList[index];
                 var item = getItem(schedule["itemId"], schedule["itemType"]);
                 var scheduleDate = DateTime.parse(schedule["date"]);
+                scheduleDate = DateTime(scheduleDate.year, scheduleDate.month, scheduleDate.day);
 
-                if (scheduleDate.month == currentDate.month &&
-                    scheduleDate.year == currentDate.year) {
+                if (checkDate == null && scheduleDate.month == currentDate.month &&
+                    scheduleDate.year == currentDate.year || (checkDate != null && checkDate == scheduleDate)) {
                   return Card(
                     margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
                     elevation: 6,

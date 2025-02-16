@@ -44,11 +44,11 @@ class SignInPageState extends State<SignInPage> {
                 Container(
                   padding: const EdgeInsets.only(top: 40, left: 35, right: 35),
                   margin: const EdgeInsets.only(bottom: 20),
-                  height: 300,
+                  height: 290,
                   width: double.infinity,
                   decoration: BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage("assets/acc_management/login.jpg"),
+                      image: AssetImage("assets/acc_management/bali.jpg"),
                       fit: BoxFit.cover,
                       colorFilter: ColorFilter.mode(
                         Colors.black.withOpacity(0.4),
@@ -97,7 +97,7 @@ class SignInPageState extends State<SignInPage> {
                               color: Colors.grey,
                             ),
                             floatingLabelStyle: TextStyle(
-                              color: Colors.orange,
+                              color: Colors.cyan,
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -108,13 +108,13 @@ class SignInPageState extends State<SignInPage> {
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide(
-                                color: Colors.orange,
+                                color: Colors.cyan,
                                 width: 2,
                               ),
                             ),
                             prefixIcon: Icon(
                               Icons.email_rounded,
-                              color: Colors.orange,
+                              color: Colors.cyan,
                             ),
                           ),
                           validator: (value) {
@@ -135,7 +135,7 @@ class SignInPageState extends State<SignInPage> {
                               color: Colors.grey,
                             ),
                             floatingLabelStyle: TextStyle(
-                              color: Colors.orange,
+                              color: Colors.cyan,
                             ),
                             border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
@@ -146,20 +146,20 @@ class SignInPageState extends State<SignInPage> {
                             focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(12),
                               borderSide: BorderSide(
-                                color: Colors.orange,
+                                color: Colors.cyan,
                                 width: 2,
                               ),
                             ),
                             prefixIcon: Icon(
                               Icons.lock,
-                              color: Colors.orange,
+                              color: Colors.cyan,
                             ),
                             suffixIcon: IconButton(
                               icon: Icon(
                                 _isPasswordVisible
                                     ? Icons.visibility
                                     : Icons.visibility_off,
-                                color: Colors.orange,
+                                color: Colors.cyan,
                               ),
                               onPressed: () {
                                 setState(() {
@@ -175,7 +175,7 @@ class SignInPageState extends State<SignInPage> {
                             return null;
                           },
                         ),
-                        const SizedBox(height: 12),
+                        const SizedBox(height: 1),
 
                         Row(
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -189,7 +189,7 @@ class SignInPageState extends State<SignInPage> {
                                       _isRememberMeChecked = value ?? false;
                                     });
                                   },
-                                  activeColor: Colors.orange,
+                                  activeColor: Colors.cyan,
                                 ),
                                 Text(
                                   "Remember me",
@@ -211,7 +211,7 @@ class SignInPageState extends State<SignInPage> {
                               child: Text(
                                 "Forgot Password?",
                                 style: GoogleFonts.roboto(
-                                  color: Colors.orange,
+                                  color: Colors.cyan,
                                   fontSize: 14, // Reduced font size
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -227,8 +227,9 @@ class SignInPageState extends State<SignInPage> {
                             if (_formKey.currentState?.validate() ?? false) {
                               try {
                                 User? user = await _authService.signInWithEmailPassword(
-                                  _usernameController.text.trim(),
-                                  _passwordController.text.trim(),
+                                    _usernameController.text.trim(),
+                                    _passwordController.text.trim(),
+                                    _isRememberMeChecked
                                 );
                                 if (user != null) {
                                   Navigator.pushReplacement(
@@ -252,7 +253,7 @@ class SignInPageState extends State<SignInPage> {
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
-                                color: Colors.orange,
+                                color: Colors.cyan,
                               ),
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               child: Center(
@@ -268,7 +269,7 @@ class SignInPageState extends State<SignInPage> {
                             ),
                           ),
                         ),
-                        SizedBox(height: 16),
+                        SizedBox(height: 10),
 
                         Center(
                           child: GestureDetector(
@@ -291,7 +292,7 @@ class SignInPageState extends State<SignInPage> {
                                   TextSpan(
                                     text: "Sign Up",
                                     style: GoogleFonts.roboto(
-                                      color: Colors.orange,
+                                      color: Colors.cyan,
                                       fontSize: 18,
                                       fontWeight: FontWeight.bold,
                                     ),

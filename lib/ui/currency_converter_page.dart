@@ -207,7 +207,7 @@ class _CurrencyConverterPageState extends State<CurrencyConverterPage> {
                         borderRadius: BorderRadius.circular(8),
                       ),
                       child: Text(
-                        '$_toCurrency: ${_convertedAmount.toStringAsFixed(2)}',
+                        '${_convertedAmount.toStringAsFixed(2)}',
                         style: const TextStyle(fontSize: 24),
                       ),
                     ),

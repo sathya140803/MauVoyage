@@ -23,9 +23,29 @@ addNotification(notification noti){
 
   var days = getDays(DateTime.parse(noti.showTime));
 
+  GetStorage().write("notifications", fin);
+  var userSettings = jsonDecode(GetStorage().read("NotificationSettings"))["ScheduledNotification"];
+  if(!userSettings){
+    return;
+  }
   LocalNotification.setScheduleTime(noti.id, noti.type, noti.description + " tomorrow!", days);
 
-  GetStorage().write("notifications", fin);
+}
+
+cancelAllNotifications(){
+  LocalNotification.cancelAll();
+  LocalNotification.seeAll();
+}
+
+rebuildNotifications(){
+  var notifications = getNotifications();
+  for(int i = 0; i < notifications.length; i++){
+    var days = getDays(DateTime.parse(notifications[i]["showTime"]));
+    if(days > 0){
+      LocalNotification.setScheduleTime(notifications[i]["id"], notifications[i]["type"], notifications[i]["description"] + " tomorrow!", days);
+    }
+  }
+  LocalNotification.seeAll();
 }
 
 int getCurrentNotificationCount(){

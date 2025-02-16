@@ -53,9 +53,8 @@ addSchedule(int itemId, String itemType, DateTime date){
 
 removeSchedule(int listId){
   var schedules = getSchedules();
-  //if(DateTime.now().isBefore(DateTime.parse(schedules[listId]["date"]))){
-    removeNotificationWithId(schedules[listId]["notificationId"]);
-  //}
+  removeNotificationWithId(schedules[listId]["notificationId"]);
+  print(schedules[listId]["notificationId"]);
 
   schedules.removeAt(listId);
   String finalString = "";
@@ -73,6 +72,11 @@ removeSchedule(int listId){
 }
 
 showInAppNoti(){
+  print(GetStorage().read("NotificationSettings"));
+  var userSettings = jsonDecode(GetStorage().read("NotificationSettings"))["InAppNotification"];
+  if(!userSettings){
+    return;
+  }
   DateTime curDay = DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day);
   if(GetStorage().read("inAppNotiId") == null ){
     GetStorage().write("inAppNotiId",0);
