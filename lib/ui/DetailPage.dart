@@ -14,6 +14,7 @@ import 'package:table_calendar/table_calendar.dart'; // Import the custom_calend
 import 'package:http/http.dart' as http;
 
 import "package:my_application/acc_management/authentications.dart";
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../Location/map.dart';
 
@@ -591,17 +592,7 @@ class _CommonDetailLayout extends State<CommonDetailLayout> {
                                     child: IconButton(
                                       icon: const Icon(Icons.location_on, color: Colors.white),
                                       onPressed: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => MapPage(
-                                              destinationLatitude: item.destinationLatitude,
-                                              destinationLongitude: item.destinationLongitude,
-                                              urlCode: item.urlCode,
-                                              name: itemName,
-                                            ), // Navigate to MapPage
-                                          ),
-                                        );
+                                        launchUrlString("https://www.google.com/maps/search/?api=1&query="+item.urlCode);
                                       },
                                     ),
                                   ),

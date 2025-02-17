@@ -123,7 +123,7 @@ class _HomePageState extends State<HomePage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(builder: (context) => NotificationPage()),
-                          );
+                          ).then((_){setState(() {});});
                         },
                         icon: const Icon(Icons.notifications, color: Colors.blue),
                       ),
