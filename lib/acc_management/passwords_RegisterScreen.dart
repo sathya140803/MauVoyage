@@ -1,21 +1,21 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_application/acc_management/name_RegisterScreen.dart';
 import '../ui/InterestSelectionScreen.dart';
-import 'login_page.dart';
 import 'authentications.dart';
 
-class SignUpPage extends StatefulWidget {
-  const SignUpPage({super.key});
+class PasswordSignUpPage extends StatefulWidget {
+  final String email; // Define the email as a field in the constructor
+
+  const PasswordSignUpPage({super.key, required this.email});
 
   @override
-  SignUpPageState createState() => SignUpPageState();
+  PasswordSignUpPageState createState() => PasswordSignUpPageState();
 }
 
-class SignUpPageState extends State<SignUpPage> {
+class PasswordSignUpPageState extends State<PasswordSignUpPage> {
   final _formKey = GlobalKey<FormState>();
-  final TextEditingController _usernameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   final TextEditingController _confirmPasswordController = TextEditingController();
   bool _isRememberMeChecked = false;
@@ -104,90 +104,15 @@ class SignUpPageState extends State<SignUpPage> {
                     ],
                   ),
                 ),
-
+                const SizedBox(height: 12),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 36.0),
                   child: Form(
                     key: _formKey,
                     child: Column(
                       children: [
-                        TextFormField(
-                          controller: _usernameController,
-                          decoration: InputDecoration(
-                            labelText: 'Username',
-                            labelStyle: GoogleFonts.roboto(
-                              color: Colors.grey,
-                            ),
-                            floatingLabelStyle: TextStyle(
-                              color: Colors.cyan,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(
-                                color: Colors.grey.shade300,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(
-                                color: Colors.cyan,
-                                width: 2,
-                              ),
-                            ),
-                            prefixIcon: Icon(
-                              Icons.account_circle,
-                              color: Colors.cyan,
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your username';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 12),  // Reduced from 16
 
-                        TextFormField(
-                          controller: _emailController,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: InputDecoration(
-                            labelText: 'Email',
-                            labelStyle: GoogleFonts.roboto(
-                              color: Colors.grey,
-                            ),
-                            floatingLabelStyle: TextStyle(
-                              color: Colors.cyan,
-                            ),
-                            border: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(
-                                color: Colors.grey.shade300,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(12),
-                              borderSide: BorderSide(
-                                color: Colors.cyan,
-                                width: 2,
-                              ),
-                            ),
-                            prefixIcon: Icon(
-                              Icons.email,
-                              color: Colors.cyan,
-                            ),
-                          ),
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Please enter your email';
-                            }
-                            if (!RegExp(r'\S+@\S+\.\S+').hasMatch(value)) {
-                              return 'Please enter a valid email address';
-                            }
-                            return null;
-                          },
-                        ),
-                        const SizedBox(height: 12),  // Reduced from 16
+                        const SizedBox(height: 12),
 
                         TextFormField(
                           controller: _passwordController,
@@ -299,55 +224,29 @@ class SignUpPageState extends State<SignUpPage> {
                           onTap: () async {
                             if (_formKey.currentState?.validate() ?? false) {
                               try {
-                                String result = await _authService.register(
-                                    _emailController.text.trim(),
-                                    _passwordController.text.trim(),
-                                    _usernameController.text,
-                                    _isRememberMeChecked
-                                );
+                                await _authService.RegisterPassword(
+                                    _passwordController.text.trim(), _isRememberMeChecked);
 
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(result),
-                                    duration: Duration(seconds: 5),
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        NameSignUpPage(email: widget.email),
                                   ),
                                 );
-
-                                showDialog(
-                                  context: context,
-                                  barrierDismissible: false,
-                                  builder: (context) {
-                                    return AlertDialog(
-                                      title: Text("Verify Your Email"),
-                                      content: Text(
-                                        "A verification email has been sent to your email address. "
-                                            "Please verify your email and return to the app.",
-                                      ),
-                                      actions: [
-                                        TextButton(
-                                          onPressed: () {
-                                            Navigator.of(context).pop();
-                                          },
-                                          child: Text("OK"),
-                                        ),
-                                      ],
-                                    );
-                                  },
-                                );
-
-                                await checkEmailVerification();
                               } catch (e) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
                                     content: Text(e.toString()),
-                                    duration: Duration(seconds: 5),
+                                    duration: const Duration(seconds: 5),
                                   ),
                                 );
                               }
                             }
                           },
+
                           child: SizedBox(
-                            width: 200,
+                            width: 155,
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
@@ -356,7 +255,7 @@ class SignUpPageState extends State<SignUpPage> {
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               child: Center(
                                 child: Text(
-                                  "Register",
+                                  "Next",
                                   style: GoogleFonts.roboto(
                                     color: Colors.white,
                                     fontSize: 24,
@@ -370,37 +269,7 @@ class SignUpPageState extends State<SignUpPage> {
 
                         SizedBox(height: 10),
 
-                        Center(
-                          child: GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(builder: (context) => SignInPage()),
-                              );
-                            },
-                            child: RichText(
-                              text: TextSpan(
-                                children: [
-                                  TextSpan(
-                                    text: "Already have an account? ",
-                                    style: GoogleFonts.roboto(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: "Sign In",
-                                    style: GoogleFonts.roboto(
-                                      color: Colors.cyan,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
+
                       ],
                     ),
                   ),

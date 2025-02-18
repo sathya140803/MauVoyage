@@ -54,7 +54,7 @@ addSchedule(int itemId, String itemType, DateTime date){
 removeSchedule(int listId){
   var schedules = getSchedules();
   removeNotificationWithId(schedules[listId]["notificationId"]);
-  print(schedules[listId]["notificationId"]);
+  //print(schedules[listId]["notificationId"]);
 
   schedules.removeAt(listId);
   String finalString = "";
@@ -72,16 +72,15 @@ removeSchedule(int listId){
 }
 
 showInAppNoti(){
-  print(GetStorage().read("NotificationSettings"));
   var userSettings = jsonDecode(GetStorage().read("NotificationSettings"))["InAppNotification"];
   if(!userSettings){
     return;
   }
   DateTime curDay = DateTime(DateTime.now().year,DateTime.now().month,DateTime.now().day);
   if(GetStorage().read("inAppNotiId") == null ){
-    GetStorage().write("inAppNotiId",0);
+    GetStorage().write("inAppNotiId",DateTime.fromMicrosecondsSinceEpoch(0).toString());
   }
-  if(GetStorage().read("inAppNotiId") > curDay.millisecondsSinceEpoch){
+  if(DateTime.parse(GetStorage().read("inAppNotiId")).isAtSameMomentAs(curDay)){
     return;
   }
   var list = getSchedules();
@@ -96,7 +95,7 @@ showInAppNoti(){
   if(listCount > 0){
     LocalNotification.inAppNotification("Reminder", "You have $listCount items scheduled for today!");
   }
-  GetStorage().write("inAppNotiId", curDay.add(Duration(days: 1)).millisecondsSinceEpoch);
+  GetStorage().write("inAppNotiId", curDay.toString());
 }
 
 removeOldDates(){

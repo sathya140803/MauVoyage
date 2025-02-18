@@ -2,19 +2,15 @@
 import 'dart:convert';
 
 
-import 'package:cloudinary_url_gen/cloudinary.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:my_application/acc_management/authentications.dart';
-import 'package:my_application/data_model/PlaceOfInterest.dart';
 import 'package:my_application/notification_schedule/local_notification.dart';
 import 'package:my_application/notification_schedule/notification_controller.dart';
 import 'package:my_application/notification_schedule/schedule_controller.dart';
-import 'package:my_application/ui/InterestSelectionScreen.dart';
-import 'package:my_application/ui/home_page.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
 import 'package:my_application/ui/settings/theme_provider.dart'; // Import the ThemeProvider
@@ -25,7 +21,8 @@ import 'cat_Pages/NightClubsPage.dart'; // Import the NightClubsPage
 import 'cat_Pages/ForestsPage.dart'; // Import the ForestsPage
 import 'cat_Pages/BeachesPage.dart'; // Import the BeachesPage
 import 'cat_Pages/ActivitiesPage.dart'; // Import the ActivitiesPage
-import 'acc_management/login_page.dart';
+
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

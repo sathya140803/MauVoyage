@@ -8,7 +8,7 @@ import 'package:my_application/notification_schedule/notification_controller.dar
 import 'package:permission_handler/permission_handler.dart';
 
 Future<bool> checkNotification() async{
-  if(await Permission.notification.isPermanentlyDenied){
+  if(await Permission.notification.isPermanentlyDenied || await Permission.notification.isDenied){
     return false;
   }
   return true;

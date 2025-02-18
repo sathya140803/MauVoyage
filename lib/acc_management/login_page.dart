@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:my_application/acc_management/email_RegisterScreen.dart';
 import 'package:my_application/ui/root_page.dart';
-import 'register_page.dart';
 import 'forgot_password.dart';
 import 'authentications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -82,7 +82,7 @@ class SignInPageState extends State<SignInPage> {
                     ],
                   ),
                 ),
-
+                const SizedBox(height: 12),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 36.0),
                   child: Form(
@@ -249,7 +249,7 @@ class SignInPageState extends State<SignInPage> {
                             }
                           },
                           child: SizedBox(
-                            width: 200,
+                            width: 155,
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(12),
@@ -258,7 +258,7 @@ class SignInPageState extends State<SignInPage> {
                               padding: const EdgeInsets.symmetric(vertical: 16),
                               child: Center(
                                 child: Text(
-                                  "Login",
+                                  "Sign In",
                                   style: GoogleFonts.roboto(
                                     color: Colors.white,
                                     fontSize: 24,
@@ -276,7 +276,7 @@ class SignInPageState extends State<SignInPage> {
                             onTap: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(builder: (context) => SignUpPage()),
+                                MaterialPageRoute(builder: (context) => EmailSignUpPage()),
                               );
                             },
                             child: RichText(

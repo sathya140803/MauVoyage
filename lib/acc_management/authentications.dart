@@ -33,40 +33,55 @@ class AuthService {
 
 
 
-  // Register a new user and send email verification
-  Future<String> register(String email, String password, String displayName, rem) async {
+
+
+  Future<User?> RegisterEmail(String email) async {
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
-        password: password,
+        password: "tempPassword", // Temporary password, actual password will be updated later
       );
 
       User? user = userCredential.user;
 
-      if (user != null && !user.emailVerified) {
-        // Send email verification
-        await user.sendEmailVerification();
-        if(rem){
-          var userDetails = {
-            "email": email,
-            "password": password,
-          };
-          GetStorage().write("userDetails", jsonEncode(userDetails));
-        }
-        user.updateDisplayName(displayName);
-        return "A verification email has been sent to $email. Please verify your email to complete the registration.";
+      if (user != null) {
+        await user.sendEmailVerification(); // Send verification email
       }
-      return "User registration failed.";
+
+      return user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'email-already-in-use') {
         throw Exception('The email address is already in use by another account.');
-      } else if (e.code == 'weak-password') {
-        throw Exception('The password provided is too weak.');
       } else {
         throw Exception(e.message ?? 'Registration failed.');
       }
     }
   }
+
+
+  Future<void> RegisterPassword(String password, bool rem) async {
+    try {
+      User? user = _auth.currentUser;
+
+      if (user != null) {
+        await user.updatePassword(password);
+
+        if (rem) {
+          var userDetails = {
+            "email": user.email,
+            "password": password,
+          };
+          GetStorage().write("userDetails", jsonEncode(userDetails));
+        }
+      } else {
+        throw Exception("No user found. Please restart registration.");
+      }
+    } catch (e) {
+      throw Exception("Failed to update password: ${e.toString()}");
+    }
+  }
+
+
 
 
   // Update Display Name
@@ -82,6 +97,8 @@ class AuthService {
       throw Exception("Failed to update display name.");
     }
   }
+
+
   Future<void> updatePhotoURL(String photoURL) async {
     try {
       User? user = _auth.currentUser;
