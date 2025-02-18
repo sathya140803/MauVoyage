@@ -32,9 +32,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
     User? user = _authService.getCurrentUser();
     SharedPreferences prefs = await SharedPreferences.getInstance(); // Get local storage
     setState(() {
-      _usernameController.text = user?.displayName ?? 'No name available';
-      _emailController.text = user?.email ?? 'No email available';
-      _phoneController.text = prefs.getString('phoneNumber') ?? 'No phone Number'; // Get stored phone number
+      _usernameController.text = user?.displayName ?? ' ';
+      _emailController.text = user?.email ?? ' ';
+      _phoneController.text = prefs.getString('phoneNumber') ?? ' '; // Get stored phone number
     });
   }
 
