@@ -77,7 +77,17 @@ Future<Widget> checkUser() async{
   await GetStorage.init();
   if(GetStorage().read("userDetails") != null){
     var userDetails = jsonDecode(GetStorage().read("userDetails"));
+    if(userDetails["password"] == "aaaaa1"){
+      await AuthService().signInWithEmailPassword(userDetails["email"], userDetails["password"], false);
+      GetStorage().remove("userDetails");
+      await AuthService().getCurrentUser()?.delete();
+      return SplashScreen();
+    }
     await AuthService().signInWithEmailPassword(userDetails["email"], userDetails["password"], true);
+    if(AuthService().getCurrentUser() == null){
+      GetStorage().remove("userDetails");
+      return SplashScreen();
+    }
     return RootPage();
   }else{
     await AuthService().logout();

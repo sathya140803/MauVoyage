@@ -39,7 +39,7 @@ class AuthService {
     try {
       UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
         email: email,
-        password: "tempPassword", // Temporary password, actual password will be updated later
+        password: "aaaaa1", // Temporary password, actual password will be updated later
       );
 
       User? user = userCredential.user;
@@ -47,6 +47,12 @@ class AuthService {
       if (user != null) {
         await user.sendEmailVerification(); // Send verification email
       }
+
+      var userDetails = {
+        "email": email,
+        "password": "aaaaa1",
+      };
+      GetStorage().write("userDetails", jsonEncode(userDetails));
 
       return user;
     } on FirebaseAuthException catch (e) {
