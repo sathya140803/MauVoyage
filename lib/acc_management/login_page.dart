@@ -92,7 +92,7 @@ class SignInPageState extends State<SignInPage> {
                         TextFormField(
                           controller: _usernameController,
                           decoration: InputDecoration(
-                            labelText: 'Email',
+                            labelText: 'Email Address',
                             labelStyle: GoogleFonts.roboto(
                               color: Colors.grey,
                             ),

@@ -1,8 +1,6 @@
 
 import 'dart:convert';
 
-
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -77,7 +75,17 @@ Future<Widget> checkUser() async{
   await GetStorage.init();
   if(GetStorage().read("userDetails") != null){
     var userDetails = jsonDecode(GetStorage().read("userDetails"));
+    if(userDetails["password"] == "aaaaa1"){
+      await AuthService().signInWithEmailPassword(userDetails["email"], userDetails["password"], false);
+      GetStorage().remove("userDetails");
+      await AuthService().getCurrentUser()?.delete();
+      return SplashScreen();
+    }
     await AuthService().signInWithEmailPassword(userDetails["email"], userDetails["password"], true);
+    if(AuthService().getCurrentUser() == null){
+      GetStorage().remove("userDetails");
+      return SplashScreen();
+    }
     return RootPage();
   }else{
     await AuthService().logout();
