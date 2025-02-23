@@ -43,6 +43,7 @@ Future<Widget> commentsBuilder(String placeString, var width, Color textColor, F
         if(response.statusCode == 404){
           imageUrl = 'https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg';
         }
+        await addComment(placeString, comment);
         return Padding(
           padding: const EdgeInsets.only(bottom: 10.0),
           child: Row(
@@ -61,7 +62,7 @@ Future<Widget> commentsBuilder(String placeString, var width, Color textColor, F
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    userName,
+                    AuthService().getCurrentUser()?.displayName?? userName,
                     style: TextStyle(fontSize: 14, fontWeight: FontWeight.bold, color: textColor),
                   ),
                   SizedBox(
