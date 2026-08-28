@@ -171,19 +171,6 @@ Check your Flutter installation:
 flutter doctor
 ```
 
-### Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/sathya140803/MauVoyage.git
-```
-
-Navigate to the project directory:
-
-```bash
-cd MauVoyage
-```
 
 Install the dependencies:
 
