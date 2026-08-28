@@ -27,7 +27,9 @@ class _NotificationSettingsPage extends State<NotificationSettingsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Notification Settings')),
+        appBar: AppBar(title: const Text('Notification Settings'),
+          elevation: 1,
+          backgroundColor: Colors.green),
         body: FutureBuilder(
             future: checkNotification(),
             builder: (BuildContext context, AsyncSnapshot<bool> widget){

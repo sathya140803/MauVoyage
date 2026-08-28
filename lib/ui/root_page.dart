@@ -13,6 +13,8 @@ import 'currency_converter_page.dart';
 import 'EmergencyPage.dart';  // Import the EmergencyPage
 import '../../acc_management/exit_notice.dart';  // Import ExitDialog
 
+import 'service_page.dart';
+
 class RootPage extends StatefulWidget {
   const RootPage({Key? key}) : super(key: key);
 
@@ -28,7 +30,7 @@ class _RootPageState extends State<RootPage> {
       HomePage(),
       FavouritePage(),
       CalendarPage(),
-      CurrencyConverterPage(),
+      ServicePage(),
       SettingsPage(),
     ];
   }
@@ -113,7 +115,7 @@ class _RootPageState extends State<RootPage> {
               selectedColor: Colors.purple,
             ),
             SalomonBottomBarItem(
-              icon: const Icon(Icons.attach_money),
+              icon: const Icon(Icons.room_service_sharp),
               title: const Text(''),
               selectedColor: Colors.teal,
             ),

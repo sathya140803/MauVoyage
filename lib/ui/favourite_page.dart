@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart'; // Import provider
 import 'package:my_application/data_model/Activity.dart';
 import 'package:my_application/data_model/Beach.dart';
 import 'package:my_application/data_model/Forest.dart';
@@ -6,14 +7,23 @@ import 'package:my_application/data_model/NightClubEvent .dart';
 import 'package:my_application/data_model/PlaceOfInterest.dart';
 import 'package:my_application/favourite_manager/favourite_manipulator.dart';
 import 'package:my_application/ui/DetailPage.dart';
+import 'package:my_application/ui/settings/font_provider.dart';  // Import FontSizeProvider if needed
 
 getItem(int id, String type) {
-  if (type == "Beach") return Beach.beachList[id];
-  if (type == "Forest") return Forest.forestList[id];
-  if (type == "Activity") return Activity.activityList[id];
-  if (type == "NightClubEvent") return NightClubEvent.nightClubList[id];
-  if (type == "PlaceOfInterest") return PlaceOfInterest.placeList[id];
-  return null;
+  switch (type) {
+    case "Beach":
+      return Beach.beachList[id];
+    case "Forest":
+      return Forest.forestList[id];
+    case "Activity":
+      return Activity.activityList[id];
+    case "NightClubEvent":
+      return NightClubEvent.nightClubList[id];
+    case "PlaceOfInterest":
+      return PlaceOfInterest.placeList[id];
+    default:
+      return null;
+  }
 }
 
 class FavouritePage extends StatefulWidget {
@@ -27,6 +37,8 @@ class _FavouritePage extends State<FavouritePage> {
   @override
   Widget build(BuildContext context) {
     var favourites = getFavourites();
+    // Get font size from FontSizeProvider
+    double fontSize = Provider.of<FontSizeProvider>(context).fontSize;
 
     return Scaffold(
       appBar: AppBar(
@@ -51,26 +63,25 @@ class _FavouritePage extends State<FavouritePage> {
         padding: const EdgeInsets.all(10.0),
         child: favourites.isEmpty
             ? Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  'assets/location.png',  // Replace with the path to your image
-                  width: 125,  // Adjust width as needed
-                  height: 125,  // Adjust height as needed
-                  fit: BoxFit.cover,  // Use BoxFit for image scaling
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/location.png', // Replace with the path to your image
+                width: 125, // Adjust width as needed
+                height: 125, // Adjust height as needed
+                fit: BoxFit.cover, // Use BoxFit for image scaling
+              ),
+              SizedBox(height: 16),
+              Text(
+                'No favorites selected yet',
+                style: TextStyle(
+                  fontSize: fontSize, // Use dynamic font size
+                  color: Colors.grey[600],
                 ),
-                SizedBox(height: 16),
-                Text(
-                  'No favorites selected yet',
-                  style: TextStyle(
-                    fontSize: 20,
-                    color: Colors.grey[600],
-                  ),
-                ),
-              ],
-            )
-
+              ),
+            ],
+          ),
         )
             : ListView.builder(
           itemCount: favourites.length,
@@ -114,9 +125,9 @@ class _FavouritePage extends State<FavouritePage> {
                           children: [
                             Text(
                               item.name!,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize: 18,
+                                fontSize: fontSize, // Dynamic font size
                               ),
                             ),
                             SizedBox(height: 4),

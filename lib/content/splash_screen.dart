@@ -54,88 +54,85 @@ class _SplashScreenState extends State<SplashScreen>
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-          colors: [Colors.redAccent, Colors.blueAccent,Colors.yellowAccent,Colors.greenAccent],
-
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ),
-        ),
-        child: Center(
-          child: ScaleTransition(
-            scale: _animation,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // Logo with glow effect
-                Hero(
-                  tag: 'app_logo',
-                  child: Container(
-                    width: size.width * 0.4,
-                    height: size.width * 0.4,
-                    child: Image.asset(
-                      'assets/moris.png', // Replace with your image path
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
-                SizedBox(height: size.height * 0.03),
-                // Animated "Welcome to" text
-                FadeTransition(
-                  opacity: _animation,
-                  child: Text(
-                    'Welcome to',
-                    style: TextStyle(
-                      fontSize: size.width * 0.06,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SizedBox(height: size.height * 0.01),
-                // Type animation for "Mauritius"
-                DefaultTextStyle(
-                  style: TextStyle(
-                    fontSize: size.width * 0.08,
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  child: AnimatedTextKit(
-                    animatedTexts: [
-                      TyperAnimatedText(
-                        'Mauritius',
-                        speed: Duration(milliseconds: 100),
-                      ),
-                    ],
-                    isRepeatingAnimation: false,
-                  ),
-                ),
-                SizedBox(height: size.height * 0.02),
-                // Tagline animation
-                FadeTransition(
-                  opacity: _animation,
-                  child: Text(
-                    'Plan and Book Your Trip With Us',
-                    style: TextStyle(
-                      fontSize: size.width * 0.05,
-                      color: Colors.black,
-                      fontStyle: FontStyle.italic,
-                      fontWeight: FontWeight.w400,
-                    ),
-                  ),
-                ),
-                SizedBox(height: size.height * 0.04),
-                // Loading animation
-                Lottie.asset(
-                  'assets/animation/anim2.json', // Adjust animation path
-                  width: size.width * 0.6,
-                ),
-              ],
+      body: Stack(
+        children: [
+          // Background Image
+          Positioned.fill(
+            child: Image.network(
+              'https://images.pexels.com/photos/2583832/pexels-photo-2583832.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1', // Replace with your image URL
+              fit: BoxFit.cover,
             ),
           ),
-        ),
+
+          // Black Overlay
+          Positioned.fill(
+            child: Container(
+              color: Colors.black.withOpacity(0.5), // Black overlay with 50% opacity
+            ),
+          ),
+          // Content
+          Center(
+            child: ScaleTransition(
+              scale: _animation,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(height: size.height * 0.03),
+                  // Animated "Welcome to" text
+                  FadeTransition(
+                    opacity: _animation,
+                    child: Text(
+                      'Welcome to',
+                      style: TextStyle(
+                        fontSize: size.width * 0.06,
+                        color: Colors.white, // Change text color to white for better visibility
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: size.height * 0.01),
+                  // Type animation for "Mauritius"
+                  DefaultTextStyle(
+                    style: TextStyle(
+                      fontSize: size.width * 0.08,
+                      color: Colors.white, // Change text color to white for better visibility
+                      fontWeight: FontWeight.bold,
+                    ),
+                    child: AnimatedTextKit(
+                      animatedTexts: [
+                        TyperAnimatedText(
+                          'Mauritius',
+                          speed: Duration(milliseconds: 100),
+                        ),
+                      ],
+                      isRepeatingAnimation: false,
+                    ),
+                  ),
+                  SizedBox(height: size.height * 0.02),
+                  // Tagline animation
+                  FadeTransition(
+                    opacity: _animation,
+                    child: Text(
+                      'Plan and Book Your Trip With Us',
+                      style: TextStyle(
+                        fontSize: size.width * 0.05,
+                        color: Colors.white, // Change text color to white for better visibility
+                        fontStyle: FontStyle.italic,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: size.height * 0.04),
+                  // Loading animation
+                  Lottie.asset(
+                    'assets/animation/anim2.json', // Adjust animation path
+                    width: size.width * 0.6,
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

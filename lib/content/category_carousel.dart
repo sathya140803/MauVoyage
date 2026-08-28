@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:my_application/ui/settings/font_provider.dart'; // Import the FontSizeProvider
 
 class CategoryCarousel extends StatelessWidget {
   final List<Map<String, String>> categories = [
@@ -12,6 +14,11 @@ class CategoryCarousel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Get the screen width for dynamic font size
+    double screenWidth = MediaQuery.of(context).size.width;
+    // Get font size from FontSizeProvider
+    double fontSize = Provider.of<FontSizeProvider>(context).fontSize;
+
     return SizedBox(
       height: 145, // Adjust height as per design
       child: SingleChildScrollView(
@@ -56,9 +63,9 @@ class CategoryCarousel extends StatelessWidget {
                     child: Center(
                       child: Text(
                         category['title']!,
-                        style: const TextStyle(
+                        style: TextStyle(
                           color: Colors.white,
-                          fontSize: 16, // Adjust font size as needed
+                          fontSize: fontSize, // Use dynamic font size from provider
                           fontWeight: FontWeight.bold,
                         ),
                         textAlign: TextAlign.center,

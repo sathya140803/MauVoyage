@@ -1,3 +1,4 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
@@ -9,6 +10,11 @@ import '../settings/ProfileSettingsPage.dart';
 import '../settings/SecuritySettingsPage.dart';
 import '../settings/LanguageSettingsPage.dart';
 import '../../acc_management/logout_notice.dart';
+import 'FontSizeSettingsPage.dart';
+import 'font_provider.dart';
+
+
+import 'package:my_application/Applocalizations.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -27,7 +33,9 @@ class _SettingsPageState extends State<SettingsPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.green,
-        title: const Text("Settings", style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text(
+            "Settings",
+            style: TextStyle(fontWeight: FontWeight.bold)),
         automaticallyImplyLeading: false,
       ),
 
@@ -146,6 +154,29 @@ class _SettingsPageState extends State<SettingsPage> {
               themeProvider.toggleEmergencyButton(value);
             },
             icon: Feather.alert_circle,
+          ),
+          const Divider(height: 32.0),
+          _buildSectionTitle('Accessibility'),
+          _buildListTile(
+            title: 'Font Size',
+            subtitle: 'Adjust text size for better readability',
+            icon: Icons.format_size,
+            iconColor: Colors.blueGrey,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => FontSizeSettingsPage()),
+              );
+            },
+          ),
+          _buildListTile(
+            title: 'Accessibility Settings',
+            subtitle: 'Open accessibility settings on your device',
+            icon: Icons.accessibility,
+            iconColor: Colors.deepPurple,
+            onTap: () {
+              AppSettings.openAppSettings(type: AppSettingsType.accessibility);
+            },
           ),
 
 

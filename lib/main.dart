@@ -1,6 +1,6 @@
 
-import 'dart:convert';
 
+import 'dart:convert';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,21 +11,33 @@ import 'package:my_application/notification_schedule/notification_controller.dar
 import 'package:my_application/notification_schedule/schedule_controller.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:my_application/ui/settings/theme_provider.dart'; // Import the ThemeProvider
+import 'package:my_application/ui/settings/font_provider.dart'; // Import the FontSizeProvider
 import 'content/splash_screen.dart'; // Import the SplashScreen
 import 'ui/root_page.dart';
-
 import 'cat_Pages/NightClubsPage.dart'; // Import the NightClubsPage
 import 'cat_Pages/ForestsPage.dart'; // Import the ForestsPage
 import 'cat_Pages/BeachesPage.dart'; // Import the BeachesPage
 import 'cat_Pages/ActivitiesPage.dart'; // Import the ActivitiesPage
 
+// TalkBack provider to manage TalkBack status globally
+class TalkBackProvider extends ChangeNotifier {
+  bool _isTalkBackEnabled = false;
 
+  bool get isTalkBackEnabled => _isTalkBackEnabled;
+
+  void toggleTalkBack(bool value) {
+    _isTalkBackEnabled = value;
+    notifyListeners();
+  }
+}
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   LocalNotification.init();
   GetStorage.init();
+
   if(kIsWeb) {
     await Firebase.initializeApp(
         options: FirebaseOptions(
@@ -35,59 +47,59 @@ void main() async {
             storageBucket: "travelapp-74f28.firebasestorage.app",
             messagingSenderId: "340107156944",
             appId: "1:340107156944:web:d1d5c4738f9b4bd12cedd5",
-            measurementId: "G-K12JG3B610"));
-
-  }else {
+            measurementId: "G-K12JG3B610"
+        ));
+  } else {
     await Firebase.initializeApp();
   }
+
   var notificationSettings = {
     "ScheduledNotification": false,
     "InAppNotification": false,
   };
-  if(await Permission.notification.status.isGranted){
+  if (await Permission.notification.status.isGranted) {
     rebuildNotifications();
     notificationSettings["ScheduledNotification"] = true;
     notificationSettings["InAppNotification"] = true;
-  }else{
+  } else {
     cancelAllNotifications();
   }
-  if(GetStorage().read("NotificationSettings") == null){
+
+  if (GetStorage().read("NotificationSettings") == null) {
     GetStorage().write("NotificationSettings", jsonEncode(notificationSettings));
   }
-  runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (_)=>ThemeProvider())
-        ],
-        child: const MyApp(),
-      )
-  );
-  removeOldDates();
-  //GetStorage().remove("schedules");
-  //GetStorage().remove("notifications");
-  //GetStorage().remove("notification_id");
-  //GetStorage().remove("inAppNotiId");
-  //GetStorage().remove("favourites");
 
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+        ChangeNotifierProvider(create: (_) => FontSizeProvider()), // Add FontSizeProvider here
+        ChangeNotifierProvider(create: (_) => TalkBackProvider()), // Add TalkBackProvider here
+      ],
+      child: const MyApp(),
+    ),
+  );
+
+  removeOldDates();
 }
 
-Future<Widget> checkUser() async{
+Future<Widget> checkUser() async {
   await GetStorage.init();
-  if(GetStorage().read("userDetails") != null){
+  if (GetStorage().read("userDetails") != null) {
     var userDetails = jsonDecode(GetStorage().read("userDetails"));
-    if(userDetails["password"] == "aaaaa1"){
+    if (userDetails["password"] == "aaaaa1") {
       await AuthService().signInWithEmailPassword(userDetails["email"], userDetails["password"], false);
       GetStorage().remove("userDetails");
       await AuthService().getCurrentUser()?.delete();
       return SplashScreen();
     }
     await AuthService().signInWithEmailPassword(userDetails["email"], userDetails["password"], true);
-    if(AuthService().getCurrentUser() == null){
+    if (AuthService().getCurrentUser() == null) {
       GetStorage().remove("userDetails");
       return SplashScreen();
     }
     return RootPage();
-  }else{
+  } else {
     await AuthService().logout();
     return SplashScreen();
   }
@@ -98,45 +110,39 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Consumer<ThemeProvider>(
-        builder: (context, themeProvider, child){
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'myapp',
-
-            themeMode: themeProvider.themeMode, // Use themeMode from ThemeProvider
-            theme: MyThemes.lightTheme,        // Light theme
-            darkTheme: MyThemes.darkTheme,     // Dark theme
-            home: FutureBuilder(
-                future: checkUser(),
-                builder: (BuildContext context, AsyncSnapshot<Widget> widget){
-                  if(widget.connectionState == ConnectionState.done){
-                    if (!widget.hasData) {
-                      return Center(
-                          child: Text('Something went wrong....')
-                      );
-                    }else{
-                      return widget.requireData;
-                    }
-                  }
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
+      builder: (context, themeProvider, child) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'myapp',
+          themeMode: themeProvider.themeMode, // Use themeMode from ThemeProvider
+          theme: MyThemes.lightTheme,        // Light theme
+          darkTheme: MyThemes.darkTheme,     // Dark theme
+          home: FutureBuilder(
+            future: checkUser(),
+            builder: (BuildContext context, AsyncSnapshot<Widget> widget) {
+              if (widget.connectionState == ConnectionState.done) {
+                if (!widget.hasData) {
+                  return const Center(child: Text('Something went wrong....'));
+                } else {
+                  return widget.requireData;
                 }
-            ),
-
-            routes: {
-              '/nightclubs': (context) => NightClubsPage(),
-              '/forests': (context) => ForestsPage(),
-              '/beaches': (context) => BeachesPage(),
-              '/activities': (context) => ActivitiesPage(),
-              '/InterestSelectionScreen': (context) => ActivitiesPage(),
-              '/root_page': (context) => RootPage(),
+              }
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
             },
-          );
-        }
-
+          ),
+          routes: {
+            '/nightclubs': (context) => NightClubsPage(),
+            '/forests': (context) => ForestsPage(),
+            '/beaches': (context) => BeachesPage(),
+            '/activities': (context) => ActivitiesPage(),
+            '/InterestSelectionScreen': (context) => ActivitiesPage(),
+            '/root_page': (context) => RootPage(),
+          },
+        );
+      },
     );
   }
 }

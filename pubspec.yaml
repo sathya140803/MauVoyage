@@ -28,6 +28,8 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  google_mlkit_text_recognition: ^0.14.0
+  camera: ^0.11.1
   flutter_slidable: ^3.1.0
   smooth_page_indicator: ^1.2.0+3
   page_transition: ^2.1.0
@@ -67,7 +69,9 @@ dependencies:
   cloudinary_dart: ^0.0.11
   cloudinary_api: ^1.1.0
   permission_handler: ^11.3.1
-  url_launcher:
+  url_launcher: ^6.3.1
+  app_settings: ^5.2.0
+  country_icons: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -83,9 +87,9 @@ dev_dependencies:
   flutter_launcher_icons: ^0.14.3
 
 flutter_icons:
-    android: "launcher_icon"
-    ios: true
-    image_path: "assets/icon/logo.png"
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/logo.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -106,6 +110,7 @@ flutter:
     - assets/cat1.jpg
     - assets/cat2.jpg
     - assets/cat3.jpg
+    - assets/bus.webp
     - assets/cat4.jpg
     - assets/cat5.jpg
     - assets/garden.jpg
@@ -113,6 +118,9 @@ flutter:
     - assets/lemorne1.jpg
     - assets/Port-Louis.jpg
     - assets/souv.jpg
+    - assets/splash1.jpg
+    - assets/splash3.jpg
+    - assets/splash2.jpg
     - assets/waterfall.jpg
     - assets/aquarium.jpg
     - assets/blackriver.jpg
@@ -124,6 +132,8 @@ flutter:
     - assets/traditinel.jpg
     - assets/maconde.jpg
     - assets/78.jpg
+    - assets/language.jpg
+    - assets/currency.jpg
     - assets/hiking.jpg
     - assets/picicon/dhav.png
     - assets/location.png
@@ -167,6 +177,10 @@ flutter:
     - assets/moris.png
     - assets/acc_management/bali.jpg
     - assets/icon/logo.png
+    - assets/lang/en.json
+    - assets/lang/fr.json
+    - assets/lang/es.json
+    - assets/lang/hi.json
 
 
 

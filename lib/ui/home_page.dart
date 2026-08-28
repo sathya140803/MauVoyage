@@ -11,6 +11,7 @@ import 'package:my_application/notification_schedule/schedule_controller.dart';
 import 'package:my_application/ui/NotificationPage.dart';
 import 'package:my_application/content/SearchPage.dart';
 import 'package:my_application/cat_Pages/ExplorePage.dart';
+import 'package:my_application/ui/settings/font_provider.dart';
 import 'package:my_application/ui/settings/theme_provider.dart'; // Import ThemeProvider
 import '../content/category_carousel.dart'; // Import your CategoryCarousel
 import 'package:my_application/ui/DetailPage.dart';
@@ -72,8 +73,6 @@ class _HomePageState extends State<HomePage> {
     double screenHeight = MediaQuery.of(context).size.height;
     Size size = MediaQuery.of(context).size;
 
-
-
     // Use the ThemeProvider to check if it's dark mode
     final themeProvider = Provider.of<ThemeProvider>(context);
     bool isDarkMode = themeProvider.isDarkMode;
@@ -103,7 +102,7 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         'Hi ${AuthService().getCurrentUser()?.displayName}',
                         style: TextStyle(
-                          fontSize: 24,
+                          fontSize: Provider.of<FontSizeProvider>(context).fontSize, // Dynamic font size
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -271,7 +270,7 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         'Discover Top Picks',
                         style: TextStyle(
-                          fontSize: screenWidth * 0.05,
+                          fontSize: 20, // Fixed font size
                           fontWeight: FontWeight.bold,
                           color: isDarkMode ? Colors.white : Colors.black, // Adjust text color
                         ),
@@ -279,7 +278,7 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         'Experience the Best of Mauritius!',
                         style: TextStyle(
-                          fontSize: screenWidth * 0.04,
+                          fontSize: 16, // Fixed font size
                           fontWeight: FontWeight.w500,
                           color: isDarkMode ? Colors.white70 : Colors.black54, // Adjust text color
                         ),
@@ -384,8 +383,10 @@ class _HomePageState extends State<HomePage> {
                                   children: [
                                     Text(
                                       place.name,
-                                      style: const TextStyle(
-                                        fontSize: 18,
+                                      style: TextStyle(
+                                        fontSize: screenWidth * 0.05 > Provider.of<FontSizeProvider>(context).fontSize
+                                            ? screenWidth * 0.05
+                                            : Provider.of<FontSizeProvider>(context).fontSize, // Using dynamic font size
                                         fontWeight: FontWeight.bold,
                                         color: Colors.white,
                                       ),
@@ -393,16 +394,20 @@ class _HomePageState extends State<HomePage> {
                                     const SizedBox(height: 5),
                                     Row(
                                       children: [
-                                        Icon(Icons.star,
-                                            color: Colors.yellow[700], size: 16),
+                                        Icon(Icons.star, color: Colors.yellow[700], size: 16),
                                         const SizedBox(width: 5),
                                         Text(
                                           place.rating.toString(),
-                                          style: const TextStyle(
-                                              fontSize: 16, color: Colors.white),
+                                          style: TextStyle(
+                                            fontSize: screenWidth * 0.05 > Provider.of<FontSizeProvider>(context).fontSize
+                                                ? screenWidth * 0.05
+                                                : Provider.of<FontSizeProvider>(context).fontSize, // Dynamic font size
+                                            color: Colors.white,
+                                          ),
                                         ),
                                       ],
                                     ),
+
                                   ],
                                 ),
                               ),
@@ -427,15 +432,16 @@ class _HomePageState extends State<HomePage> {
                       Text(
                         'Explore more',
                         style: TextStyle(
-                          fontSize: screenWidth * 0.05,
+                          fontSize: 20, // Fixed font size
                           fontWeight: FontWeight.bold,
                           color: isDarkMode ? Colors.white : Colors.black, // Adjust text color
                         ),
                       ),
+
                       Text(
                         'According to your personal taste',
                         style: TextStyle(
-                          fontSize: screenWidth * 0.04,
+                          fontSize: 16, // Fixed font size
                           fontWeight: FontWeight.w500,
                           color: isDarkMode ? Colors.white70 : Colors.black54, // Adjust text color
                         ),
