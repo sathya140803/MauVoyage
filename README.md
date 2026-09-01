@@ -214,10 +214,3 @@ The project provided practical experience in:
 * Authentication
 * Notification scheduling
 
-## 👨‍💻 Developer
-
-**Sathya Moothosawmy**
-
-## 📄 License
-
-This project is intended primarily as a personal/academic portfolio project.
